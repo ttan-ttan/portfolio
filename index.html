@@ -2,436 +2,555 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Tan Yong Jian | DE Interactive Career Canvas</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Career Evolution Portfolio | Tan Yong Jian</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
-    body, html {
+    html, body {
+      width: 100vw;
+      height: 100vh;
       margin: 0;
       padding: 0;
-      width: 100vw;
-      height: 100vh;
       overflow: hidden;
-      background-color: #070a14;
-      color: #f1f5f9;
-      font-family: 'Segoe UI', system-ui, sans-serif;
+      background-color: #020617;
+      font-family: system-ui, -apple-system, sans-serif;
     }
 
-    /* Background image layer */
-    #viewport {
-      width: 100vw;
-      height: 100vh;
-      position: relative;
-      overflow: hidden;
-      background-image: url('background.jpg');
-      background-size: cover;
-      background-position: center;
+    .bg-tech-grid {
+      background-color: #020617;
+      background-image: 
+        radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.15), transparent 60%),
+        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15), transparent 50%),
+        linear-gradient(to bottom, rgba(2, 6, 23, 0.85), rgba(9, 13, 22, 0.95)),
+        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231e293b' stroke-width='1' stroke-opacity='0.4'%3E%3Cpath d='M0 0h80v80H0z'/%3E%3Cpath d='M0 40h80M40 0v80' stroke='%230284c7' stroke-opacity='0.15' stroke-dasharray='2,2'/%3E%3C/g%3E%3C/svg%3E");
+      background-size: cover, cover, cover, 80px 80px;
     }
 
-    /* World Canvas Container */
-    #world {
-      width: 2600px;
-      height: 1000px;
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform-origin: center center;
-      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    .scene-element { display: none !important; }
+    .scene-visible { display: flex !important; }
+
+    .neon-card-cyan {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+      backdrop-filter: blur(12px);
+    }
+    .neon-card-cyan:hover {
+      border-color: #38bdf8;
+      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
     }
 
-    /* Running Neon Light Backlight Effect */
-    @keyframes border-run {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+    .neon-card-purple {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(168, 85, 247, 0.3);
+      box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
+      backdrop-filter: blur(12px);
     }
 
-    .neon-flow-box {
-      position: relative;
-      background: rgba(10, 15, 30, 0.92);
-      border-radius: 24px;
-      z-index: 1;
+    .neon-card-emerald {
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(52, 211, 153, 0.3);
+      box-shadow: 0 0 15px rgba(52, 211, 153, 0.15);
+      backdrop-filter: blur(12px);
     }
 
-    /* Continuous Neon Light Border Animation */
-    .neon-flow-box::before {
-      content: '';
-      position: absolute;
-      top: -2px; left: -2px; right: -2px; bottom: -2px;
-      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
-      background-size: 300% 300%;
-      border-radius: 26px;
-      z-index: -1;
-      animation: border-run 4s linear infinite;
-      opacity: 0.6;
-      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
-      transition: opacity 0.3s, filter 0.3s;
-    }
-
-    .neon-flow-box:hover::before {
-      opacity: 1;
-      filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.8));
-    }
-
-    /* Standout Hero Namecard styling */
-    .hero-card::before {
-      background: linear-gradient(90deg, #0284c7, #38bdf8, #a855f7, #0284c7) !important;
-      background-size: 300% 300% !important;
-      opacity: 0.95 !important;
-      filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.7)) !important;
-    }
-
-    /* Spatial Node Cards */
-    .spatial-card {
-      position: absolute;
-      padding: 24px;
-      backdrop-filter: blur(20px);
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
-      cursor: pointer;
-      z-index: 10;
-      transition: transform 0.3s ease;
-    }
-
-    .spatial-card:hover {
-      transform: translateY(-5px) scale(1.02);
-    }
-
-    .active-node::before {
-      opacity: 1 !important;
-      filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.9)) !important;
-    }
-
-    /* Animated Neon Dotted SVG Pipeline Line */
-    .neon-line {
-      stroke: #38bdf8;
-      stroke-width: 4;
-      stroke-dasharray: 12, 12;
-      animation: dash-flow 1.5s linear infinite;
-      filter: drop-shadow(0 0 10px #38bdf8);
-    }
-
-    @keyframes dash-flow {
-      to { stroke-dashoffset: -24; }
-    }
-
-    /* Slow Blinking Button Effect */
-    @keyframes slow-blink {
-      0%, 100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.9)); transform: scale(1); }
-      50% { opacity: 0.65; filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.2)); transform: scale(0.98); }
-    }
-
-    .blink-slow {
-      animation: slow-blink 2.2s infinite ease-in-out;
-      border-color: #38bdf8 !important;
-      background-color: #0284c7 !important;
-      color: #ffffff !important;
-    }
+    ::-webkit-scrollbar { width: 5px; }
+    ::-webkit-scrollbar-track { background: #020617; }
+    ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
   </style>
 </head>
-<body>
+<body id="mainBody" class="bg-tech-grid text-slate-100 flex flex-col justify-between p-3 select-none">
 
-  <!-- Viewport Stage -->
-  <div id="viewport" onclick="onCanvasClick(event)">
+  <!-- HEADER -->
+  <header class="w-full bg-slate-950/90 border border-slate-800 rounded-2xl px-5 py-2.5 flex justify-between items-center backdrop-blur-md z-40 shrink-0">
+    <div class="flex items-center gap-4 cursor-pointer" onclick="goToPhase(0)">
+      <div class="w-10 h-10 rounded-2xl bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-lg shadow-[0_0_20px_rgba(6,182,212,0.6)]">
+        YJ
+      </div>
+      <div>
+        <h1 class="text-lg font-black text-slate-100 font-mono tracking-wider">TAN YONG JIAN</h1>
+        <p class="text-xs text-cyan-400 font-mono font-bold">Junior Data Engineer | Ex-SOC Analyst & Structural Project Manager</p>
+      </div>
+    </div>
 
-    <!-- Top Floating Bar: Action Links -->
-    <div class="fixed top-4 right-4 md:right-8 z-50 flex items-center gap-3 bg-slate-950/90 p-2.5 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-2xl">
-      <a href="https://linkedin.com/in/tanyj" target="_blank" class="flex items-center gap-2 bg-slate-900 border border-slate-700 hover:border-sky-400 px-3.5 py-2 rounded-xl transition-all">
-        <img src="linkedin.jpg" alt="LinkedIn" class="w-6 h-6 rounded object-cover" onerror="this.style.display='none'">
-        <span class="text-xs font-mono font-bold text-slate-200">LinkedIn</span>
+    <!-- External Links -->
+    <div class="flex items-center gap-3 font-mono text-xs">
+      <a href="https://www.linkedin.com/in/ttan-ttan/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors">
+        <i class="fa-brands fa-linkedin text-sm"></i> LinkedIn
       </a>
-
-      <a href="https://github.com/ttan-ttan" target="_blank" class="flex items-center gap-2 bg-slate-900 border border-slate-700 hover:border-sky-400 px-3.5 py-2 rounded-xl transition-all">
-        <img src="github.jpg" alt="GitHub" class="w-6 h-6 rounded object-cover" onerror="this.style.display='none'">
-        <span class="text-xs font-mono font-bold text-slate-200">GitHub</span>
+      <a href="https://github.com/ttan-ttan" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors">
+        <i class="fa-brands fa-github text-sm"></i> GitHub
       </a>
+      <a href="TanYongJian_JDE10.pdf" target="_blank" class="px-3.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-black flex items-center gap-1.5 transition-colors shadow-[0_0_12px_rgba(6,182,212,0.4)]">
+        <i class="fa-solid fa-file-pdf"></i> Resume (PDF)
+      </a>
+      <a href="TanYongJian_JDE10.docx" download class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800 rounded-xl text-xs flex items-center gap-1.5 transition-colors">
+        <i class="fa-solid fa-file-word text-blue-400"></i> .DOCX
+      </a>
+    </div>
+  </header>
 
-      <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden font-mono text-xs font-bold">
-        <span class="px-3 text-sky-400 border-r border-slate-700"><i class="fa-solid fa-file-pdf mr-1"></i> Resume</span>
-        <a href="TanYongJian_JDE10.pdf" target="_blank" class="px-3 py-2 hover:bg-slate-800 text-slate-300">Open</a>
-        <a href="TanYongJian_JDE10.pdf" download class="px-3 py-2 hover:bg-slate-800 text-emerald-400 border-l border-slate-700">Download</a>
+  <!-- MAIN CANVAS CONTAINER -->
+  <main id="stageCanvas" class="w-full flex-1 my-2 relative z-10 flex items-center justify-center overflow-hidden min-h-0 pb-1">
+
+    <!-- PHASE 0: OVERVIEW -->
+    <div id="phase0Wrapper" class="scene-element scene-visible w-full h-full flex flex-col justify-center items-center p-2 space-y-6">
+      <div class="text-center space-y-1">
+        <h2 class="text-3xl font-black font-serif text-slate-100 tracking-wide">CAREER EVOLUTION ROADMAP</h2>
+        <p class="text-xs text-cyan-400 font-mono">From Structural Engineering Delivery to Reliable Data Platforms</p>
       </div>
 
-      <button onclick="toggleQrModal()" class="flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/60 hover:bg-emerald-900 px-3.5 py-2 rounded-xl transition-all text-xs font-mono font-bold text-emerald-300">
-        <i class="fa-solid fa-qrcode"></i> QR Code
-      </button>
+      <div class="grid grid-cols-4 gap-4 w-full max-w-6xl">
+        <div onclick="goToPhase(1)" class="neon-card-cyan rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+          <div>
+            <span class="text-xs font-mono font-black text-cyan-400">PHASE 01</span>
+            <h3 class="text-base font-black text-slate-100 mt-1">Civil Eng. Career</h3>
+            <p class="text-xs text-slate-400 mt-2">8 project stages with evolving skill scale from Benoi Rd to Yishun HDB.</p>
+          </div>
+          <span class="text-xs font-mono text-cyan-300 font-bold mt-4">View All 8 Projects <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <div onclick="goToPhase(2)" class="neon-card-purple rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+          <div>
+            <span class="text-xs font-mono font-black text-purple-400">PHASE 02</span>
+            <h3 class="text-base font-black text-slate-100 mt-1">Animated Story & Pivot</h3>
+            <p class="text-xs text-slate-400 mt-2">10-scene interactive helmet engineer story leading into IT transition.</p>
+          </div>
+          <span class="text-xs font-mono text-purple-300 font-bold mt-4">Explore Transition <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <div onclick="goToPhase(3)" class="neon-card-emerald rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+          <div>
+            <span class="text-xs font-mono font-black text-sky-400">PHASE 03</span>
+            <h3 class="text-base font-black text-slate-100 mt-1">Capstone Projects</h3>
+            <p class="text-xs text-slate-400 mt-2">Smart-Route Emergency Engine & Olist E-Commerce Fabric Pipeline.</p>
+          </div>
+          <span class="text-xs font-mono text-sky-300 font-bold mt-4">View Capstones <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+
+        <div onclick="goToPhase(4)" class="neon-card-emerald rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+          <div>
+            <span class="text-xs font-mono font-black text-emerald-400">PHASE 04</span>
+            <h3 class="text-base font-black text-slate-100 mt-1">DE Readiness Matrix</h3>
+            <p class="text-xs text-slate-400 mt-2">Direct site-to-DE skill correlations, technical matrix & value proposal.</p>
+          </div>
+          <span class="text-xs font-mono text-emerald-300 font-bold mt-4">View Readiness <i class="fa-solid fa-arrow-right"></i></span>
+        </div>
+      </div>
     </div>
 
-    <!-- Spatial World Canvas (2-Row Pipeline) -->
-    <div id="world">
-
-      <!-- SVG Layer for Neon Connector Lines -->
-      <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
-        <!-- Top Row Connectors -->
-        <path class="neon-line" d="M 620 280 L 780 280" />
-        <path class="neon-line" d="M 1260 280 L 1420 280" />
-        <!-- Drop Down to Row 2 Connector -->
-        <path class="neon-line" d="M 1900 280 L 2100 280 L 2100 450 L 1040 450 L 1040 580" />
-        <!-- Row 2 Connectors -->
-        <path class="neon-line" d="M 1300 720 L 1420 720" />
-        <path class="neon-line" d="M 1940 720 L 2060 720" />
-      </svg>
-
-      <!-- TOP-LEFT STANDOUT HERO NAMECARD -->
-      <div id="cardMain" class="spatial-card neon-flow-box hero-card w-[520px] top-[150px] left-[100px]" onclick="zoomToNode('cardMain', event)">
-        <div class="flex justify-between items-center mb-2">
-          <span class="text-xs font-mono text-sky-300 uppercase font-bold tracking-widest block">CAREER EVOLUTION ROADMAP</span>
-          <span class="bg-sky-500/20 text-sky-300 border border-sky-400 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold">PORTFOLIO HUB</span>
+    <!-- PHASE 1: CIVIL PROJECTS -->
+    <div id="phase1Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1">
+      <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
+        <div>
+          <span class="text-[10px] font-mono font-black text-cyan-400 uppercase">PHASE 1 · CIVIL ENGINEERING CAREER STAGES</span>
+          <h2 class="text-base font-black text-slate-100 leading-tight">Ordered Project Scale & Evolving Skill Matrix</h2>
         </div>
-        <h1 class="text-4xl font-black text-white mb-2 tracking-tight">Tan Yong Jian</h1>
-        <p class="text-slate-200 text-xs leading-relaxed font-sans">
-          10 years of structural engineering leadership managing complex projects, now transitioning into cloud-native Data Engineering architecture.
-        </p>
+        <span class="text-[10px] font-mono bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded-xl">2014 - 2023 (8 Core Projects)</span>
       </div>
 
-      <!-- ROW 1 - NODE 1: PHASE 1 FOUNDATION -->
-      <div id="cardPhase1" class="spatial-card neon-flow-box w-[480px] top-[150px] left-[780px]" onclick="zoomToNode('cardPhase1', event)">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-mono text-indigo-400 font-bold">PHASE 1: FOUNDATION</span>
-          <span class="text-[10px] font-mono bg-indigo-950 text-indigo-300 px-2.5 py-0.5 rounded border border-indigo-800">Construction Era</span>
+      <div class="grid grid-cols-4 grid-rows-2 gap-2 flex-1 my-1 min-h-0">
+        <!-- Project 1 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo1.jpg" alt="Benoi Road Factory" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">1. Benoi Rd</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">Factory @ Benoi Road</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Site Engineer · Small Scale</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Steel structure & concrete reinforced structure — <strong>One-man band</strong> site manager.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Autonomous Execution & Versatility
+          </div>
         </div>
-        <h3 class="text-xl font-bold text-white mb-2">Graduate to Construction Manager</h3>
-        <p class="text-slate-300 text-xs mb-3">10 years managing structural projects (S$3M–S$100M) across Singapore.</p>
-        <ul class="text-xs font-mono text-slate-300 space-y-1.5 bg-slate-950/90 p-3 rounded-xl border border-slate-800">
-          <li>✓ Multidisciplinary technical stakeholder coordination</li>
-          <li>✓ Resource allocation & schedule optimization</li>
-          <li>✓ De-risking PPVC off-site module casting</li>
-        </ul>
-      </div>
 
-      <!-- ROW 1 - NODE 2: PHASE 2 THE PIVOT -->
-      <div id="cardPhase2" class="spatial-card neon-flow-box w-[480px] top-[150px] left-[1420px]" onclick="zoomToNode('cardPhase2', event)">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-mono text-purple-400 font-bold">PHASE 2: THE PIVOT</span>
-          <span class="text-[10px] font-mono bg-purple-950 text-purple-300 px-2.5 py-0.5 rounded border border-purple-800">Tech Upskilling</span>
+        <!-- Project 2 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo2.jpg" alt="JTC ChemHub" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">2. JTC ChemHub</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">JTC ChemHub @ Tuas</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Project Engineer · Chemical Hub</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Chemical warehouse structural works and containment zones.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Risk Management & Workflow Planning
+          </div>
         </div>
-        <h3 class="text-xl font-bold text-white mb-2">Why IT & Data Engineering?</h3>
-        <p class="text-slate-300 text-xs italic mb-3">
-          "Tech integration can solve construction bottlenecks, but I want to build the data pipelines solving complex problems directly."
-        </p>
-        <div class="bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-xs font-mono text-purple-300 space-y-1">
-          <p>• PgDip Cybersecurity (PSB Academy)</p>
-          <p>• 42 Singapore Piscine (C & Linux Shell)</p>
-          <p>• NTU SCTP Software Engineering</p>
+
+        <!-- Project 3 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo3.jpg" alt="GESS" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">3. GESS School</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">German European School</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Senior Engineer · S$100M Campus</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Complex steel structures, multi-block framing & finishes.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Steel Structures & Precision Detail
+          </div>
+        </div>
+
+        <!-- Project 4 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo4.jpg" alt="JTC CT3" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">4. JTC CT3</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">JTC CT3 Industrial Hub</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Project Manager · S$45M Hub</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Authority submissions, BCA clearances & scheduling.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Regulation Compliance & Project Planning
+          </div>
+        </div>
+
+        <!-- Project 5 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo5.jpg" alt="Bidadari HDB" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">5. Bidadari HDB</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">Bidadari HDB Development</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Project Manager · Precast/PPVC</p>
+            <p class="text-[10px] text-slate-300 leading-tight">PPVC prefabrication logistics & module jointing.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: PPVC Coordination & Communication
+          </div>
+        </div>
+
+        <!-- Project 6 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo6.jpg" alt="REVV Corp Drive" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">6. REVV Corp</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">REVV Corporation Drive</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Project Manager · B1 Industrial</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Piling, <strong>labour management</strong> & manpower allocation.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Labour Management & Optimization
+          </div>
+        </div>
+
+        <!-- Project 7 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo7.jpg" alt="Polyclinic" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">7. Polyclinic</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">Healthcare Polyclinic</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Senior PM · Healthcare Facility</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Medical interface & <strong>compliance to MOH/BCA</strong>.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Stakeholder & Authority Compliance
+          </div>
+        </div>
+
+        <!-- Project 8 -->
+        <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
+          <div class="space-y-1">
+            <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
+              <img src="photo8.jpg" alt="Yishun HDB" class="w-full h-full object-cover" onerror="this.src='https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80'">
+              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">8. Yishun HDB</span>
+            </div>
+            <h4 class="text-xs font-black text-slate-100">HDB Yishun C27</h4>
+            <p class="text-[10px] font-mono text-cyan-400">Structural Manager · S$100M Housing</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Mega logistics & <strong>cross-country coordination/inspection</strong>.</p>
+          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
+            Skill: Cross-Country Inspection & Mega Logistics
+          </div>
         </div>
       </div>
-
-      <!-- ROW 1 - NODE 3: PHASE 3 IT WORK EXPERIENCE -->
-      <div id="cardPhase3" class="spatial-card neon-flow-box w-[480px] top-[150px] left-[2060px]" onclick="zoomToNode('cardPhase3', event)">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-mono text-amber-400 font-bold">PHASE 3: IT EXPERIENCE</span>
-          <span class="text-[10px] font-mono bg-amber-950 text-amber-300 px-2.5 py-0.5 rounded border border-amber-800">IRAS (via Spade)</span>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">SOC L1 Analyst</h3>
-        <p class="text-slate-300 text-xs mb-3">Monitored 24/7 SIEM security logs and automated operational reporting workflows.</p>
-        <div class="bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-xs font-mono text-amber-300 space-y-1.5">
-          <p>⚡ Automated daily reporting using Excel VBA (reduced manual entry time).</p>
-          <p>🛡️ Fine-tuned SIEM alert rules, cutting security response time by >50%.</p>
-        </div>
-      </div>
-
-      <!-- ROW 2 - NODE 4 PAGE 1: OLIST CAPSTONE -->
-      <div id="cardPhase4Page1" class="spatial-card neon-flow-box w-[520px] top-[580px] left-[780px]" onclick="zoomToNode('cardPhase4Page1', event)">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-mono text-emerald-400 font-bold">PHASE 4: PROJECTS (PAGE 1 / 2)</span>
-          <span class="text-[10px] font-mono bg-emerald-950 text-emerald-300 px-2.5 py-0.5 rounded border border-emerald-800">Fabric & PySpark</span>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">Olist E-Commerce Medallion Architecture</h3>
-        <p class="text-slate-300 text-xs mb-3">Engineered 3-tier Medallion pipeline (Bronze/Silver/Gold) on Microsoft Fabric across 9 datasets.</p>
-        <ul class="text-xs font-mono text-slate-300 space-y-1.5 bg-slate-950/90 p-3 rounded-xl border border-slate-800">
-          <li>🔹 PySpark error-proof schema reading & validation</li>
-          <li>🔹 Gold Star Schema for Direct Lake Power BI analytics</li>
-          <li>🔹 CI/CD pivot via GitHub Actions & Power Automate</li>
-        </ul>
-      </div>
-
-      <!-- ROW 2 - NODE 4 PAGE 2: SMART-ROUTE ED -->
-      <div id="cardPhase4Page2" class="spatial-card neon-flow-box w-[520px] top-[580px] left-[1420px]" onclick="zoomToNode('cardPhase4Page2', event)">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-mono text-sky-400 font-bold">PHASE 4: PROJECTS (PAGE 2 / 2)</span>
-          <span class="text-[10px] font-mono bg-sky-950 text-sky-300 px-2.5 py-0.5 rounded border border-sky-800">Routing Engine</span>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">Emergency Hospital Routing Engine</h3>
-        <p class="text-slate-300 text-xs mb-3">Solved 80% hospital queue API absence using tri-modal extraction (Selenium, NEA REST APIs, Mock).</p>
-        <ul class="text-xs font-mono text-slate-300 space-y-1.5 bg-slate-950/90 p-3 rounded-xl border border-slate-800">
-          <li>🔹 OneMap JWT refresh wrapper & Regex geocoding</li>
-          <li>🔹 Total Time-to-Treatment (TTT) logic with rain penalty</li>
-          <li>🔹 PostgreSQL relational database & terminal CLI</li>
-        </ul>
-      </div>
-
-      <!-- ROW 2 - NODE 5: THE PRESENT -->
-      <div id="cardPresent" class="spatial-card neon-flow-box w-[480px] top-[580px] left-[2060px]" onclick="zoomToNode('cardPresent', event)">
-        <div class="flex justify-between items-center mb-1.5">
-          <span class="text-xs font-mono text-sky-400 font-bold">THE PRESENT</span>
-          <span class="text-[10px] font-mono bg-sky-950 text-sky-300 px-2.5 py-0.5 rounded border border-sky-800">DE Ready</span>
-        </div>
-        <h3 class="text-xl font-bold text-white mb-2">Ready for Data Engineering</h3>
-        <p class="text-slate-300 text-xs mb-3">Combining 10 years of domain project leadership with cloud-native data pipeline architecture.</p>
-        <div class="bg-sky-950/80 border border-sky-500/60 p-3 rounded-xl text-xs font-mono text-sky-200">
-          Microsoft Fabric • PySpark • PostgreSQL • CI/CD DevOps
-        </div>
-      </div>
-
     </div>
 
-    <!-- Bottom Navigation Controls -->
-    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 bg-slate-950/95 p-3 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-2xl font-mono">
-      <button id="btnMain" onclick="resetZoom()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-2">
-        <i class="fa-solid fa-house"></i> Main
-      </button>
-
-      <button id="btnBack" onclick="stepPrev()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-2">
-        <i class="fa-solid fa-chevron-left"></i> Back
-      </button>
-
-      <button id="btnNext" onclick="stepNext()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-2">
-        Next <i class="fa-solid fa-chevron-right"></i>
-      </button>
-    </div>
-
-  </div>
-
-  <!-- QR Code Modal Overlay -->
-  <div id="qrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center" onclick="toggleQrModal()">
-    <div class="bg-slate-900 border border-slate-700 p-6 rounded-3xl text-center space-y-4 max-w-sm" onclick="event.stopPropagation()">
-      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
-        <span class="text-xs font-mono font-bold text-sky-400">Scan Portfolio QR Code</span>
-        <button onclick="toggleQrModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+    <!-- PHASE 2: PIVOT STORY HUB -->
+    <div id="phase2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-3">
+      <div class="border-b border-slate-800 pb-1.5 shrink-0 flex justify-between items-center">
+        <div>
+          <span class="text-[10px] font-mono font-black text-purple-400 uppercase">PHASE 2 · CAREER TRANSITION ROADMAP</span>
+          <h2 class="text-lg font-black text-slate-100 leading-tight">From Site Data Chaos to Data Engineering</h2>
+        </div>
+        <a href="whyswitch.html" target="_blank" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs font-bold rounded-xl shadow-[0_0_15px_rgba(168,85,247,0.5)] flex items-center gap-2 transition-transform hover:scale-105">
+          <i class="fa-solid fa-film"></i> Launch Interactive Animated Story (whyswitch.html)
+        </a>
       </div>
-      <img src="qrcode.jpg" alt="Portfolio QR Code" class="w-60 h-60 mx-auto rounded-2xl border-2 border-sky-500/50 object-cover" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://ttan-ttan.github.io/portfolio/'">
-      <p class="text-xs text-slate-400 font-mono">Scan to open on mobile phone</p>
+
+      <div class="grid grid-cols-4 gap-4 my-auto">
+        <div class="neon-card-purple rounded-2xl p-4 flex flex-col justify-between">
+          <span class="text-xs font-mono text-purple-400 font-bold">01. ACADEMIC PIVOT</span>
+          <h4 class="text-sm font-black text-slate-100 mt-1">PostGrad Cybersecurity</h4>
+          <p class="text-xs text-slate-400 mt-2">PSB Academy & 42 SG Piscine. Linux CLI & C programming algorithms.</p>
+        </div>
+
+        <div class="neon-card-purple rounded-2xl p-4 flex flex-col justify-between">
+          <span class="text-xs font-mono text-purple-400 font-bold">02. SOC ANALYST L1</span>
+          <h4 class="text-sm font-black text-slate-100 mt-1">IRAS (Spade Consulting)</h4>
+          <p class="text-xs text-slate-400 mt-2">SIEM log monitoring, 50% error reduction via VBA & 50% SLA optimization.</p>
+        </div>
+
+        <div class="neon-card-purple rounded-2xl p-4 flex flex-col justify-between">
+          <span class="text-xs font-mono text-purple-400 font-bold">03. SOFTWARE ENG.</span>
+          <h4 class="text-sm font-black text-slate-100 mt-1">NTU SCTP Software Program</h4>
+          <p class="text-xs text-slate-400 mt-2">Garang Guni recycling marketplace app, Docker, PostgreSQL & GitHub CI/CD.</p>
+        </div>
+
+        <div class="neon-card-emerald rounded-2xl p-4 flex flex-col justify-between">
+          <span class="text-xs font-mono text-emerald-400 font-bold">04. DATA ENGINEER</span>
+          <h4 class="text-sm font-black text-slate-100 mt-1">GenSG Junior Data Engineer</h4>
+          <p class="text-xs text-slate-400 mt-2">Microsoft Fabric, PySpark Medallion pipelines, Star Schema & Power BI Direct Lake.</p>
+        </div>
+      </div>
     </div>
-  </div>
+
+    <!-- PHASE 3: CAPSTONE PROJECTS -->
+    <div id="phase3Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-3">
+      <div class="border-b border-slate-800 pb-2 flex justify-between items-center shrink-0">
+        <div>
+          <span class="text-xs font-mono font-black text-sky-400 uppercase">PHASE 3 · APPLIED CAPSTONE PROJECTS</span>
+          <h2 class="text-lg font-black text-slate-100">Production-Grade Pipeline Implementations</h2>
+        </div>
+        <span class="text-xs font-mono bg-sky-950 text-sky-300 border border-sky-800 px-3 py-1 rounded-xl font-bold">
+          Click Projects to View Detailed Architectures
+        </span>
+      </div>
+
+      <div class="grid grid-cols-2 gap-6 my-auto flex-1 min-h-0 items-center">
+        <div class="neon-card-cyan rounded-3xl p-6 flex flex-col justify-between h-full max-h-[420px]">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-mono bg-sky-950 text-sky-300 px-3 py-1 rounded-full border border-sky-800 font-bold">Interim Capstone Project</span>
+              <i class="fa-solid fa-truck-medical text-3xl text-sky-400"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-100">Smart-Route ED Emergency Routing Engine</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+              Automated data pipeline scraping public hospital wait-time metrics, geocoding hospital addresses via OneMap API, and storing real-time metrics in PostgreSQL. Computes total travel time (TTT) dynamically for emergency response optimization.
+            </p>
+
+            <div class="mt-4 space-y-2 text-xs text-slate-300 font-mono">
+              <div class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400"></i> Selenium Web Scrapers & Dynamic Parsing</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400"></i> OneMap REST API Geocoding Integration</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-check text-sky-400"></i> Relational Database Schema & PostgreSQL</div>
+            </div>
+          </div>
+
+          <a href="project1.html" target="_blank" class="mt-6 w-full py-3 bg-sky-500 hover:bg-sky-400 text-slate-950 font-mono font-black rounded-xl text-center flex items-center justify-center gap-2 transition-colors shadow-[0_0_15px_rgba(56,189,248,0.4)]">
+            Open Hospital ED Project Architecture <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+
+        <div class="neon-card-emerald rounded-3xl p-6 flex flex-col justify-between h-full max-h-[420px]">
+          <div>
+            <div class="flex justify-between items-center mb-3">
+              <span class="text-xs font-mono bg-amber-950 text-amber-300 px-3 py-1 rounded-full border border-amber-800 font-bold">Final Capstone Project</span>
+              <i class="fa-solid fa-chart-line text-3xl text-amber-400"></i>
+            </div>
+            <h3 class="text-xl font-black text-slate-100">Olist E-Commerce Black Friday Architecture</h3>
+            <p class="text-xs text-slate-400 mt-2 leading-relaxed">
+              End-to-end Medallion data architecture in Microsoft Fabric, ingesting 9 raw e-commerce CSV files into OneLake via PySpark, executing automated validation checks, and modeling a Gold-layer star schema powering Power BI Direct Lake dashboards.
+            </p>
+
+            <div class="mt-4 space-y-2 text-xs text-slate-300 font-mono">
+              <div class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> Microsoft Fabric OneLake & Medallion Layers</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> PySpark & SQL Automated Cleaning Pipelines</div>
+              <div class="flex items-center gap-2"><i class="fa-solid fa-check text-amber-400"></i> GitHub Actions CI/CD Pipeline Deployment</div>
+            </div>
+          </div>
+
+          <a href="project2.html" target="_blank" class="mt-6 w-full py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-mono font-black rounded-xl text-center flex items-center justify-center gap-2 transition-colors shadow-[0_0_15px_rgba(245,158,11,0.4)]">
+            Open Olist Black Friday Project Architecture <i class="fa-solid fa-arrow-up-right-from-square"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- PHASE 4: DE READINESS MATRIX (INCLUDES MATURITY & WORK ETHIC) -->
+    <div id="phase4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2 overflow-y-auto">
+      <div class="border-b border-slate-800 pb-2 flex justify-between items-center shrink-0">
+        <div>
+          <span class="text-xs font-mono font-black text-emerald-400 uppercase">PHASE 4 · DE READINESS & SITE-TO-DE TRANSFERABLE MAPPING</span>
+          <h2 class="text-lg font-black text-slate-100">Correlating Daily Construction Work directly to Data Engineering</h2>
+        </div>
+        <span class="text-xs font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 px-3 py-1 rounded-xl font-bold">
+          GenSG JDE10 Candidate
+        </span>
+      </div>
+
+      <div class="space-y-3 my-auto">
+        <div class="neon-card-emerald rounded-3xl p-4">
+          <h3 class="text-xs font-black text-purple-400 font-mono tracking-wider uppercase mb-2">
+            <i class="fa-solid fa-shuffle mr-2"></i>CONSTRUCTION DAILY WORK $\rightarrow$ DATA ENGINEERING CORRELATION
+          </h3>
+          <table class="w-full text-left text-xs font-mono border-collapse">
+            <thead>
+              <tr class="border-b border-slate-800 text-slate-400">
+                <th class="p-2 w-1/2">DAILY CONSTRUCTION SITE RESPONSIBILITY</th>
+                <th class="p-2 w-1/2">DATA ENGINEERING PIPELINE CORRELATION</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-800 text-slate-200">
+              <tr>
+                <td class="p-2 font-bold text-cyan-300">Complex structural, architectural, M&E trade scheduling to ensure budget & timeline</td>
+                <td class="p-2 text-emerald-300">Schema Design & Relational Modeling (planning table relationships, primary keys, and foreign joins)</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-cyan-300">PPVC & Precast module hoisting sequence (cannot install block 3 before block 1)</td>
+                <td class="p-2 text-emerald-300">DAG Pipeline Orchestration & Dependency Trees (Bronze $\rightarrow$ Silver $\rightarrow$ Gold staging constraints)</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-cyan-300">BCA structural inspections & concrete cube strength test validations</td>
+                <td class="p-2 text-emerald-300">Data Quality Enforcement & Schema Validation Rules (null checks, duplicate filtering, type casting)</td>
+              </tr>
+              <tr>
+                <td class="p-2 font-bold text-cyan-300">Consolidating daily site logs across 10+ sub-contractors into unified progress report</td>
+                <td class="p-2 text-emerald-300">Multi-source Ingestion & Transformation Pipelines (ETL/ELT aggregation into unified Star Schema)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="neon-card-emerald rounded-3xl p-4">
+          <h3 class="text-xs font-black text-cyan-400 font-mono tracking-wider uppercase mb-2">
+            <i class="fa-solid fa-code mr-2"></i>TECHNICAL SKILLSET PROFICIENCY
+          </h3>
+          <div class="grid grid-cols-2 gap-4 text-xs font-mono">
+            <div class="space-y-1.5">
+              <div class="flex justify-between bg-slate-900/90 p-1.5 rounded-xl border border-slate-800"><span>SQL Querying & DDL</span><span class="text-amber-400">★★★☆☆</span></div>
+              <div class="flex justify-between bg-slate-900/90 p-1.5 rounded-xl border border-slate-800"><span>PySpark DataFrames</span><span class="text-amber-400">★★★☆☆</span></div>
+              <div class="flex justify-between bg-slate-900/90 p-1.5 rounded-xl border border-slate-800"><span>Microsoft Fabric Platform</span><span class="text-amber-400">★★★★☆</span></div>
+            </div>
+            <div class="space-y-1.5">
+              <div class="flex justify-between bg-slate-900/90 p-1.5 rounded-xl border border-slate-800"><span>Git & GitHub Actions CI/CD</span><span class="text-amber-400">★★★★☆</span></div>
+              <div class="flex justify-between bg-slate-900/90 p-1.5 rounded-xl border border-slate-800"><span>Power BI Direct Lake</span><span class="text-amber-400">★★★☆☆</span></div>
+              <div class="flex justify-between bg-slate-900/90 p-1.5 rounded-xl border border-slate-800"><span>Medallion Architecture</span><span class="text-amber-400">★★★★☆</span></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- UPDATED VALUE PROPOSAL -->
+        <div class="neon-card-emerald rounded-3xl p-4">
+          <h3 class="text-xs font-black text-emerald-400 font-mono tracking-wider uppercase mb-2">
+            <i class="fa-solid fa-briefcase mr-2"></i>WHAT I BRING TO THE ROLE
+          </h3>
+          <table class="w-full text-left text-xs font-mono border-collapse">
+            <tbody class="divide-y divide-slate-800 text-slate-200">
+              <tr>
+                <td class="p-1.5 font-bold text-cyan-300 w-1/3">Maturity in Decision Making</td>
+                <td class="p-1.5">10+ years leading site operations, managing multi-million budgets, resolving high-stakes stakeholder conflicts, and making calm, risk-calculated choices under tight pressure.</td>
+              </tr>
+              <tr>
+                <td class="p-1.5 font-bold text-cyan-300">Uncompromising Work Ethic</td>
+                <td class="p-1.5">Tenacious problem-solver accustomed to demanding site schedules and midnight shifts; dedicated to driving data pipelines from raw concept to 100% production delivery.</td>
+              </tr>
+              <tr>
+                <td class="p-1.5 font-bold text-cyan-300">Technical Capability & Rigor</td>
+                <td class="p-1.5">Proficient in SQL, PySpark, Microsoft Fabric OneLake, Data Modeling, and GitHub CI/CD automation built on disciplined engineering standards.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="w-full bg-slate-950/90 border border-slate-800 rounded-2xl p-2.5 flex justify-between items-center backdrop-blur-md z-40 shrink-0">
+    <nav class="flex gap-2">
+      <button onclick="goToPhase(0)" id="tab0" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-cyan-500 text-slate-950 shadow-md">
+        Overview
+      </button>
+      <button onclick="goToPhase(1)" id="tab1" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-cyan-300 hover:bg-slate-900">
+        Phase 1: Civil Projects
+      </button>
+      <button onclick="goToPhase(2)" id="tab2" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-purple-300 hover:bg-slate-900">
+        Phase 2: Pivot Story
+      </button>
+      <button onclick="goToPhase(3)" id="tab3" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-sky-300 hover:bg-slate-900">
+        Phase 3: Capstones
+      </button>
+      <button onclick="goToPhase(4)" id="tab4" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-emerald-300 hover:bg-slate-900">
+        Phase 4: DE Matrix
+      </button>
+    </nav>
+
+    <div class="flex items-center gap-3 font-mono text-xs">
+      <button onclick="prevPhase()" class="px-4 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors">
+        <i class="fa-solid fa-chevron-left text-xs"></i> Previous
+      </button>
+      <span id="phaseCounter" class="text-cyan-400 font-bold px-2">Phase 0 / 4</span>
+      <button onclick="nextPhase()" class="px-4 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-black flex items-center gap-1.5 transition-colors shadow-[0_0_12px_rgba(6,182,212,0.4)]">
+        Next Phase <i class="fa-solid fa-chevron-right text-xs"></i>
+      </button>
+    </div>
+  </footer>
 
   <script>
-    const world = document.getElementById('world');
-    let activeCardId = 'cardMain';
+    let currentPhase = 0;
+    const totalPhases = 4;
 
-    const sequence = [
-      'cardMain',
-      'cardPhase1',
-      'cardPhase2',
-      'cardPhase3',
-      'cardPhase4Page1',
-      'cardPhase4Page2',
-      'cardPresent'
-    ];
-
-    function getFitScale() {
-      const padding = 100; // Account for top navbar and bottom floating controls
-      const scaleX = (window.innerWidth - 80) / 2600;
-      const scaleY = (window.innerHeight - padding) / 1000;
-      return Math.min(scaleX, scaleY);
+    function setVisible(elemId, visible) {
+      const el = document.getElementById(elemId);
+      if (!el) return;
+      if (visible) el.classList.add('scene-visible');
+      else el.classList.remove('scene-visible');
     }
 
-    function updateButtonStates(currentId) {
-      const btnMain = document.getElementById('btnMain');
-      const btnNext = document.getElementById('btnNext');
+    function goToPhase(phaseNum) {
+      currentPhase = phaseNum;
 
-      btnMain.classList.remove('blink-slow');
-      btnNext.classList.remove('blink-slow');
+      for (let i = 0; i <= totalPhases; i++) {
+        const tab = document.getElementById(`tab${i}`);
+        if (tab) {
+          if (i === phaseNum) {
+            tab.className = "px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-cyan-500 text-slate-950 shadow-md";
+          } else {
+            tab.className = "px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-cyan-300 hover:bg-slate-900";
+          }
+        }
+      }
 
-      const currentIndex = sequence.indexOf(currentId);
+      document.getElementById('phaseCounter').innerText = `Phase ${phaseNum} / ${totalPhases}`;
 
-      if (currentId === 'cardPhase4Page1' || (currentIndex >= 0 && currentIndex < sequence.length - 1)) {
-        btnNext.classList.add('blink-slow');
-      } 
-      else if (currentId === 'cardPresent') {
-        btnMain.classList.add('blink-slow');
+      for (let i = 0; i <= totalPhases; i++) {
+        setVisible(`phase${i}Wrapper`, i === phaseNum);
       }
     }
 
-    function zoomToNode(nodeId, event) {
-      if (event) event.stopPropagation();
-
-      const card = document.getElementById(nodeId);
-      if (!card) return;
-
-      sequence.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('active-node');
-      });
-
-      card.classList.add('active-node');
-      activeCardId = nodeId;
-
-      if (nodeId === 'cardMain') {
-        resetZoom();
-        return;
-      }
-
-      const cardX = card.offsetLeft + card.offsetWidth / 2;
-      const cardY = card.offsetTop + card.offsetHeight / 2;
-
-      // Calculate dynamic focus zoom for laptop & tablet viewports
-      const scale = Math.min(1.5, (window.innerHeight - 180) / card.offsetHeight);
-      const translateX = -cardX * scale + window.innerWidth / 2;
-      const translateY = -cardY * scale + window.innerHeight / 2;
-
-      world.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
-      updateButtonStates(nodeId);
+    function nextPhase() {
+      if (currentPhase < totalPhases) goToPhase(currentPhase + 1);
+      else goToPhase(0);
     }
 
-    function resetZoom() {
-      sequence.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.classList.remove('active-node');
-      });
-
-      activeCardId = 'cardMain';
-      document.getElementById('cardMain').classList.add('active-node');
-      
-      // Auto-fit overview camera to entire screen viewport
-      const fitScale = getFitScale();
-      world.style.transform = `translate(-50%, -50%) scale(${fitScale})`;
-      updateButtonStates('cardMain');
-    }
-
-    function stepNext() {
-      const currentIndex = sequence.indexOf(activeCardId);
-      if (currentIndex < sequence.length - 1) {
-        zoomToNode(sequence[currentIndex + 1]);
-      } else {
-        resetZoom();
-      }
-    }
-
-    function stepPrev() {
-      const currentIndex = sequence.indexOf(activeCardId);
-      if (currentIndex > 0) {
-        zoomToNode(sequence[currentIndex - 1]);
-      } else {
-        resetZoom();
-      }
-    }
-
-    function onCanvasClick(event) {
-      if (event.target.id === 'viewport' || event.target.id === 'world') {
-        resetZoom();
-      }
-    }
-
-    function toggleQrModal() {
-      const modal = document.getElementById('qrModal');
-      modal.classList.toggle('hidden');
+    function prevPhase() {
+      if (currentPhase > 0) goToPhase(currentPhase - 1);
+      else goToPhase(totalPhases);
     }
 
     window.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' || e.key === ' ') stepNext();
-      else if (e.key === 'ArrowLeft') stepPrev();
-      else if (e.key === 'Escape') resetZoom();
+      if (e.key === 'ArrowRight' || e.key === ' ') nextPhase();
+      else if (e.key === 'ArrowLeft') prevPhase();
     });
 
-    window.addEventListener('resize', () => {
-      if (activeCardId === 'cardMain') {
-        resetZoom();
-      } else {
-        zoomToNode(activeCardId);
-      }
-    });
-
-    window.onload = () => resetZoom();
+    window.onload = () => goToPhase(0);
   </script>
 </body>
 </html>

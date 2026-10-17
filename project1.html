@@ -1,0 +1,1080 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart-Route ED | Interactive Data Engineering Presentation Deck</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      background-color: #f0f4f8;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
+
+    /* Executive Singapore Public Healthcare Theme */
+    .slide-bg-bright {
+      background: radial-gradient(circle at 85% 15%, rgba(2, 132, 199, 0.15), transparent 45%),
+                  radial-gradient(circle at 15% 85%, rgba(220, 38, 38, 0.1), transparent 50%),
+                  linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+    }
+
+    .card-bright-white {
+      background-color: rgba(255, 255, 255, 0.98);
+      border: 1px solid #cbd5e1;
+      box-shadow: 0 12px 30px -5px rgba(0, 43, 73, 0.08);
+    }
+
+    .card-bright-navy {
+      background-color: #002b49;
+      color: #ffffff;
+      border: 1px solid #00406c;
+      box-shadow: 0 20px 35px -10px rgba(0, 43, 73, 0.35);
+    }
+
+    .terminal-window-bright {
+      background-color: #001b30;
+      color: #f8fafc;
+      border: 1px solid #003863;
+      box-shadow: 0 20px 45px -10px rgba(0, 27, 48, 0.45);
+      font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    }
+
+    .scene-element { display: none !important; }
+    .scene-visible { display: flex !important; }
+
+    /* Animated Motion Packet for Slide 6 Data Lineage */
+    .moving-packet {
+      transition: all 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .terminal-scroll::-webkit-scrollbar { width: 6px; }
+    .terminal-scroll::-webkit-scrollbar-track { background: #001b30; }
+    .terminal-scroll::-webkit-scrollbar-thumb { background: #003863; border-radius: 4px; }
+  </style>
+</head>
+<body id="mainBody" class="slide-bg-bright text-slate-800 flex flex-col justify-between p-6 select-none">
+
+  <!-- Floating Story Navigator Drawer -->
+  <aside id="navDrawer" class="fixed right-4 top-4 bottom-4 w-96 z-50 bg-white/98 border border-slate-300 rounded-3xl p-6 backdrop-blur-2xl shadow-2xl flex flex-col justify-between transition-all duration-300">
+    <button onclick="toggleDrawer()" class="absolute -left-6 top-8 bg-[#002b49] text-white w-12 h-12 rounded-full border-2 border-white flex items-center justify-center shadow-2xl font-black hover:bg-[#00406c] transition-all">
+      <i id="drawerToggleIcon" class="fa-solid fa-chevron-right text-base"></i>
+    </button>
+
+    <div>
+      <div class="flex items-center gap-3 border-b-2 border-slate-100 pb-4 mb-5">
+        <div class="w-10 h-10 rounded-xl bg-[#002b49] text-white flex items-center justify-center font-bold text-xl shadow-md">
+          <i class="fa-solid fa-hospital-user"></i>
+        </div>
+        <div>
+          <h1 class="text-base font-black text-[#002b49] font-mono tracking-wider uppercase">MOH Digital Health</h1>
+          <p class="text-xs text-slate-500 font-mono font-bold">Smart-Route ED Architecture</p>
+        </div>
+      </div>
+
+      <p class="text-xs text-slate-400 font-mono uppercase tracking-widest font-bold">Slide Navigation</p>
+      <p id="sceneTitle" class="text-xl font-black text-slate-900 mt-1 leading-snug">Slide 1 / 11: Emergency Hook</p>
+
+      <div class="mt-6 bg-slate-100 border border-slate-200 rounded-2xl p-4">
+        <div class="flex justify-between text-sm font-mono mb-2">
+          <span class="text-slate-600 font-bold">Progress</span>
+          <span id="sceneCounter" class="text-[#002b49] font-black text-base">1 / 11</span>
+        </div>
+        <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
+          <div id="progressBar" class="bg-[#002b49] h-full w-[9%] transition-all duration-300"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="space-y-3">
+      <button id="playAllBtn" onclick="togglePlayAll()" class="w-full py-4 bg-[#002b49] hover:bg-[#00406c] text-white text-base font-black rounded-2xl shadow-xl flex items-center justify-center gap-2 transition-all active:scale-95">
+        <i id="playIcon" class="fa-solid fa-play text-sm"></i> <span id="playText">Play Presentation</span>
+      </button>
+
+      <div class="grid grid-cols-2 gap-3">
+        <button onclick="prevScene()" class="py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold rounded-2xl border border-slate-300 flex items-center justify-center gap-2 active:scale-95">
+          <i class="fa-solid fa-chevron-left text-xs"></i> Prev
+        </button>
+        <button onclick="nextScene()" class="py-3.5 bg-sky-700 hover:bg-sky-600 text-white text-sm font-black rounded-2xl shadow-lg flex items-center justify-center gap-2 active:scale-95">
+          Next <i class="fa-solid fa-chevron-right text-xs"></i>
+        </button>
+      </div>
+
+      <button onclick="resetStory()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold rounded-xl border border-slate-300 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-rotate-left"></i> Reset Deck
+      </button>
+    </div>
+
+    <div class="border-t border-slate-200 pt-3 text-xs font-mono text-slate-500 text-center font-bold">
+      SINGAPORE PUBLIC HEALTH DATA ENGINE
+    </div>
+  </aside>
+
+  <!-- Main Presentation Stage -->
+  <main id="stageCanvas" class="w-full h-full my-auto relative z-10 flex items-center justify-center p-2">
+
+    <!-- SLIDE 1: EMERGENCY HOOK & PROBLEM STATEMENT -->
+    <div id="slide1Wrapper" class="scene-element scene-visible w-full h-full flex flex-col items-center justify-center text-center space-y-8 px-8">
+      <div class="flex items-center gap-3 bg-red-50 border border-red-200 px-6 py-2.5 rounded-full text-sm font-mono text-red-700 font-bold animate-pulse shadow-sm">
+        <i class="fa-solid fa-triangle-exclamation text-red-600 text-lg"></i> EMERGENCY ROUTING PARADOX
+      </div>
+      
+      <div class="space-y-4 max-w-5xl">
+        <h1 class="text-5xl md:text-7xl font-black tracking-tight text-[#002b49] uppercase leading-none drop-shadow-sm font-serif">
+          Emergency! Where to go?
+        </h1>
+        <p class="text-2xl md:text-3xl font-black text-red-600 font-mono tracking-wider uppercase">
+          Don't Panic — Check Wait Times First!
+        </p>
+      </div>
+
+      <p class="text-xl text-slate-600 font-medium max-w-3xl leading-relaxed">
+        Selecting an emergency department based on geographical distance alone leads to critical treatment delays when that hospital experiences acute overcrowding. Our data engineering engine calculates real-time <strong>Total Time-to-Treatment (TTT)</strong> across Singapore's public hospital clusters.
+      </p>
+
+      <button onclick="nextScene()" class="px-12 py-5 bg-[#002b49] hover:bg-[#00406c] text-white text-xl font-black rounded-2xl shadow-xl transition-all active:scale-95 font-mono flex items-center gap-3">
+        LAUNCH ROUTING ENGINE <i class="fa-solid fa-arrow-right"></i>
+      </button>
+    </div>
+
+    <!-- SLIDE 2: INTERACTIVE CLI DEMO -->
+    <div id="slide2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+      <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+        <div>
+          <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">LIVE SYSTEM PROTOTYPE</span>
+          <h2 class="text-3xl font-black text-[#002b49]">Smart-Route ED Core Engine (<code class="text-sky-700">src/main.py</code>)</h2>
+        </div>
+        <span class="text-xs font-mono bg-emerald-50 border border-emerald-300 text-emerald-800 font-bold px-4 py-2 rounded-xl">
+          <i class="fa-solid fa-terminal mr-2"></i>MOH Data Gateway Active
+        </span>
+      </div>
+
+      <div class="grid grid-cols-12 gap-8 my-auto h-full py-4 items-center">
+        <!-- Terminal Engine Container -->
+        <div class="col-span-7 h-full terminal-window-bright rounded-3xl p-8 flex flex-col justify-between">
+          <div class="flex items-center justify-between border-b border-[#003863] pb-3">
+            <div class="flex items-center gap-2">
+              <div class="w-3.5 h-3.5 rounded-full bg-red-500"></div>
+              <div class="w-3.5 h-3.5 rounded-full bg-amber-500"></div>
+              <div class="w-3.5 h-3.5 rounded-full bg-emerald-500"></div>
+              <span class="text-sm text-slate-300 font-mono ml-2">Main Application Engine (<code class="text-cyan-300">src/main.py</code>)</span>
+            </div>
+            <span class="text-xs text-emerald-400 font-mono font-bold">ONLINE</span>
+          </div>
+
+          <div class="text-xs font-mono text-sky-200 space-y-3 my-auto p-6 bg-[#001424] rounded-2xl border border-[#003863] shadow-inner">
+            <p class="text-slate-400">================ GenSG Project Main Menu ================</p>
+            <p>[1] Run Full ETL Pipeline, Update Visualizations & View Dashboard</p>
+            <p class="text-emerald-400 font-bold">[2] Search Emergency Hospital Routing Recommendation</p>
+            <p>[3] Reset/Recreate Database Schema (⚠️ Wipes all data)</p>
+            <p>[0] Exit Service</p>
+            <p class="text-slate-400">==========================================================</p>
+
+            <div class="pt-4 border-t border-[#003863] space-y-3">
+              <label class="text-amber-400 block font-bold text-sm">> Enter Postal Code (e.g. 520123):</label>
+              <div class="flex gap-3 items-center">
+                <input id="simPostalInput" type="text" value="520123" maxlength="6" class="bg-[#000d18] border-2 border-sky-500 text-emerald-400 font-bold px-4 py-2.5 rounded-xl text-lg w-48 focus:outline-none">
+                <button onclick="runAppSimulation()" class="bg-red-600 hover:bg-red-700 text-white font-black px-6 py-3 rounded-xl text-xs shadow-lg flex items-center gap-2 transition-all active:scale-95">
+                  <i class="fa-solid fa-play text-amber-300"></i> EXECUTE QUERY
+                </button>
+              </div>
+            </div>
+
+            <!-- Interactive Congestion Slider -->
+            <div class="pt-3 border-t border-[#003863]/60 flex items-center justify-between gap-4">
+              <div class="flex-1">
+                <div class="flex justify-between text-[11px] font-bold text-slate-300 mb-1">
+                  <span>Simulate NUH Queue Congestion:</span>
+                  <span id="nuhWaitVal" class="text-amber-400">180 Mins</span>
+                </div>
+                <input id="nuhSlider" type="range" min="20" max="240" value="180" oninput="updateNuhWait(this.value)" class="w-full accent-amber-400 cursor-pointer">
+              </div>
+            </div>
+
+            <div id="simAppOutput" class="pt-3 border-t border-[#003863] text-xs space-y-1">
+              <p class="text-slate-400">[SYSTEM]: Enter postal code or adjust slider to evaluate travel time vs A&E triage queues...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real-World Decision Impact -->
+        <div class="col-span-5 h-full flex flex-col justify-between space-y-4">
+          <div class="bg-red-50 border-2 border-red-200 p-6 rounded-3xl space-y-2 shadow-sm">
+            <p class="text-xs font-mono font-black text-red-700 uppercase"><i class="fa-solid fa-hospital-user mr-2"></i>Nearest Facility (NUH - Western Cluster)</p>
+            <p id="nuhCardTitle" class="text-3xl font-black text-red-950">180 MINS WAIT TIME</p>
+            <p id="nuhCardSub" class="text-xs text-red-800 font-medium">Drive: 15 mins | Triage Queue: 180 mins | Total: 195 mins.</p>
+          </div>
+
+          <div class="card-bright-white p-6 rounded-3xl space-y-2 border-2 border-emerald-500 shadow-sm">
+            <p class="text-xs font-mono font-black text-emerald-700 uppercase"><i class="fa-solid fa-circle-check mr-2"></i>Recommended Facility (TTSH - Central Cluster)</p>
+            <p class="text-3xl font-black text-emerald-950">ONLY 30 MINS WAIT!</p>
+            <p class="text-xs text-slate-600 font-medium">Drive: 25 mins | Triage Queue: 30 mins | Total: 55 mins.</p>
+          </div>
+
+          <div class="card-bright-navy p-6 rounded-3xl space-y-2 shadow-md">
+            <p class="text-xs font-mono font-bold text-sky-300"><i class="fa-solid fa-car-side mr-2"></i>ENGINE OUTCOME:</p>
+            <p id="outcomeBanner" class="text-lg font-black text-white">Drive 10 mins further to TTSH → Save 140 minutes total!</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 3: GOV DATA SOURCES & COVERAGE GAP MATRIX -->
+    <div id="slide3Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+      <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+        <div>
+          <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">DATA INGESTION REALITIES</span>
+          <h2 class="text-3xl font-black text-[#002b49]">Government Sources & Data Coverage Gaps</h2>
+        </div>
+        <span class="text-xs font-mono bg-sky-50 text-sky-800 border border-sky-300 px-3 py-1 rounded-xl font-bold">
+          Data Audit Matrix
+        </span>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 my-auto h-full py-2">
+        <!-- DOMAIN 1: HOSPITALS -->
+        <div class="card-bright-white p-6 rounded-3xl flex flex-col justify-between border-t-4 border-t-red-600">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+              <span class="text-[#002b49] font-black font-mono text-sm">A&E Queue Feeds</span>
+              <span class="bg-red-50 text-red-700 border border-red-200 px-2.5 py-0.5 rounded text-xs font-bold">Scrape / Mock</span>
+            </div>
+            <p class="text-sm text-slate-600 font-medium"><strong>Official Source:</strong> 10 Acute Public Hospitals in SG.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> Only 2/10 publish feeds (NUHS & TTSH web portals).</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Data Gap (80% missing):</strong> SingHealth (SGH, CGH, SKH, KTPH) provides no API or machine-readable feed.</p>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs font-mono text-slate-700 mt-2">
+            <strong>DE Solution:</strong> Engineered pseudo-random synthetic wait generator driven by peak-hour congestion multipliers.
+          </div>
+        </div>
+
+        <!-- DOMAIN 2: WEATHER APIs -->
+        <div class="card-bright-white p-6 rounded-3xl flex flex-col justify-between border-t-4 border-t-sky-600">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+              <span class="text-[#002b49] font-black font-mono text-sm">NEA Weather APIs</span>
+              <span class="bg-sky-50 text-sky-800 border border-sky-200 px-2.5 py-0.5 rounded text-xs font-bold">REST Endpoints</span>
+            </div>
+            <p class="text-sm text-slate-600 font-medium"><strong>Official Source:</strong> data.gov.sg NEA REST API.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> 77 rainfall stations (5-min real-time) + 47 area 2-hr forecasts.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>API Limit:</strong> REST endpoint only maintains a 14-day rolling window.</p>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs font-mono text-slate-700 mt-2">
+            <strong>DE Solution:</strong> Executed 60-day historical backfill pipeline storing 4,690 daily station records in PostgreSQL.
+          </div>
+        </div>
+
+        <!-- DOMAIN 3: DENGUE GEOJSON -->
+        <div class="card-bright-white p-6 rounded-3xl flex flex-col justify-between border-t-4 border-t-purple-600">
+          <div class="space-y-3">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2">
+              <span class="text-[#002b49] font-black font-mono text-sm">Dengue Clusters</span>
+              <span class="bg-purple-50 text-purple-800 border border-purple-200 px-2.5 py-0.5 rounded text-xs font-bold">GeoJSON</span>
+            </div>
+            <p class="text-sm text-slate-600 font-medium"><strong>Official Source:</strong> NEA Active Dengue Cluster GeoJSON dataset.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> Active cluster names and case counts.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Data Gap:</strong> Free-text locality strings contain messy block numbers failing geocoding.</p>
+          </div>
+          <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs font-mono text-slate-700 mt-2">
+            <strong>DE Solution:</strong> Regex cleaning pipelines + OneMap API query fallback handlers.
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 4: 3 EXTRACTION METHODS & CODE LOGIC -->
+    <div id="slide4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+      <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+        <div>
+          <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">DE INGESTION STRATEGY</span>
+          <h2 class="text-3xl font-black text-[#002b49]">3 Extraction Methods (API, Scraping, Mock)</h2>
+        </div>
+        <span class="text-xs font-mono bg-sky-50 text-sky-800 border border-sky-300 px-3 py-1 rounded-xl font-bold">
+          Multi-Modal Extraction
+        </span>
+      </div>
+
+      <div class="grid grid-cols-3 gap-6 my-auto h-full py-2">
+        <!-- METHOD 1: REST API -->
+        <div class="terminal-window-bright rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center border-b border-[#003863] pb-2 mb-3">
+              <span class="text-emerald-400 font-mono font-bold text-xs"><i class="fa-solid fa-cloud-arrow-down mr-1"></i> 1. REST API Extraction</span>
+              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">NEA Weather</span>
+            </div>
+            <p class="text-xs text-slate-300 font-mono mb-3">Extracts JSON payloads from data.gov.sg (77 rainfall stations).</p>
+            <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto bg-[#001424] p-3.5 rounded-xl border border-[#003863]">
+<span class="text-purple-400">import</span> requests
+
+<span class="text-purple-400">def</span> <span class="text-cyan-400">fetch_nea_rainfall</span>():
+    url = <span class="text-emerald-300">"https://api.data.gov.sg/v1/environment/rainfall"</span>
+    res = requests.get(url, timeout=<span class="text-amber-400">10</span>).json()
+    stations = res[<span class="text-emerald-300">'metadata'</span>][<span class="text-emerald-300">'stations'</span>]
+    readings = res[<span class="text-emerald-300">'items'</span>][<span class="text-amber-400">0</span>][<span class="text-emerald-300">'readings'</span>]
+    <span class="text-purple-400">return</span> parse_json(stations, readings)
+            </pre>
+          </div>
+          <p class="text-xs text-slate-400 font-mono border-t border-[#003863] pt-2">
+            <strong>Logic:</strong> Standard HTTP GET requests parsing nested JSON objects into structured dictionaries.
+          </p>
+        </div>
+
+        <!-- METHOD 2: WEB SCRAPING -->
+        <div class="terminal-window-bright rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center border-b border-[#003863] pb-2 mb-3">
+              <span class="text-sky-400 font-mono font-bold text-xs"><i class="fa-solid fa-spider mr-1"></i> 2. Web Scraping</span>
+              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">NUH / TTSH</span>
+            </div>
+            <p class="text-xs text-slate-300 font-mono mb-3">Headless Selenium extracts live HTML DOM queue elements.</p>
+            <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto bg-[#001424] p-3.5 rounded-xl border border-[#003863]">
+<span class="text-purple-400">from</span> selenium <span class="text-purple-400">import</span> webdriver
+
+<span class="text-purple-400">def</span> <span class="text-cyan-400">scrape_hospital_queues</span>():
+    opts = webdriver.ChromeOptions()
+    opts.add_argument(<span class="text-emerald-300">"--headless"</span>)
+    driver = webdriver.Chrome(options=opts)
+    driver.get(<span class="text-emerald-300">"https://nuhs.edu.sg/wait-time"</span>)
+    hrs = driver.find_element(<span class="text-emerald-300">"id"</span>, <span class="text-emerald-300">"wait_val"</span>).text
+    driver.quit()
+    <span class="text-purple-400">return</span> float(hrs)
+            </pre>
+          </div>
+          <p class="text-xs text-slate-400 font-mono border-t border-[#003863] pt-2">
+            <strong>Logic:</strong> Spawns headless Chrome instances to render JS elements and pull live wait times.
+          </p>
+        </div>
+
+        <!-- METHOD 3: MOCK GENERATOR -->
+        <div class="terminal-window-bright rounded-2xl p-5 flex flex-col justify-between">
+          <div>
+            <div class="flex justify-between items-center border-b border-[#003863] pb-2 mb-3">
+              <span class="text-amber-400 font-mono font-bold text-xs"><i class="fa-solid fa-vial mr-1"></i> 3. Mock Generator</span>
+              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">SingHealth</span>
+            </div>
+            <p class="text-xs text-slate-300 font-mono mb-3">Synthetic fallback generation for unlisted acute hospitals.</p>
+            <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto bg-[#001424] p-3.5 rounded-xl border border-[#003863]">
+<span class="text-purple-400">import</span> random
+
+<span class="text-purple-400">def</span> <span class="text-cyan-400">generate_mock_unlisted</span>():
+    hospitals = [<span class="text-emerald-300">"SGH"</span>, <span class="text-emerald-300">"CGH"</span>, <span class="text-emerald-300">"SKH"</span>, <span class="text-emerald-300">"KTPH"</span>]
+    mock_data = []
+    <span class="text-purple-400">for</span> h <span class="text-purple-400">in</span> hospitals:
+        <span class="text-slate-500"># Peak-hour penalty formula</span>
+        hrs = round(random.uniform(<span class="text-amber-400">1.0</span>, <span class="text-amber-400">4.5</span>), <span class="text-amber-400">2</span>)
+        mock_data.append({<span class="text-emerald-300">"hospital"</span>: h, <span class="text-emerald-300">"wait_hrs"</span>: hrs})
+    <span class="text-purple-400">return</span> mock_data
+            </pre>
+          </div>
+          <p class="text-xs text-slate-400 font-mono border-t border-[#003863] pt-2">
+            <strong>Logic:</strong> Simulates realistic wait times when official public APIs are absent.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 5: TRANSFORM - GEOCODING, TOKEN EXPIRATION & STANDARDIZATION -->
+    <div id="slide5Wrapper" class="scene-element w-full h-full flex items-center justify-between gap-8 p-4">
+      <div class="w-1/2 h-full card-bright-white rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-[#002b49]">
+        <div class="space-y-4">
+          <span class="text-xs font-mono font-black text-purple-700 uppercase tracking-widest">DE TRANSFORMATION PIPELINE</span>
+          <h2 class="text-3xl font-black text-[#002b49]">Geocoding & Token Handling</h2>
+          
+          <div class="space-y-3 font-mono text-xs">
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <span class="text-red-700 font-bold block mb-1">Issue 1: Block-Level Address Failures</span>
+              <p class="text-slate-600 text-xs">6/14 dengue clusters (43%) failed OneMap queries due to raw strings like <i>"Senja Cl (Blk 647A)"</i>. Applied Regex to strip block tags and fall back to road names.</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <span class="text-amber-700 font-bold block mb-1">Issue 2: OneMap 3-Day Token Expiration</span>
+              <p class="text-slate-600 text-xs">OneMap REST API tokens expire every 72 hours. Built an automated re-authentication wrapper in <code class="text-purple-800 font-bold">src/transform/geocoder.py</code> requesting a fresh JWT on HTTP 401 response.</p>
+            </div>
+
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <span class="text-emerald-700 font-bold block mb-1">Solution: Spatial Standardization</span>
+              <p class="text-slate-600 text-xs">Standardized disparate address formats and lat/long coordinates into 2-digit <strong>Postal Sector Prefixes</strong> for indexed relational joins.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-1/2 h-full terminal-window-bright rounded-3xl p-8 flex flex-col justify-between">
+        <div class="flex items-center justify-between border-b border-[#003863] pb-3">
+          <span class="text-sm text-sky-300 font-mono"><i class="fa-solid fa-code mr-2"></i>src/transform/geocoder.py</span>
+          <span class="text-xs text-slate-400 font-mono">Python Wrapper</span>
+        </div>
+        <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto my-auto">
+<span class="text-purple-400">def</span> <span class="text-cyan-400">get_onemap_token_and_geocode</span>(raw_locality, token_cache):
+    <span class="text-slate-500"># 1. Clean address with Regex</span>
+    clean_addr = re.sub(<span class="text-emerald-300">r'\(Blk.*?\)'</span>, <span class="text-emerald-300">''</span>, raw_locality).strip()
+    
+    url = <span class="text-emerald-300">f"https://www.onemap.gov.sg/api/common/elastic/search?searchVal={clean_addr}&returnGeom=Y"</span>
+    headers = {<span class="text-emerald-300">"Authorization"</span>: token_cache[<span class="text-emerald-300">'token'</span>]}
+    res = requests.get(url, headers=headers)
+    
+    <span class="text-slate-500"># 2. Auto refresh token on expiration</span>
+    <span class="text-purple-400">if</span> res.status_code == <span class="text-amber-400">401</span>:
+        token_cache[<span class="text-emerald-300">'token'</span>] = fetch_fresh_onemap_jwt()
+        headers[<span class="text-emerald-300">"Authorization"</span>] = token_cache[<span class="text-emerald-300">'token'</span>]
+        res = requests.get(url, headers=headers)
+        
+    postal = res.json()[<span class="text-emerald-300">'results'</span>][<span class="text-amber-400">0</span>][<span class="text-emerald-300">'POSTAL'</span>]
+    <span class="text-purple-400">return</span> postal[:<span class="text-amber-400">2</span>]  <span class="text-slate-500"># Extract 2-digit sector prefix</span>
+        </pre>
+      </div>
+    </div>
+
+    <!-- SLIDE 6: END-TO-END ARCHITECTURE & ANIMATED DATA LINEAGE -->
+    <div id="slide6Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4 relative">
+      <!-- Animated Motion Packet Actor -->
+      <div id="lineagePacket" class="moving-packet absolute z-30 opacity-0 pointer-events-none flex flex-col items-center" style="top: 0px; left: 0px;">
+        <div class="w-10 h-10 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center text-base shadow-xl font-bold animate-bounce border-2 border-white">
+          <i class="fa-solid fa-database"></i>
+        </div>
+        <span id="packetLabel" class="text-[10px] font-mono font-bold bg-slate-900 text-cyan-300 px-2 py-0.5 rounded border border-cyan-500 mt-1 shadow-2xl whitespace-nowrap">
+          Payload Sync
+        </span>
+      </div>
+
+      <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+        <div>
+          <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">DATA PIPELINE ARCHITECTURE</span>
+          <h2 class="text-3xl font-black text-[#002b49]">Directory Mapping & Data Lineage Flow</h2>
+        </div>
+        <button onclick="runLineageSimulation()" class="px-5 py-2 bg-[#002b49] hover:bg-[#00406c] text-white text-xs font-mono font-bold rounded-xl shadow-md flex items-center gap-2 active:scale-95">
+          <i class="fa-solid fa-play text-amber-300"></i> PLAY DATA FLOW ANIMATION
+        </button>
+      </div>
+
+      <div class="grid grid-cols-4 gap-4 my-auto h-full py-4 font-mono">
+        <!-- STEP 1: RAW FOLDER -->
+        <div id="node1" class="card-bright-white p-5 rounded-2xl flex flex-col justify-between border-2 border-amber-400 shadow-md">
+          <div>
+            <span class="text-amber-800 font-black text-xs block mb-1">1. EXTRACTION LANDING</span>
+            <p class="text-xs font-bold text-slate-900 mb-2">Folder: <code class="text-amber-800">data/raw/</code></p>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">Stores raw payload dumps directly from scrapers & APIs.</p>
+            <ul class="text-xs text-slate-600 space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <li>📄 <code class="font-bold">raw_rainfall.json</code></li>
+              <li>📄 <code class="font-bold">dengue_clusters.geojson</code></li>
+              <li>📄 <code class="font-bold">scraped_wait_times.json</code></li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-amber-900 font-bold bg-amber-50 p-2.5 rounded-xl border border-amber-200">
+            Purpose: Immutable audit trail of raw extraction payloads.
+          </p>
+        </div>
+
+        <!-- STEP 2: PROCESSED FOLDER -->
+        <div id="node2" class="card-bright-white p-5 rounded-2xl flex flex-col justify-between border-2 border-purple-300 shadow-md">
+          <div>
+            <span class="text-purple-800 font-black text-xs block mb-1">2. TRANSFORMATION</span>
+            <p class="text-xs font-bold text-slate-900 mb-2">Folder: <code class="text-purple-800">data/processed/</code></p>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">Pandas cleans nulls, enforces types, and parses regex addresses.</p>
+            <ul class="text-xs text-slate-600 space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <li>📄 <code class="font-bold">clean_wait_times.csv</code></li>
+              <li>📄 <code class="font-bold">clean_dengue_sectors.csv</code></li>
+              <li>📄 <code class="font-bold">clean_weather_stations.csv</code></li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-purple-900 font-bold bg-purple-50 p-2.5 rounded-xl border border-purple-200">
+            Purpose: Staging clean CSVs before relational database insertion.
+          </p>
+        </div>
+
+        <!-- STEP 3: POSTGRESQL DB -->
+        <div id="node3" class="card-bright-navy p-5 rounded-2xl flex flex-col justify-between border-2 border-sky-400 shadow-md">
+          <div>
+            <span class="text-sky-300 font-black text-xs block mb-1">3. DATABASE STORAGE</span>
+            <p class="text-xs font-bold text-white mb-2">Engine: <code class="text-sky-300">PostgreSQL DB</code></p>
+            <p class="text-xs text-slate-300 leading-relaxed mb-3">Loaded via <code class="text-sky-300">SQLAlchemy</code> & <code class="text-sky-300">psycopg2</code> batch execution engine.</p>
+            <ul class="text-xs text-slate-300 space-y-1.5 bg-[#001c33] p-3 rounded-xl border border-[#003863]">
+              <li>📊 <code class="text-cyan-300">hospital_wait_times</code></li>
+              <li>📊 <code class="text-cyan-300">dengue_clusters</code></li>
+              <li>📊 <code class="text-cyan-300">weather_forecast</code></li>
+              <li>📊 <code class="text-cyan-300">weather_history</code></li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-sky-200 font-bold bg-[#001424] p-2.5 rounded-xl border border-[#003863]">
+            Purpose: Centralized relational queries with foreign key indexing.
+          </p>
+        </div>
+
+        <!-- STEP 4: SERVING LAYER -->
+        <div id="node4" class="card-bright-white p-5 rounded-2xl flex flex-col justify-between border-2 border-emerald-400 shadow-md">
+          <div>
+            <span class="text-emerald-800 font-black text-xs block mb-1">4. SERVING & ANALYTICS</span>
+            <p class="text-xs font-bold text-slate-900 mb-2">Modules: <code class="text-emerald-800">src/main.py</code></p>
+            <p class="text-xs text-slate-600 leading-relaxed mb-3">Executes user queries and generates visual charts for decision making.</p>
+            <ul class="text-xs text-slate-600 space-y-1.5 bg-slate-50 p-3 rounded-xl border border-slate-200">
+              <li>🖥️ Interactive Terminal CLI</li>
+              <li>📈 Seaborn Heatmap Charts</li>
+              <li>🚑 Emergency Route Recommendation</li>
+            </ul>
+          </div>
+          <p class="text-[11px] text-emerald-900 font-bold bg-emerald-50 p-2.5 rounded-xl border border-emerald-200">
+            Purpose: Exposes real-time insights & recommendations to users.
+          </p>
+        </div>
+      </div>
+
+      <!-- Lineage Execution Console Footer -->
+      <div class="bg-slate-900 border border-slate-800 rounded-xl p-3 font-mono text-xs">
+        <div class="flex justify-between items-center text-slate-400 font-bold mb-1 pb-1 border-b border-slate-800">
+          <span><i class="fa-solid fa-terminal mr-2"></i>Lineage Flow Console</span>
+          <span id="lineageStatus" class="text-slate-500">IDLE</span>
+        </div>
+        <div id="lineageLog" class="text-slate-300 font-mono">
+          <p class="text-slate-500">[SYSTEM] Ready to launch pipeline animation...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 7: POSTGRESQL SCHEMA & DATA VALIDATION PIPELINE -->
+    <div id="slide7Wrapper" class="scene-element w-full h-full flex items-center justify-between gap-8 p-4">
+      <div class="w-1/2 h-full card-bright-white rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-[#002b49]">
+        <div class="space-y-4">
+          <span class="text-xs font-mono font-black text-red-700 uppercase tracking-widest">DATABASE SCHEMA & VALIDATION</span>
+          <h2 class="text-3xl font-black text-[#002b49]">Data Quality & Validation Gates</h2>
+          
+          <div class="space-y-3 font-mono text-xs">
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <span class="text-sky-800 font-bold block mb-1">1. Pre-Ingestion Schema Check</span>
+              <p class="text-slate-600">Validates required column types and enforces range checks (e.g., $wait\_time\_hrs \ge 0$). Null records logged to quarantine tables.</p>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <span class="text-purple-800 font-bold block mb-1">2. Deduplication & Primary Keys</span>
+              <p class="text-slate-600">Primary keys (<code class="text-purple-800 font-bold">id</code>) and timestamp uniqueness constraints prevent duplicate rows during automated re-runs.</p>
+            </div>
+            <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200">
+              <span class="text-emerald-800 font-bold block mb-1">3. Automated CI/CD Testing Gate</span>
+              <p class="text-slate-600">GitHub Actions (<code class="text-emerald-800 font-bold">.github/workflows/ci.yml</code>) runs <code class="text-emerald-800">flake8</code>, <code class="text-emerald-800">black</code>, <code class="text-emerald-800">bandit</code>, and <code class="text-emerald-800">pytest</code> on every push to maintain code quality.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="w-1/2 h-full terminal-window-bright rounded-3xl p-8 flex flex-col justify-between">
+        <div class="flex items-center justify-between border-b border-[#003863] pb-3">
+          <span class="text-sm text-amber-400 font-mono"><i class="fa-solid fa-database mr-2"></i>PostgreSQL Schema DDL</span>
+          <span class="text-xs text-slate-400 font-mono">SQL DDL</span>
+        </div>
+        <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto my-auto">
+<span class="text-purple-400">CREATE TABLE</span> hospital_wait_times (
+    id <span class="text-amber-400">SERIAL PRIMARY KEY</span>,
+    hospital_name <span class="text-cyan-400">VARCHAR(100) NOT NULL</span>,
+    postal_sector <span class="text-cyan-400">VARCHAR(2) NOT NULL</span>,
+    doctor_wait_minutes <span class="text-amber-400">INT CHECK (doctor_wait_minutes >= 0)</span>,
+    wait_time_hrs <span class="text-amber-400">NUMERIC(4, 2) NOT NULL</span>,
+    updated_at <span class="text-amber-400">TIMESTAMP DEFAULT CURRENT_TIMESTAMP</span>
+);
+
+<span class="text-purple-400">CREATE TABLE</span> dengue_clusters (
+    id <span class="text-amber-400">SERIAL PRIMARY KEY</span>,
+    postal_sector <span class="text-cyan-400">VARCHAR(2) NOT NULL</span>,
+    location_name <span class="text-cyan-400">VARCHAR(150)</span>,
+    case_count <span class="text-amber-400">INT DEFAULT 0</span>,
+    report_month <span class="text-cyan-400">VARCHAR(20)</span>
+);
+        </pre>
+      </div>
+    </div>
+
+    <!-- SLIDE 8: SQL & ETL LOGIC FOR TTT CALCULATION -->
+    <div id="slide8Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+      <div class="card-bright-white rounded-3xl p-8 h-full flex flex-col justify-between border-t-4 border-t-[#002b49]">
+        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+          <div>
+            <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">SQL & ETL ENGINE LOGIC</span>
+            <h2 class="text-3xl font-black text-[#002b49]">Total Time-to-Treatment (TTT) Query</h2>
+          </div>
+          <button id="rainToggleBtn" onclick="toggleRainPenalty()" class="px-5 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 border-2 border-amber-400 rounded-xl font-mono text-xs font-black shadow-md flex items-center gap-2 transition-all active:scale-95">
+            <i class="fa-solid fa-cloud-showers-heavy text-amber-600"></i> TOGGLE HEAVY RAIN PENALTY (+30%)
+          </button>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6 my-auto h-full py-2">
+          <!-- SQL Statement Code -->
+          <div class="col-span-7 terminal-window-bright rounded-2xl p-5 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-[#003863] pb-2 mb-2">
+              <span class="text-xs text-cyan-400 font-mono"><i class="fa-solid fa-code mr-2"></i>src/routing_logic.py (SQL Query Engine)</span>
+              <span class="text-xs text-slate-400 font-mono">SQL / Python</span>
+            </div>
+            <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto my-auto">
+<span class="text-purple-400">SELECT</span> 
+    h.hospital_name,
+    h.wait_time_hrs * <span class="text-amber-400">60</span> <span class="text-purple-400">AS</span> queue_wait_mins,
+    b.base_drive_mins,
+    <span class="text-purple-400">CASE</span> 
+        <span class="text-purple-400">WHEN</span> w.will_rain = <span class="text-amber-400">TRUE</span> <span class="text-purple-400">THEN</span> (b.base_drive_mins * <span class="text-amber-400">1.3</span>) + <span class="text-amber-400">3</span>
+        <span class="text-purple-400">ELSE</span> b.base_drive_mins
+    <span class="text-purple-400">END</span> <span class="text-purple-400">AS</span> adjusted_drive_mins,
+    ( (b.base_drive_mins * <span class="text-purple-400">CASE WHEN</span> w.will_rain = <span class="text-amber-400">TRUE</span> <span class="text-purple-400">THEN</span> <span class="text-amber-400">1.3</span> <span class="text-purple-400">ELSE</span> <span class="text-amber-400">1.0</span> <span class="text-purple-400">END</span>) + (h.wait_time_hrs * <span class="text-amber-400">60</span>) ) <span class="text-purple-400">AS</span> total_ttt_mins
+<span class="text-purple-400">FROM</span> hospital_wait_times h
+<span class="text-purple-400">JOIN</span> distance_matrix b <span class="text-purple-400">ON</span> h.postal_sector = b.dest_sector
+<span class="text-purple-400">JOIN</span> weather_forecast w <span class="text-purple-400">ON</span> b.origin_sector = w.postal_sector
+<span class="text-purple-400">WHERE</span> b.origin_sector = <span class="text-emerald-300">'52'</span> <span class="text-slate-500">-- User Sector Prefix</span>
+<span class="text-purple-400">ORDER BY</span> total_ttt_mins <span class="text-purple-400">ASC</span>
+<span class="text-purple-400">LIMIT</span> <span class="text-amber-400">1</span>;
+            </pre>
+          </div>
+
+          <!-- Worked Calculation Table -->
+          <div class="col-span-5 card-bright-white rounded-2xl p-6 flex flex-col justify-between border-2 border-slate-300">
+            <div class="flex justify-between items-center border-b border-slate-200 pb-2 mb-2">
+              <span class="text-xs font-mono font-black text-slate-700 uppercase">Live Output Table</span>
+              <span id="rainBadge" class="text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-300">
+                Rain Multiplier: 1.0x (Clear)
+              </span>
+            </div>
+            
+            <table class="w-full text-left font-mono text-xs border-collapse">
+              <thead>
+                <tr class="border-b border-slate-300 text-slate-500 font-bold">
+                  <th class="p-2">Hospital</th>
+                  <th class="p-2">Drive</th>
+                  <th class="p-2">Queue</th>
+                  <th class="p-2">TTT</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-200">
+                <tr class="bg-emerald-50 text-emerald-900 font-bold">
+                  <td class="p-2">TTSH</td>
+                  <td id="ttshDriveCell" class="p-2">17.2 m</td>
+                  <td class="p-2">44 m</td>
+                  <td id="ttshTttCell" class="p-2 text-emerald-700 font-black">61.2m (WIN)</td>
+                </tr>
+                <tr>
+                  <td class="p-2">AH</td>
+                  <td id="ahDriveCell" class="p-2">24.8 m</td>
+                  <td class="p-2">60 m</td>
+                  <td id="ahTttCell" class="p-2 text-slate-500">84.8m</td>
+                </tr>
+                <tr>
+                  <td class="p-2">NUH</td>
+                  <td id="nuhDriveCell" class="p-2">37.2 m</td>
+                  <td class="p-2">180 m</td>
+                  <td id="nuhTttCell" class="p-2 text-slate-500">217.2m</td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="text-xs text-slate-500 font-mono mt-3">
+              Queue dominance (44 mins vs 180 mins) far outweighs driving distance!
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 9: DENGUE TIMELINE & WINDOW FUNCTION LAG ANALYSIS -->
+    <div id="slide9Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+      <div class="card-bright-white rounded-3xl p-8 h-full flex flex-col justify-between border-t-4 border-t-[#002b49]">
+        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+          <div>
+            <span class="text-xs font-mono font-black text-purple-700 uppercase tracking-widest">ADVANCED ANALYTICS</span>
+            <h2 class="text-3xl font-black text-[#002b49]">Dengue Catalyst Lag Analysis (28–58 Day Window)</h2>
+          </div>
+          <span class="text-xs font-mono bg-purple-50 text-purple-800 border border-purple-300 px-3 py-1 rounded-xl font-bold">
+            SQL Window Functions
+          </span>
+        </div>
+
+        <div class="grid grid-cols-12 gap-6 my-auto h-full py-2">
+          <!-- SQL Window Function Code -->
+          <div class="col-span-7 terminal-window-bright rounded-2xl p-5 flex flex-col justify-between">
+            <div class="flex items-center justify-between border-b border-[#003863] pb-2 mb-2">
+              <span class="text-xs text-purple-400 font-mono"><i class="fa-solid fa-chart-line mr-2"></i>notebooks/dengue_lag_analysis.sql</span>
+              <span class="text-xs text-slate-400 font-mono">SQL / PySpark</span>
+            </div>
+            <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto my-auto">
+<span class="text-slate-500">-- Compute 30-day rainfall precursor vs 30-day dengue case surge</span>
+<span class="text-purple-400">WITH</span> daily_rainfall <span class="text-purple-400">AS</span> (
+    <span class="text-purple-400">SELECT</span> 
+        postal_sector,
+        record_date,
+        SUM(total_rainfall_mm) <span class="text-purple-400">AS</span> daily_mm,
+        <span class="text-purple-400">LAG</span>(SUM(total_rainfall_mm), <span class="text-amber-400">30</span>) <span class="text-purple-400">OVER</span> (
+            <span class="text-purple-400">PARTITION BY</span> postal_sector <span class="text-purple-400">ORDER BY</span> record_date
+        ) <span class="text-purple-400">AS</span> rainfall_30days_prior
+    <span class="text-purple-400">FROM</span> weather_history
+    <span class="text-purple-400">GROUP BY</span> postal_sector, record_date
+)
+<span class="text-purple-400">SELECT</span> 
+    d.postal_sector,
+    d.report_month,
+    d.case_count <span class="text-purple-400">AS</span> current_dengue_cases,
+    r.rainfall_30days_prior
+<span class="text-purple-400">FROM</span> dengue_clusters d
+<span class="text-purple-400">JOIN</span> daily_rainfall r <span class="text-purple-400">ON</span> d.postal_sector = r.postal_sector
+<span class="text-purple-400">ORDER BY</span> d.case_count <span class="text-purple-400">DESC</span>;
+            </pre>
+          </div>
+
+          <!-- Research Conclusion Box -->
+          <div class="col-span-5 flex flex-col justify-between space-y-3">
+            <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-300 space-y-2">
+              <p class="text-emerald-900 font-black text-sm flex items-center gap-2">
+                <i class="fa-solid fa-circle-check"></i> Primary Goal (VALIDATED)
+              </p>
+              <p class="text-emerald-800 text-xs leading-relaxed font-medium">
+                Live A&E queue data proves our core thesis: TTSH reported a 44-min wait vs NUH's 180-min wait despite equal patient volume. Routing saves >2 hours.
+              </p>
+            </div>
+
+            <div class="bg-amber-50 p-6 rounded-2xl border border-amber-300 space-y-2">
+              <p class="text-amber-900 font-black text-sm flex items-center gap-2">
+                <i class="fa-solid fa-circle-xmark"></i> Secondary Lag Hypothesis (INCONCLUSIVE)
+              </p>
+              <p class="text-amber-800 text-xs leading-relaxed font-medium">
+                60-day historical data limit was too short to establish statistical correlation between vector catalysts and A&E load. Longer runway (>180 days) required.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SLIDE 10: CONCLUSION & SUMMARY DE INSIGHTS -->
+    <div id="slide10Wrapper" class="scene-element w-full h-full flex flex-col items-center justify-center text-center space-y-8 p-4">
+      <div class="flex items-center gap-3 bg-sky-50 border border-sky-200 px-6 py-2.5 rounded-full text-sm font-mono text-sky-800 font-bold shadow-sm">
+        <i class="fa-solid fa-award text-sky-700 text-lg"></i> DATA ENGINEERING VALUE DELIVERED
+      </div>
+
+      <h2 class="text-4xl font-black text-[#002b49] font-serif">Project Data Engineering Insights</h2>
+
+      <div class="grid grid-cols-3 gap-6 max-w-6xl text-left text-sm font-mono">
+        <div class="card-bright-white p-6 rounded-3xl space-y-2 border-t-4 border-t-sky-600">
+          <p class="text-sky-800 font-black text-base">Multi-Modal Pipeline</p>
+          <p class="text-slate-600 font-medium text-xs leading-relaxed">Successfully combined Web Scraping, REST APIs, and Mock Generators to overcome 80% public hospital feed absence.</p>
+        </div>
+        <div class="card-bright-white p-6 rounded-3xl space-y-2 border-t-4 border-t-purple-600">
+          <p class="text-purple-800 font-black text-base">Spatial Standardization</p>
+          <p class="text-slate-600 font-medium text-xs leading-relaxed">Resolved 43% geocoding address failures using Regex transforms and automated OneMap token refresh wrappers.</p>
+        </div>
+        <div class="card-bright-white p-6 rounded-3xl space-y-2 border-t-4 border-t-emerald-600">
+          <p class="text-emerald-800 font-black text-base">System Reliability & Throughput</p>
+          <p class="text-slate-600 font-medium text-xs leading-relaxed">Engineered a resilient SQL/PySpark data pipeline that prevents A&E overcrowding bottlenecks and balances hospital patient throughput in real time.</p>
+        </div>
+      </div>
+
+      <button onclick="renderStep(11)" class="px-10 py-4 bg-[#002b49] hover:bg-[#00406c] text-white font-black rounded-2xl text-xs font-mono shadow-xl transition-all active:scale-95">
+        VIEW DELIVERABLES DIRECTORY <i class="fa-solid fa-arrow-right ml-2"></i>
+      </button>
+    </div>
+
+    <!-- SLIDE 11: DELIVERABLES & PUBLIC LINKS (OPTION A INTEGRATED) -->
+    <div id="slide11Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+      <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+        <div>
+          <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">PROOF OF WORK & DELIVERABLES DIRECTORY</span>
+          <h2 class="text-3xl font-black text-[#002b49]">Project Resources & Deliverables Hub</h2>
+        </div>
+        <span class="text-xs font-mono bg-sky-50 text-sky-800 border border-sky-300 px-3 py-1 rounded-xl font-bold">
+          GenSG JDE10 • Group 2 Error 404
+        </span>
+      </div>
+
+      <div class="grid grid-cols-12 gap-8 my-auto h-full py-4 items-stretch">
+        <!-- Deliverable Links Column (Option A) -->
+        <div class="col-span-6 card-bright-white rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-[#002b49] shadow-xl">
+          <div>
+            <p class="text-sm font-black text-[#002b49] font-mono mb-4 flex items-center gap-2 border-b border-slate-200 pb-2">
+              <i class="fa-solid fa-link text-base text-sky-700"></i> Public Deliverable Links
+            </p>
+            
+            <div class="space-y-4">
+              <!-- GitHub Repository Link -->
+              <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 hover:border-sky-500/80 transition-all">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-bold text-slate-900"><i class="fa-brands fa-github text-sky-700 mr-2"></i>1. GitHub Source Repository</span>
+                  <span class="text-[10px] font-mono bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded border border-emerald-300 font-bold">Codebase</span>
+                </div>
+                <p class="text-xs text-slate-600 truncate my-1">ETL pipelines, scraper scripts, geocoding & PostgreSQL schema DDL.</p>
+                <a href="https://github.com/ttan-ttan/GenSG_InterimProject_Group2" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-mono text-sky-700 hover:text-sky-900 font-bold pt-1">
+                  Open GitHub Repo <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+
+              <!-- Google Drive Documentation & Slides Link -->
+              <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 hover:border-blue-500/80 transition-all">
+                <div class="flex justify-between items-center mb-1">
+                  <span class="text-sm font-bold text-slate-900"><i class="fa-brands fa-google-drive text-blue-600 mr-2"></i>2. Presentation Slides & Drive Hub</span>
+                  <span class="text-[10px] font-mono bg-blue-100 text-blue-800 px-2 py-0.5 rounded border border-blue-300 font-bold">Public Drive</span>
+                </div>
+                <p class="text-xs text-slate-600 truncate my-1">Interim project presentation deck, diagrams & documentation.</p>
+                <a href="https://drive.google.com/drive/u/0/folders/1t4l-ThmTnlKxFVBhH6kdbMrDMxNcvA3l" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-mono text-blue-700 hover:text-blue-900 font-bold pt-1">
+                  Open Google Drive Folder <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <p class="text-xs font-mono text-slate-500 border-t border-slate-200 pt-3 mt-4">
+            GenSG JDE10 • Interim Project • Error 404 No Name Group
+          </p>
+        </div>
+
+        <!-- Project Overview & Team Credits Card -->
+        <div class="col-span-6 card-bright-navy rounded-3xl p-6 flex flex-col justify-between shadow-xl">
+          <div>
+            <p class="text-sm font-black text-sky-300 font-mono mb-4 flex items-center gap-2 border-b border-[#003863] pb-2">
+              <i class="fa-solid fa-users text-base"></i> Engineering Team & Scope
+            </p>
+
+            <div class="space-y-3 text-xs font-mono text-slate-300">
+              <div class="bg-[#001d33] p-3 rounded-xl border border-[#003863]">
+                <p class="text-sky-300 font-bold mb-1">Team Members:</p>
+                <p>Tan Yong Jian, Jun Jie, Jie Song, Ana N</p>
+              </div>
+
+              <div class="bg-[#001d33] p-3 rounded-xl border border-[#003863]">
+                <p class="text-emerald-400 font-bold mb-1">Key Deliverables Completed:</p>
+                <ul class="list-disc pl-4 space-y-1 text-slate-300">
+                  <li>Tri-Modal ETL Pipeline (Selenium + REST APIs + Mock)</li>
+                  <li>PostgreSQL Relational Schema with Indexing</li>
+                  <li>OneMap Geocoding & JWT Auto-Renewal Wrapper</li>
+                  <li>SQL Total Time-to-Treatment (TTT) Engine</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <button onclick="renderStep(1)" class="w-full py-3 bg-sky-600 hover:bg-sky-500 text-white font-mono font-bold rounded-xl text-xs shadow-lg transition-all active:scale-95 mt-4">
+            <i class="fa-rotate-left fa-solid mr-2"></i> RESTART DE PRESENTATION
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <script>
+    let currentStep = 1;
+    const totalSteps = 11;
+    let isPlayingAll = false;
+    let playTimer = null;
+    let isDrawerOpen = true;
+    let isRainy = false;
+
+    const stepTitles = [
+      "Slide 1 / 11: Emergency Routing Paradox",
+      "Slide 2 / 11: Live App Engine (main.py)",
+      "Slide 3 / 11: Gov Data Sources & Coverage Gaps",
+      "Slide 4 / 11: 3 Extraction Methods (API, Scrape, Mock)",
+      "Slide 5 / 11: Geocoding & Token Refresh Wrapper",
+      "Slide 6 / 11: Architecture & Data Lineage Flow",
+      "Slide 7 / 11: PostgreSQL Schema & Validation",
+      "Slide 8 / 11: SQL & ETL Logic for TTT Engine",
+      "Slide 9 / 11: Dengue Lag & Window Functions",
+      "Slide 10 / 11: DE Engineering Insights & Summary",
+      "Slide 11 / 11: Deliverables Directory & Links"
+    ];
+
+    function toggleDrawer() {
+      const drawer = document.getElementById('navDrawer');
+      const icon = document.getElementById('drawerToggleIcon');
+      isDrawerOpen = !isDrawerOpen;
+
+      if (isDrawerOpen) {
+        drawer.style.transform = 'translateX(0)';
+        icon.className = "fa-solid fa-chevron-right text-base";
+      } else {
+        drawer.style.transform = 'translateX(calc(100% - 1.5rem))';
+        icon.className = "fa-solid fa-chevron-left text-base";
+      }
+    }
+
+    function setVisible(elemId, visible) {
+      const el = document.getElementById(elemId);
+      if (!el) return;
+      if (visible) el.classList.add('scene-visible');
+      else el.classList.remove('scene-visible');
+    }
+
+    function renderStep(step) {
+      currentStep = step;
+      document.getElementById('sceneTitle').innerText = stepTitles[step - 1];
+      document.getElementById('sceneCounter').innerText = `${step} / ${totalSteps}`;
+      
+      const progressPercent = (step / totalSteps) * 100;
+      document.getElementById('progressBar').style.width = `${progressPercent}%`;
+
+      for (let i = 1; i <= totalSteps; i++) {
+        setVisible(`slide${i}Wrapper`, i === step);
+      }
+    }
+
+    /* SLIDE 2 INTERACTIVE QUEUE CONGESTION SLIDER */
+    function updateNuhWait(val) {
+      document.getElementById('nuhWaitVal').innerText = `${val} Mins`;
+      document.getElementById('nuhCardTitle').innerText = `${val} MINS WAIT TIME`;
+      
+      const driveMins = 15;
+      const totalMins = parseInt(val) + driveMins;
+      document.getElementById('nuhCardSub').innerText = `Drive: ${driveMins} mins | Triage Queue: ${val} mins | Total: ${totalMins} mins.`;
+
+      const outcomeBanner = document.getElementById('outcomeBanner');
+      if (totalMins > 55) {
+        const saved = totalMins - 55;
+        outcomeBanner.innerText = `Drive 10 mins further to TTSH → Save ${saved} minutes total!`;
+        outcomeBanner.className = "text-lg font-black text-white";
+      } else {
+        outcomeBanner.innerText = `NUH queue is low! Proceed directly to NUH (Nearest Facility).`;
+        outcomeBanner.className = "text-lg font-black text-emerald-400";
+      }
+    }
+
+    function runAppSimulation() {
+      const postal = document.getElementById('simPostalInput').value.trim();
+      const output = document.getElementById('simAppOutput');
+      const prefix = postal.substring(0, 2);
+
+      let region = "Central";
+      if (["11", "12", "13", "58", "59", "60"].includes(prefix)) region = "West";
+      else if (["46", "47", "48", "52"].includes(prefix)) region = "East";
+      else if (["72", "73", "75", "76"].includes(prefix)) region = "North";
+
+      output.innerHTML = `
+        <p class="text-cyan-300">✔ Mapped Sector Prefix: ${prefix} -> Region: ${region}</p>
+        <p class="text-amber-300">⏳ Querying PostgreSQL tables & weather multipliers...</p>
+        <p class="text-red-400 font-bold">❌ Nearest (NUH): Travel 15m | Wait 180m | Total: 195 mins</p>
+        <p class="text-emerald-400 font-bold">✅ 2nd Nearest (TTSH): Travel 25m | Wait 30m | Total: 55 mins</p>
+        <p class="text-emerald-300 font-bold">💡 DECISION: Proceed to 2nd nearest hospital! (Saves 140 mins total time)</p>
+      `;
+    }
+
+    /* SLIDE 6 ANIMATED DATA LINEAGE SIMULATION */
+    function getCenterPosLineage(elemId) {
+      const el = document.getElementById(elemId);
+      if (!el) return { x: '0px', y: '0px' };
+      const rect = el.getBoundingClientRect();
+      const parentRect = document.getElementById('stageCanvas').getBoundingClientRect();
+      return {
+        x: (rect.left + rect.width / 2 - parentRect.left - 20) + 'px',
+        y: (rect.top + rect.height / 2 - parentRect.top - 20) + 'px'
+      };
+    }
+
+    async function runLineageSimulation() {
+      const packet = document.getElementById('lineagePacket');
+      const label = document.getElementById('packetLabel');
+      const log = document.getElementById('lineageLog');
+      const status = document.getElementById('lineageStatus');
+
+      packet.style.opacity = '1';
+      status.innerText = "EXECUTING PIPELINE";
+      status.className = "text-amber-400 font-bold";
+
+      const steps = [
+        { node: 'node1', label: '1. Raw Extract Payload', msg: '[1/4] Web scraper & NEA API payload dumped to data/raw/' },
+        { node: 'node2', label: '2. Pandas Regex Clean', msg: '[2/4] Pandas cleans nulls & normalizes 2-digit sector prefixes' },
+        { node: 'node3', label: '3. PostgreSQL Batch Insert', msg: '[3/4] Batch inserted into PostgreSQL indexed tables via SQLAlchemy' },
+        { node: 'node4', label: '4. Serving Console Ready', msg: '[4/4] Serving layer ready for real-time user query execution!' }
+      ];
+
+      for (let i = 0; i < steps.length; i++) {
+        const s = steps[i];
+        label.innerText = s.label;
+        log.innerHTML += `<p class="text-cyan-300">${s.msg}</p>`;
+        
+        const pos = getCenterPosLineage(s.node);
+        packet.style.left = pos.x;
+        packet.style.top = pos.y;
+
+        await new Promise(r => setTimeout(r, 1400));
+      }
+
+      status.innerText = "PIVOT COMPLETE";
+      status.className = "text-emerald-400 font-bold";
+      packet.style.opacity = '0';
+    }
+
+    /* SLIDE 8 INTERACTIVE RAIN MULTIPLIER TOGGLE */
+    function toggleRainPenalty() {
+      isRainy = !isRainy;
+      const btn = document.getElementById('rainToggleBtn');
+      const badge = document.getElementById('rainBadge');
+
+      if (isRainy) {
+        btn.className = "px-5 py-2.5 bg-amber-500 text-slate-950 border-2 border-amber-300 rounded-xl font-mono text-xs font-black shadow-lg flex items-center gap-2 transition-all active:scale-95";
+        badge.innerText = "Rain Multiplier: 1.3x (Heavy Rain Penalty)";
+        badge.className = "text-[10px] font-mono font-bold bg-amber-100 text-amber-900 px-2 py-0.5 rounded border border-amber-400";
+
+        document.getElementById('ttshDriveCell').innerText = "22.4 m";
+        document.getElementById('ttshTttCell').innerText = "66.4m (WIN)";
+
+        document.getElementById('ahDriveCell').innerText = "32.2 m";
+        document.getElementById('ahTttCell').innerText = "92.2m";
+
+        document.getElementById('nuhDriveCell').innerText = "48.4 m";
+        document.getElementById('nuhTttCell').innerText = "228.4m";
+      } else {
+        btn.className = "px-5 py-2.5 bg-amber-100 hover:bg-amber-200 text-amber-900 border-2 border-amber-400 rounded-xl font-mono text-xs font-black shadow-md flex items-center gap-2 transition-all active:scale-95";
+        badge.innerText = "Rain Multiplier: 1.0x (Clear)";
+        badge.className = "text-[10px] font-mono font-bold bg-slate-100 text-slate-600 px-2 py-0.5 rounded border border-slate-300";
+
+        document.getElementById('ttshDriveCell').innerText = "17.2 m";
+        document.getElementById('ttshTttCell').innerText = "61.2m (WIN)";
+
+        document.getElementById('ahDriveCell').innerText = "24.8 m";
+        document.getElementById('ahTttCell').innerText = "84.8m";
+
+        document.getElementById('nuhDriveCell').innerText = "37.2 m";
+        document.getElementById('nuhTttCell').innerText = "217.2m";
+      }
+    }
+
+    function nextScene() {
+      if (currentStep < totalSteps) renderStep(currentStep + 1);
+      else renderStep(1);
+    }
+
+    function prevScene() {
+      if (currentStep > 1) renderStep(currentStep - 1);
+      else renderStep(totalSteps);
+    }
+
+    function resetStory() {
+      stopPlayAll();
+      renderStep(1);
+    }
+
+    function togglePlayAll() {
+      if (isPlayingAll) stopPlayAll();
+      else startPlayAll();
+    }
+
+    function startPlayAll() {
+      isPlayingAll = true;
+      document.getElementById('playIcon').className = "fa-solid fa-pause text-sm";
+      document.getElementById('playText').innerText = "Pause";
+      
+      renderStep(1);
+      playTimer = setInterval(() => {
+        if (currentStep < totalSteps) renderStep(currentStep + 1);
+        else stopPlayAll();
+      }, 10000);
+    }
+
+    function stopPlayAll() {
+      isPlayingAll = false;
+      if (playTimer) clearInterval(playTimer);
+      document.getElementById('playIcon').className = "fa-solid fa-play text-sm";
+      document.getElementById('playText').innerText = "Play Presentation";
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') nextScene();
+      else if (e.key === 'ArrowLeft') prevScene();
+    });
+
+    window.onload = () => renderStep(1);
+  </script>
+</body>
+</html>
