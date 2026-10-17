@@ -7,6 +7,7 @@
   <title>Career Evolution Portfolio | Tan Yong Jian</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   <style>
     html,
     body {
@@ -90,7 +91,7 @@
       </div>
     </div>
 
-    <!-- External Profile & Resume Links -->
+    <!-- External Profile, Resume Links & QR Code -->
     <div class="flex items-center gap-3 font-mono text-xs">
       <a href="https://www.linkedin.com/in/ttan-ttan/" target="_blank" rel="noopener noreferrer"
         class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors">
@@ -104,6 +105,20 @@
         class="px-3.5 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-black flex items-center gap-1.5 transition-colors shadow-[0_0_12px_rgba(6,182,212,0.4)]">
         <i class="fa-solid fa-file-pdf"></i> Resume (PDF)
       </a>
+      <div class="relative group">
+        <button type="button" aria-label="Show QR code for mobile resume" title="Show QR code for mobile resume"
+          class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-cyan-400 flex items-center justify-center transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
+          <i class="fa-solid fa-qrcode text-sm"></i>
+        </button>
+        <div
+          class="absolute right-0 top-full hidden group-hover:flex group-focus-within:flex flex-col items-center bg-slate-950 border border-cyan-800/80 p-3 rounded-2xl shadow-[0_0_25px_rgba(6,182,212,0.3)] z-50 w-36 backdrop-blur-md">
+          <div id="qrcodeDisplay" class="p-1 bg-white rounded-lg overflow-hidden"
+            aria-label="QR code linking to the resume PDF"></div>
+          <span id="qrCodeStatus"
+            class="text-[10px] font-mono text-cyan-400 mt-2 font-bold text-center leading-tight">Scan for Mobile
+            Resume</span>
+        </div>
+      </div>
       <a href="TanYongJian_JDE10.docx" download
         class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800 rounded-xl text-xs flex items-center gap-1.5 transition-colors">
         <i class="fa-solid fa-file-word text-blue-400"></i> .DOCX
@@ -663,7 +678,28 @@
       else if (e.key === 'ArrowLeft') prevPhase();
     });
 
-    window.onload = () => goToPhase(0);
+    window.onload = () => {
+      goToPhase(0);
+
+      const qrCodeDisplay = document.getElementById("qrcodeDisplay");
+      const qrCodeStatus = document.getElementById("qrCodeStatus");
+      const resumePdfLink = document.querySelector('a[href="TanYongJian_JDE10.pdf"]');
+
+      if (typeof QRCode === "undefined") {
+        qrCodeStatus.textContent = "QR unavailable. Use Resume (PDF).";
+        console.error("QR code library failed to load.");
+        return;
+      }
+
+      new QRCode(qrCodeDisplay, {
+        text: new URL(resumePdfLink.href, document.baseURI).href,
+        width: 100,
+        height: 100,
+        colorDark: "#020617",
+        colorLight: "#ffffff",
+        correctLevel: QRCode.CorrectLevel.H
+      });
+    };
   </script>
 </body>
 
