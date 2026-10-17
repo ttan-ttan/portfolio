@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>The Pivot Story | Why Switch to Data Engineering?</title>
+  <title>The Pivot Story Engine</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <style>
     html, body {
-      width: 100vw;
-      height: 100vh;
+      width: 100%;
+      height: 100%;
       margin: 0;
       padding: 0;
       overflow: hidden;
@@ -25,111 +25,53 @@
     .boom-active { animation: boomFlash 0.8s ease-out; }
   </style>
 </head>
-<body class="bg-slate-950 text-slate-100 flex flex-col justify-between p-3 select-none">
+<body class="bg-slate-950 text-slate-100 flex flex-col justify-between p-2 select-none h-full w-full">
 
-  <!-- Header -->
-  <header class="w-full bg-slate-900/90 border border-slate-800 rounded-2xl p-2.5 flex justify-between items-center z-40 shrink-0">
-    <div class="flex items-center gap-3">
-      <a href="index.html" class="w-9 h-9 rounded-xl bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-base hover:bg-cyan-400 transition-colors">
-        <i class="fa-solid fa-arrow-left"></i>
-      </a>
-      <div>
-        <h1 class="text-sm font-black text-slate-100 font-mono tracking-wider">THE PIVOT STORY (whyswitch.html)</h1>
-        <p class="text-[10px] text-cyan-400 font-mono">Site Data Chaos → Excel VBA / Drive → Data Engineering</p>
-      </div>
+  <!-- TOP OVERLAY CONTROL BAR -->
+  <div class="w-full bg-slate-900/90 border border-slate-800 rounded-xl p-2 flex justify-between items-center z-40 shrink-0">
+    <div class="flex items-center gap-2">
+      <span class="w-2.5 h-2.5 rounded-full bg-purple-500 animate-pulse"></span>
+      <span id="sceneTitle" class="text-xs font-black font-mono text-purple-300">
+        Scene 1: Walking onto the Construction Site
+      </span>
     </div>
 
-    <div class="flex items-center gap-3 font-mono text-xs">
-      <button onclick="toggleAutoPlay()" id="autoPlayBtn" class="px-3 py-1.5 bg-purple-600 hover:bg-purple-500 text-white rounded-xl font-bold shadow-[0_0_12px_rgba(168,85,247,0.4)]">
-        Auto Play
+    <div class="flex items-center gap-2 font-mono text-xs">
+      <button onclick="toggleAutoPlay()" id="autoPlayBtn" class="px-3 py-1 bg-purple-600 hover:bg-purple-500 text-white rounded-lg font-bold shadow-[0_0_10px_rgba(168,85,247,0.4)] flex items-center gap-1">
+        <i class="fa-solid fa-play text-[10px]"></i> Auto Play
       </button>
-      <button onclick="playPrevScene()" class="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-xl font-bold">
+      <button onclick="playPrevScene()" class="px-2.5 py-1 bg-slate-800 hover:bg-slate-700 text-slate-200 border border-slate-700 rounded-lg font-bold">
         <i class="fa-solid fa-step-backward"></i> Prev
       </button>
-      <span id="sceneTracker" class="text-purple-400 font-bold px-2">Scene 1 / 10</span>
-      <button onclick="playNextScene()" class="px-3 py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-black">
+      <span id="sceneTracker" class="text-purple-400 font-bold px-2 bg-purple-950 border border-purple-800 rounded-md text-[11px]">
+        Scene 1 / 10
+      </span>
+      <button onclick="playNextScene()" class="px-3 py-1 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-lg font-black">
         Next <i class="fa-solid fa-step-forward"></i>
       </button>
     </div>
-  </header>
+  </div>
 
-  <!-- MAIN VIEWPORT split: 50% Top Reserved Animation Box / 50% Bottom Pivot Details -->
-  <main class="w-full flex-1 my-2 flex flex-col gap-2 min-h-0 overflow-hidden">
-    
-    <!-- TOP 50%: RESERVED SPACE BOX FOR ANIMATION CANVAS -->
-    <div class="h-[48vh] w-full bg-slate-950/90 border border-purple-900/60 rounded-3xl relative overflow-hidden flex flex-col justify-between p-3 shrink-0">
-      <div id="flashOverlay" class="absolute inset-0 z-50 pointer-events-none"></div>
+  <!-- FULL CANVAS STAGE AREA -->
+  <div class="relative flex-1 w-full my-1 min-h-0 rounded-xl overflow-hidden bg-slate-900/90 border border-purple-950 flex items-center justify-center">
+    <div id="flashOverlay" class="absolute inset-0 z-50 pointer-events-none"></div>
+    <canvas id="animCanvas" class="w-full h-full block"></canvas>
+  </div>
 
-      <div class="flex justify-between items-center z-20 border-b border-purple-900/40 pb-1.5 shrink-0">
-        <span id="sceneTitle" class="text-xs font-black font-mono text-purple-300">
-          Scene 1: Walking onto the Construction Site
-        </span>
-        <span class="text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800 px-2.5 py-0.5 rounded-full">
-          Reserved Animation Viewport (50%)
-        </span>
-      </div>
-
-      <!-- HTML5 Canvas -->
-      <div class="relative flex-1 w-full my-1 min-h-0 rounded-2xl overflow-hidden bg-slate-900/60 border border-purple-950 flex items-center justify-center">
-        <canvas id="animCanvas" class="w-full h-full block"></canvas>
-      </div>
-
-      <!-- Scene Banner -->
-      <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-2 text-center z-20 shrink-0">
-        <p id="sceneDesc" class="text-[11px] font-mono text-slate-200 leading-tight">
-          Site engineer wearing a white safety helmet walks onto the construction site with scaffolding cranes in the background.
-        </p>
-      </div>
-    </div>
-
-    <!-- BOTTOM 50%: PIVOT MILESTONES & TRANSITION CONTEXT -->
-    <div class="flex-1 w-full grid grid-cols-4 gap-3 min-h-0">
-      <div class="bg-slate-900/90 border border-purple-900/40 rounded-2xl p-3 flex flex-col justify-between">
-        <div>
-          <span class="text-[10px] font-mono text-purple-400 font-bold">STAGE 01 · ACADEMIC PIVOT</span>
-          <h4 class="text-xs font-black text-slate-100 mt-1">PostGrad Cybersecurity</h4>
-          <p class="text-[11px] text-slate-400 mt-1 leading-snug">PSB Academy & 42 Singapore. Linux CLI, networks & C programming fundamentals.</p>
-        </div>
-        <span class="text-[9px] font-mono text-purple-300">Foundation Step</span>
-      </div>
-
-      <div class="bg-slate-900/90 border border-purple-900/40 rounded-2xl p-3 flex flex-col justify-between">
-        <div>
-          <span class="text-[10px] font-mono text-purple-400 font-bold">STAGE 02 · SOC ANALYST</span>
-          <h4 class="text-xs font-black text-slate-100 mt-1">IRAS (Spade Consulting)</h4>
-          <p class="text-[11px] text-slate-400 mt-1 leading-snug">Log monitoring, automated incident reports via Excel VBA, 50% error reduction.</p>
-        </div>
-        <span class="text-[9px] font-mono text-purple-300">VBA Automation</span>
-      </div>
-
-      <div class="bg-slate-900/90 border border-purple-900/40 rounded-2xl p-3 flex flex-col justify-between">
-        <div>
-          <span class="text-[10px] font-mono text-purple-400 font-bold">STAGE 03 · SOFTWARE ENG.</span>
-          <h4 class="text-xs font-black text-slate-100 mt-1">NTU SCTP Software</h4>
-          <p class="text-[11px] text-slate-400 mt-1 leading-snug">Garang Guni app, PostgreSQL relational modeling, REST APIs & Docker containerization.</p>
-        </div>
-        <span class="text-[9px] font-mono text-purple-300">Full-Stack & SQL</span>
-      </div>
-
-      <div class="bg-slate-900/90 border border-emerald-900/40 rounded-2xl p-3 flex flex-col justify-between">
-        <div>
-          <span class="text-[10px] font-mono text-emerald-400 font-bold">STAGE 04 · DATA ENGINEER</span>
-          <h4 class="text-xs font-black text-slate-100 mt-1">GenSG Junior Data Eng.</h4>
-          <p class="text-[11px] text-slate-400 mt-1 leading-snug">Microsoft Fabric, PySpark Medallion pipelines, Star Schema & Power BI Direct Lake.</p>
-        </div>
-        <span class="text-[9px] font-mono text-emerald-300">Data Platform Complete</span>
-      </div>
-    </div>
-
-  </main>
+  <!-- BOTTOM CAPTION OVERLAY -->
+  <div class="bg-slate-900/90 border border-slate-800 rounded-xl p-1.5 text-center z-20 shrink-0">
+    <p id="sceneDesc" class="text-[11px] font-mono text-slate-200 leading-tight">
+      Site engineer wearing a white safety helmet walks onto the active construction site with tower cranes moving in the background.
+    </p>
+  </div>
 
   <script>
     let sceneIdx = 0;
     let autoTimer = null;
     let canvas, ctx;
-    let engineerX = 100;
-    let legAngle = 0;
-    let walkDirection = 1;
+    let engineerX = 80;
+    let craneAngle = 0;
+    let legCycle = 0;
 
     const storyData = [
       {
@@ -141,23 +83,23 @@
         desc: "Subcontractors demand hardcopies, Office staff request Excel claims, Consultants track proprietary issues, Clients check portals, and Coordinators ask for Revit BIM models."
       },
       {
-        title: "Scene 3: Manual Processing Overload",
+        title: "Scene 3: Resolving RFIs & Manual Bottlenecks",
         desc: "The engineer manually reviews, translates, and feeds data back to every single party one by one."
       },
       {
-        title: "Scene 4: Working Until Midnight",
-        desc: "Clock ticks past 02:00 AM. Information requests stack up endlessly, causing extreme fatigue and operational burnout."
+        title: "Scene 4: Working Until Midnight (Burnout)",
+        desc: "Clock ticks past 02:00 AM under site desk lamps. Paper stacks pile up endlessly as fatigue and information overload set in."
       },
       {
-        title: "Scene 5: BOOM! Flash-Bang Burst",
+        title: "Scene 5: Flash-Bang BOOM! System Overload",
         desc: "BOOM! The legacy manual data system overloads! Screen flashes white and resets back to the engineer pondering."
       },
       {
-        title: "Scene 6: The Idea Strikes!",
+        title: "Scene 6: The Innovation Idea (Excel VBA & Drive)",
         desc: "The Idea Strikes! Thinking of using Excel VBA scripts & Google Drive standardization to unify data flows."
       },
       {
-        title: "Scene 7: Connected Automation System",
+        title: "Scene 7: Connected Automation Pipeline",
         desc: "An automated terminal running Excel VBA & Drive folder nodes connects all 4 external parties dynamically!"
       },
       {
@@ -165,8 +107,8 @@
         desc: "Walking through digital matrix code (10101010) into a smooth transition toward software development."
       },
       {
-        title: "Scene 9: The ETL Revelation",
-        desc: "Data Engineering concepts emerge directly from the dark screen."
+        title: "Scene 9: The Data Engineering Revelation",
+        desc: "Data Engineering concepts emerge directly from the software space."
       },
       {
         title: "Scene 10: Construction = Data Engineering Mapping",
@@ -189,141 +131,168 @@
       canvas.height = canvas.parentElement.clientHeight;
     }
 
-    function drawStickman(x, y, helmetColor = '#ffffff', scale = 1) {
+    /* Draw Role Characters */
+    function drawAvatar(x, y, role = 'engineer', scale = 1) {
       ctx.save();
       ctx.translate(x, y);
       ctx.scale(scale, scale);
 
-      const legOffset = Math.sin(legAngle) * 12;
+      const legOffset = Math.sin(legCycle) * 10;
 
-      ctx.strokeStyle = '#c084fc';
-      ctx.lineWidth = 3;
+      // Legs
+      ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3;
       ctx.beginPath();
       ctx.moveTo(0, 0); ctx.lineTo(-8 + legOffset, 24);
       ctx.moveTo(0, 0); ctx.lineTo(8 - legOffset, 24);
       ctx.stroke();
 
+      // Body (Role Colors)
+      let shirtColor = '#38bdf8';
+      let helmetColor = '#ffffff';
+
+      if (role === 'worker') { shirtColor = '#f97316'; helmetColor = '#eab308'; }
+      if (role === 'client') { shirtColor = '#1e293b'; helmetColor = '#f8fafc'; }
+      if (role === 'consultant') { shirtColor = '#0284c7'; helmetColor = '#0284c7'; }
+      if (role === 'coordinator') { shirtColor = '#10b981'; helmetColor = '#10b981'; }
+
+      ctx.fillStyle = shirtColor;
+      ctx.fillRect(-8, -26, 16, 26);
+
+      // Arms
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 3;
       ctx.beginPath();
-      ctx.moveTo(0, -25); ctx.lineTo(0, 0);
+      ctx.moveTo(-8, -22); ctx.lineTo(-14 - legOffset * 0.5, -8);
+      ctx.moveTo(8, -22); ctx.lineTo(14 + legOffset * 0.5, -8);
       ctx.stroke();
 
-      ctx.beginPath();
-      ctx.moveTo(0, -18); ctx.lineTo(-10 - legOffset * 0.5, -6);
-      ctx.moveTo(0, -18); ctx.lineTo(10 + legOffset * 0.5, -6);
-      ctx.stroke();
-
+      // Head
       ctx.fillStyle = '#fde047';
-      ctx.beginPath();
-      ctx.arc(0, -32, 8, 0, Math.PI * 2);
-      ctx.fill();
+      ctx.beginPath(); ctx.arc(0, -34, 8, 0, Math.PI * 2); ctx.fill();
 
+      // Hardhat / Cap
       ctx.fillStyle = helmetColor;
-      ctx.beginPath();
-      ctx.arc(0, -35, 10, Math.PI, 0);
-      ctx.fill();
-      ctx.fillRect(-12, -36, 24, 3);
+      ctx.beginPath(); ctx.arc(0, -37, 10, Math.PI, 0); ctx.fill();
+      ctx.fillRect(-12, -38, 24, 3);
 
       ctx.restore();
     }
 
-    function drawScene() {
+    function renderScene() {
       if (!ctx || !canvas) return;
       const w = canvas.width;
       const h = canvas.height;
-      const groundY = h * 0.7;
+      const groundY = h * 0.68;
 
       ctx.clearRect(0, 0, w, h);
 
+      // Ground Line
       ctx.strokeStyle = '#334155'; ctx.lineWidth = 2;
       ctx.beginPath(); ctx.moveTo(0, groundY + 24); ctx.lineTo(w, groundY + 24); ctx.stroke();
 
-      legAngle += 0.1;
+      craneAngle += 0.02;
+      legCycle += 0.1;
 
       if (sceneIdx === 0) {
-        engineerX += 1.2 * walkDirection;
-        if (engineerX > w - 80 || engineerX < 80) walkDirection *= -1;
+        engineerX += 1.2;
+        if (engineerX > w - 80) engineerX = 80;
 
-        ctx.strokeStyle = '#475569';
-        ctx.strokeRect(w * 0.15, h * 0.15, 30, h * 0.55);
-        ctx.strokeRect(w * 0.78, h * 0.1, 40, h * 0.6);
+        // Crane Tower Background
+        ctx.strokeStyle = '#475569'; ctx.lineWidth = 2;
+        ctx.strokeRect(w * 0.78, h * 0.12, 30, h * 0.55);
+        ctx.beginPath();
+        ctx.moveTo(w * 0.78, h * 0.12);
+        ctx.lineTo(w * 0.78 + Math.cos(craneAngle) * 60, h * 0.12 - 10);
+        ctx.stroke();
 
-        drawStickman(engineerX, groundY, '#ffffff', 1.0);
+        drawAvatar(engineerX, groundY, 'engineer', 1.0);
       }
       else if (sceneIdx === 1 || sceneIdx === 2) {
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
 
-        const p1X = w * 0.15; const p2X = w * 0.32;
-        const p3X = w * 0.68; const p4X = w * 0.85;
+        const p1 = w * 0.15; const p2 = w * 0.32;
+        const p3 = w * 0.68; const p4 = w * 0.85;
 
-        drawStickman(p1X, groundY, '#eab308', 0.85);
-        drawStickman(p2X, groundY, '#38bdf8', 0.85);
-        drawStickman(p3X, groundY, '#a855f7', 0.85);
-        drawStickman(p4X, groundY, '#34d399', 0.85);
+        drawAvatar(p1, groundY, 'worker', 0.9);
+        drawAvatar(p2, groundY, 'client', 0.9);
+        drawAvatar(p3, groundY, 'consultant', 0.9);
+        drawAvatar(p4, groundY, 'coordinator', 0.9);
 
-        ctx.fillStyle = '#0f172a'; ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 1;
-        ctx.fillRect(p1X - 25, groundY - 60, 50, 18); ctx.strokeRect(p1X - 25, groundY - 60, 50, 18);
-        ctx.fillRect(p2X - 25, groundY - 60, 50, 18); ctx.strokeRect(p2X - 25, groundY - 60, 50, 18);
-        ctx.fillRect(p3X - 25, groundY - 60, 50, 18); ctx.strokeRect(p3X - 25, groundY - 60, 50, 18);
-        ctx.fillRect(p4X - 25, groundY - 60, 50, 18); ctx.strokeRect(p4X - 25, groundY - 60, 50, 18);
+        ctx.fillStyle = '#0f172a'; ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 1.5;
+        
+        ctx.fillRect(p1 - 35, groundY - 65, 70, 22); ctx.strokeRect(p1 - 35, groundY - 65, 70, 22);
+        ctx.fillRect(p2 - 35, groundY - 65, 70, 22); ctx.strokeRect(p2 - 35, groundY - 65, 70, 22);
+        ctx.fillRect(p3 - 35, groundY - 65, 70, 22); ctx.strokeRect(p3 - 35, groundY - 65, 70, 22);
+        ctx.fillRect(p4 - 35, groundY - 65, 70, 22); ctx.strokeRect(p4 - 35, groundY - 65, 70, 22);
 
-        ctx.fillStyle = '#38bdf8'; ctx.font = '9px monospace';
-        ctx.fillText("📑 Claim", p1X - 18, groundY - 48);
-        ctx.fillText("🏛️ Portal", p2X - 18, groundY - 48);
-        ctx.fillText("📊 Tracker", p3X - 20, groundY - 48);
-        ctx.fillText("📐 Revit", p4X - 16, groundY - 48);
+        ctx.fillStyle = '#f8fafc'; ctx.font = '9px monospace';
+        ctx.fillText("📑 RFA Claim", p1 - 28, groundY - 51);
+        ctx.fillText("🏛️ Portal Info", p2 - 30, groundY - 51);
+        ctx.fillText("📊 RFI #104", p3 - 26, groundY - 51);
+        ctx.fillText("📐 BIM Clash", p4 - 28, groundY - 51);
       }
       else if (sceneIdx === 3) {
-        ctx.fillStyle = '#f59e0b'; ctx.font = '18px font-mono';
-        ctx.fillText("⏰ 02:00 AM - Burnout", w * 0.35, h * 0.25);
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        ctx.fillStyle = '#f59e0b'; ctx.font = '16px monospace';
+        ctx.fillText("⏰ 02:00 AM - Burnout & Paper Overload", w * 0.25, h * 0.2);
+
+        ctx.fillStyle = '#334155'; ctx.fillRect(w * 0.42, groundY - 15, 120, 15);
+        ctx.fillStyle = '#f8fafc';
+        ctx.fillRect(w * 0.44, groundY - 40, 25, 25);
+        ctx.fillRect(w * 0.52, groundY - 50, 25, 35);
+
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
       }
       else if (sceneIdx === 4) {
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
       }
       else if (sceneIdx === 5) {
-        ctx.fillStyle = '#facc15'; ctx.font = '20px font-mono';
-        ctx.fillText("💡 Idea: Excel VBA & Drive", w * 0.3, h * 0.25);
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        ctx.fillStyle = '#facc15'; ctx.font = '18px monospace';
+        ctx.fillText("💡 Idea: Excel VBA & Google Drive Automation", w * 0.2, h * 0.2);
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
       }
       else if (sceneIdx === 6) {
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
 
         ctx.fillStyle = '#0f172a'; ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
         ctx.fillRect(w * 0.42, groundY - 75, 110, 38); ctx.strokeRect(w * 0.42, groundY - 75, 110, 38);
         ctx.fillStyle = '#38bdf8'; ctx.font = '9px monospace';
-        ctx.fillText("Excel VBA Loop", w * 0.44, groundY - 53);
+        ctx.fillText("Sub Automate_RFIs()", w * 0.43, groundY - 53);
 
-        ctx.setLineDash([5, 5]); ctx.strokeStyle = '#38bdf8';
+        ctx.setLineDash([4, 4]); ctx.strokeStyle = '#22c55e'; ctx.lineWidth = 2;
         const partyXs = [w * 0.15, w * 0.32, w * 0.68, w * 0.85];
-        partyXs.forEach(px => {
-          drawStickman(px, groundY, '#64748b', 0.8);
+        const partyRoles = ['worker', 'client', 'consultant', 'coordinator'];
+
+        partyXs.forEach((px, idx) => {
+          drawAvatar(px, groundY, partyRoles[idx], 0.8);
           ctx.beginPath(); ctx.moveTo(w * 0.5, groundY - 55); ctx.lineTo(px, groundY - 25); ctx.stroke();
+
+          ctx.fillStyle = '#15803d'; ctx.fillRect(px - 15, groundY - 55, 30, 15);
+          ctx.fillStyle = '#ffffff'; ctx.font = '9px font-black'; ctx.fillText("✓ OK", px - 10, groundY - 44);
         });
         ctx.setLineDash([]);
       }
       else if (sceneIdx === 7) {
         ctx.fillStyle = '#22c55e'; ctx.font = '12px monospace';
-        for (let i = 0; i < 16; i++) {
-          ctx.fillText("10101010", (i * w) / 16, (Math.sin(Date.now() / 200 + i) + 1) * 0.4 * h);
+        for (let i = 0; i < 18; i++) {
+          ctx.fillText("10101010", (i * w) / 18, (Math.sin(Date.now() / 200 + i) + 1) * 0.4 * h);
         }
         engineerX += 1.0;
-        drawStickman(engineerX % w, groundY, '#ffffff', 1.1);
+        drawAvatar(engineerX % w, groundY, 'engineer', 1.1);
       }
       else if (sceneIdx === 8) {
         ctx.fillStyle = '#a855f7'; ctx.font = '18px font-black';
-        ctx.fillText("✨ DATA ENGINEERING REVELATION", w * 0.22, h * 0.32);
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        ctx.fillText("✨ DATA PLATFORM REVELATION", w * 0.25, h * 0.28);
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
       }
       else if (sceneIdx === 9) {
         ctx.fillStyle = '#34d399'; ctx.font = '18px font-black';
-        ctx.fillText("EXTRACT ➔ TRANSFORM ➔ LOAD", w * 0.25, h * 0.32);
-        drawStickman(w * 0.5, groundY, '#ffffff', 1.1);
+        ctx.fillText("EXTRACT ➔ TRANSFORM ➔ LOAD", w * 0.25, h * 0.28);
+        drawAvatar(w * 0.5, groundY, 'engineer', 1.1);
       }
     }
 
     function startLoop() {
       function loop() {
-        drawScene();
+        renderScene();
         requestAnimationFrame(loop);
       }
       loop();
@@ -357,13 +326,10 @@
       if (autoTimer) {
         clearInterval(autoTimer);
         autoTimer = null;
-        btn.innerText = "Auto Play";
-        btn.classList.remove('bg-purple-600');
-        btn.classList.add('bg-purple-600');
+        btn.innerHTML = `<i class="fa-solid fa-play text-[10px]"></i> Auto Play`;
       } else {
-        autoTimer = setInterval(playNextScene, 3000);
-        btn.innerText = "Pause Story";
-        btn.classList.add('bg-purple-600');
+        autoTimer = setInterval(playNextScene, 3200);
+        btn.innerHTML = `<i class="fa-solid fa-pause text-[10px]"></i> Pause`;
       }
     }
 

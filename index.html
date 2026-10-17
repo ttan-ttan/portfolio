@@ -36,18 +36,12 @@
       box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
       backdrop-filter: blur(12px);
     }
-    .neon-card-cyan:hover {
-      border-color: #38bdf8;
-      box-shadow: 0 0 25px rgba(56, 189, 248, 0.35);
-    }
-
     .neon-card-purple {
       background: rgba(15, 23, 42, 0.85);
       border: 1px solid rgba(168, 85, 247, 0.3);
       box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
       backdrop-filter: blur(12px);
     }
-
     .neon-card-emerald {
       background: rgba(15, 23, 42, 0.85);
       border: 1px solid rgba(52, 211, 153, 0.3);
@@ -58,7 +52,6 @@
     ::-webkit-scrollbar { width: 5px; }
     ::-webkit-scrollbar-track { background: #020617; }
     ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
-    ::-webkit-scrollbar-thumb:hover { background: #38bdf8; }
   </style>
 </head>
 <body id="mainBody" class="bg-tech-grid text-slate-100 flex flex-col justify-between p-3 select-none">
@@ -75,7 +68,7 @@
       </div>
     </div>
 
-    <!-- External Links -->
+    <!-- External Profile & Resume Links -->
     <div class="flex items-center gap-3 font-mono text-xs">
       <a href="https://www.linkedin.com/in/ttan-ttan/" target="_blank" rel="noopener noreferrer" class="px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors">
         <i class="fa-brands fa-linkedin text-sm"></i> LinkedIn
@@ -92,7 +85,7 @@
     </div>
   </header>
 
-  <!-- MAIN CANVAS CONTAINER -->
+  <!-- MAIN STAGE STACK -->
   <main id="stageCanvas" class="w-full flex-1 my-2 relative z-10 flex items-center justify-center overflow-hidden min-h-0 pb-1">
 
     <!-- PHASE 0: OVERVIEW -->
@@ -103,7 +96,7 @@
       </div>
 
       <div class="grid grid-cols-4 gap-4 w-full max-w-6xl">
-        <div onclick="goToPhase(1)" class="neon-card-cyan rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+        <div onclick="goToPhase(1)" class="neon-card-cyan rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between">
           <div>
             <span class="text-xs font-mono font-black text-cyan-400">PHASE 01</span>
             <h3 class="text-base font-black text-slate-100 mt-1">Civil Eng. Career</h3>
@@ -112,16 +105,16 @@
           <span class="text-xs font-mono text-cyan-300 font-bold mt-4">View All 8 Projects <i class="fa-solid fa-arrow-right"></i></span>
         </div>
 
-        <div onclick="goToPhase(2)" class="neon-card-purple rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+        <div onclick="goToPhase(2)" class="neon-card-purple rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between">
           <div>
             <span class="text-xs font-mono font-black text-purple-400">PHASE 02</span>
-            <h3 class="text-base font-black text-slate-100 mt-1">Animated Story & Pivot</h3>
-            <p class="text-xs text-slate-400 mt-2">10-scene interactive helmet engineer story leading into IT transition.</p>
+            <h3 class="text-base font-black text-slate-100 mt-1">Lively Pivot Story</h3>
+            <p class="text-xs text-slate-400 mt-2">Cinematic video narrative detailing site data chaos transforming into data engineering pipelines.</p>
           </div>
-          <span class="text-xs font-mono text-purple-300 font-bold mt-4">Explore Transition <i class="fa-solid fa-arrow-right"></i></span>
+          <span class="text-xs font-mono text-purple-300 font-bold mt-4">Watch Story Video <i class="fa-solid fa-arrow-right"></i></span>
         </div>
 
-        <div onclick="goToPhase(3)" class="neon-card-emerald rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+        <div onclick="goToPhase(3)" class="neon-card-emerald rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between">
           <div>
             <span class="text-xs font-mono font-black text-sky-400">PHASE 03</span>
             <h3 class="text-base font-black text-slate-100 mt-1">Capstone Projects</h3>
@@ -130,11 +123,11 @@
           <span class="text-xs font-mono text-sky-300 font-bold mt-4">View Capstones <i class="fa-solid fa-arrow-right"></i></span>
         </div>
 
-        <div onclick="goToPhase(4)" class="neon-card-emerald rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between group">
+        <div onclick="goToPhase(4)" class="neon-card-emerald rounded-3xl p-5 cursor-pointer transition-all hover:scale-105 flex flex-col justify-between">
           <div>
             <span class="text-xs font-mono font-black text-emerald-400">PHASE 04</span>
             <h3 class="text-base font-black text-slate-100 mt-1">DE Readiness Matrix</h3>
-            <p class="text-xs text-slate-400 mt-2">Direct site-to-DE skill correlations, technical matrix & value proposal.</p>
+            <p class="text-xs text-slate-400 mt-2">Direct site-to-DE skill correlations, technical matrix & value proposition.</p>
           </div>
           <span class="text-xs font-mono text-emerald-300 font-bold mt-4">View Readiness <i class="fa-solid fa-arrow-right"></i></span>
         </div>
@@ -152,7 +145,6 @@
       </div>
 
       <div class="grid grid-cols-4 grid-rows-2 gap-2 flex-1 my-1 min-h-0">
-        <!-- Project 1 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -163,12 +155,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Site Engineer · Small Scale</p>
             <p class="text-[10px] text-slate-300 leading-tight">Steel structure & concrete reinforced structure — <strong>One-man band</strong> site manager.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Autonomous Execution & Versatility
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Autonomous Execution</div>
         </div>
 
-        <!-- Project 2 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -179,12 +168,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Project Engineer · Chemical Hub</p>
             <p class="text-[10px] text-slate-300 leading-tight">Chemical warehouse structural works and containment zones.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Risk Management & Workflow Planning
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Risk & Workflow Planning</div>
         </div>
 
-        <!-- Project 3 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -195,12 +181,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Senior Engineer · S$100M Campus</p>
             <p class="text-[10px] text-slate-300 leading-tight">Complex steel structures, multi-block framing & finishes.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Steel Structures & Precision Detail
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: High Precision Detail</div>
         </div>
 
-        <!-- Project 4 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -211,12 +194,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Project Manager · S$45M Hub</p>
             <p class="text-[10px] text-slate-300 leading-tight">Authority submissions, BCA clearances & scheduling.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Regulation Compliance & Project Planning
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Regulation & Submissions</div>
         </div>
 
-        <!-- Project 5 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -227,12 +207,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Project Manager · Precast/PPVC</p>
             <p class="text-[10px] text-slate-300 leading-tight">PPVC prefabrication logistics & module jointing.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: PPVC Coordination & Communication
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Multi-party Coordination</div>
         </div>
 
-        <!-- Project 6 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -243,12 +220,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Project Manager · B1 Industrial</p>
             <p class="text-[10px] text-slate-300 leading-tight">Piling, <strong>labour management</strong> & manpower allocation.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Labour Management & Optimization
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Labour & Resource Optimization</div>
         </div>
 
-        <!-- Project 7 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -259,12 +233,9 @@
             <p class="text-[10px] font-mono text-cyan-400">Senior PM · Healthcare Facility</p>
             <p class="text-[10px] text-slate-300 leading-tight">Medical interface & <strong>compliance to MOH/BCA</strong>.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Stakeholder & Authority Compliance
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Stakeholder Governance</div>
         </div>
 
-        <!-- Project 8 -->
         <div class="neon-card-cyan rounded-2xl p-2 flex flex-col justify-between overflow-hidden">
           <div class="space-y-1">
             <div class="h-28 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
@@ -273,50 +244,70 @@
             </div>
             <h4 class="text-xs font-black text-slate-100">HDB Yishun C27</h4>
             <p class="text-[10px] font-mono text-cyan-400">Structural Manager · S$100M Housing</p>
-            <p class="text-[10px] text-slate-300 leading-tight">Mega logistics & <strong>cross-country coordination/inspection</strong>.</p>
+            <p class="text-[10px] text-slate-300 leading-tight">Mega logistics & <strong>cross-country inspection</strong>.</p>
           </div>
-          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">
-            Skill: Cross-Country Inspection & Mega Logistics
-          </div>
+          <div class="pt-1 border-t border-slate-800 text-[9px] font-mono text-amber-300 font-bold">Skill: Mega Logistics & Supply Chain</div>
         </div>
       </div>
     </div>
 
-    <!-- PHASE 2: PIVOT STORY HUB -->
-    <div id="phase2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-3">
-      <div class="border-b border-slate-800 pb-1.5 shrink-0 flex justify-between items-center">
+    <!-- PHASE 2: EXPANDED VIDEO VIEWPORT -->
+    <div id="phase2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2 gap-2">
+      <div class="border-b border-slate-800 pb-1 shrink-0 flex justify-between items-center">
         <div>
           <span class="text-[10px] font-mono font-black text-purple-400 uppercase">PHASE 2 · CAREER TRANSITION ROADMAP</span>
-          <h2 class="text-lg font-black text-slate-100 leading-tight">From Site Data Chaos to Data Engineering</h2>
+          <h2 class="text-base font-black text-slate-100 leading-tight">From Site Data Chaos to Data Engineering</h2>
         </div>
-        <a href="whyswitch.html" target="_blank" class="px-4 py-2 bg-purple-600 hover:bg-purple-500 text-white font-mono text-xs font-bold rounded-xl shadow-[0_0_15px_rgba(168,85,247,0.5)] flex items-center gap-2 transition-transform hover:scale-105">
-          <i class="fa-solid fa-film"></i> Launch Interactive Animated Story (whyswitch.html)
-        </a>
+        <span class="text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800 px-2.5 py-0.5 rounded-full font-bold">
+          Career Pivot Story Video
+        </span>
       </div>
 
-      <div class="grid grid-cols-4 gap-4 my-auto">
-        <div class="neon-card-purple rounded-2xl p-4 flex flex-col justify-between">
-          <span class="text-xs font-mono text-purple-400 font-bold">01. ACADEMIC PIVOT</span>
-          <h4 class="text-sm font-black text-slate-100 mt-1">PostGrad Cybersecurity</h4>
-          <p class="text-xs text-slate-400 mt-2">PSB Academy & 42 SG Piscine. Linux CLI & C programming algorithms.</p>
+      <!-- EMBEDDED VIDEO PLAYER BOX -->
+      <div class="neon-card-purple rounded-2xl p-1.5 flex-1 w-full relative overflow-hidden flex flex-col justify-center items-center min-h-0 bg-slate-950/80">
+        <video 
+          id="pivotVideo"
+          class="w-full h-full object-contain rounded-xl shadow-2xl"
+          controls 
+          preload="metadata"
+          poster="photo1.jpg">
+          <source src="why.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      <!-- PIVOT MILESTONE CARDS BELOW -->
+      <div class="grid grid-cols-4 gap-2 shrink-0">
+        <div class="bg-slate-900/90 border border-purple-900/40 rounded-xl p-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] font-mono text-purple-400 font-bold">01. ACADEMIC PIVOT</span>
+            <h4 class="text-xs font-black text-slate-100 mt-0.5">PostGrad Cybersecurity</h4>
+            <p class="text-[10px] text-slate-400 mt-0.5 leading-tight">PSB & 42 SG Piscine. Linux CLI & C algorithms.</p>
+          </div>
         </div>
 
-        <div class="neon-card-purple rounded-2xl p-4 flex flex-col justify-between">
-          <span class="text-xs font-mono text-purple-400 font-bold">02. SOC ANALYST L1</span>
-          <h4 class="text-sm font-black text-slate-100 mt-1">IRAS (Spade Consulting)</h4>
-          <p class="text-xs text-slate-400 mt-2">SIEM log monitoring, 50% error reduction via VBA & 50% SLA optimization.</p>
+        <div class="bg-slate-900/90 border border-purple-900/40 rounded-xl p-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] font-mono text-purple-400 font-bold">02. SOC ANALYST L1</span>
+            <h4 class="text-xs font-black text-slate-100 mt-0.5">IRAS (Spade Consulting)</h4>
+            <p class="text-[10px] text-slate-400 mt-0.5 leading-tight">Log analysis, 50% VBA error reduction & SLA optimization.</p>
+          </div>
         </div>
 
-        <div class="neon-card-purple rounded-2xl p-4 flex flex-col justify-between">
-          <span class="text-xs font-mono text-purple-400 font-bold">03. SOFTWARE ENG.</span>
-          <h4 class="text-sm font-black text-slate-100 mt-1">NTU SCTP Software Program</h4>
-          <p class="text-xs text-slate-400 mt-2">Garang Guni recycling marketplace app, Docker, PostgreSQL & GitHub CI/CD.</p>
+        <div class="bg-slate-900/90 border border-purple-900/40 rounded-xl p-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] font-mono text-purple-400 font-bold">03. SOFTWARE ENG.</span>
+            <h4 class="text-xs font-black text-slate-100 mt-0.5">NTU SCTP Software</h4>
+            <p class="text-[10px] text-slate-400 mt-0.5 leading-tight">Garang Guni app, PostgreSQL, REST APIs & Docker.</p>
+          </div>
         </div>
 
-        <div class="neon-card-emerald rounded-2xl p-4 flex flex-col justify-between">
-          <span class="text-xs font-mono text-emerald-400 font-bold">04. DATA ENGINEER</span>
-          <h4 class="text-sm font-black text-slate-100 mt-1">GenSG Junior Data Engineer</h4>
-          <p class="text-xs text-slate-400 mt-2">Microsoft Fabric, PySpark Medallion pipelines, Star Schema & Power BI Direct Lake.</p>
+        <div class="bg-slate-900/90 border border-emerald-900/40 rounded-xl p-2 flex flex-col justify-between">
+          <div>
+            <span class="text-[9px] font-mono text-emerald-400 font-bold">04. DATA ENGINEER</span>
+            <h4 class="text-xs font-black text-slate-100 mt-0.5">GenSG Data Engineer</h4>
+            <p class="text-[10px] text-slate-400 mt-0.5 leading-tight">Microsoft Fabric OneLake, PySpark Medallion & Power BI.</p>
+          </div>
         </div>
       </div>
     </div>
@@ -382,7 +373,7 @@
       </div>
     </div>
 
-    <!-- PHASE 4: DE READINESS MATRIX (INCLUDES MATURITY & WORK ETHIC) -->
+    <!-- PHASE 4: DE READINESS MATRIX -->
     <div id="phase4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2 overflow-y-auto">
       <div class="border-b border-slate-800 pb-2 flex justify-between items-center shrink-0">
         <div>
@@ -445,7 +436,7 @@
           </div>
         </div>
 
-        <!-- UPDATED VALUE PROPOSAL -->
+        <!-- WHAT I BRING -->
         <div class="neon-card-emerald rounded-3xl p-4">
           <h3 class="text-xs font-black text-emerald-400 font-mono tracking-wider uppercase mb-2">
             <i class="fa-solid fa-briefcase mr-2"></i>WHAT I BRING TO THE ROLE
@@ -475,21 +466,11 @@
   <!-- FOOTER -->
   <footer class="w-full bg-slate-950/90 border border-slate-800 rounded-2xl p-2.5 flex justify-between items-center backdrop-blur-md z-40 shrink-0">
     <nav class="flex gap-2">
-      <button onclick="goToPhase(0)" id="tab0" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-cyan-500 text-slate-950 shadow-md">
-        Overview
-      </button>
-      <button onclick="goToPhase(1)" id="tab1" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-cyan-300 hover:bg-slate-900">
-        Phase 1: Civil Projects
-      </button>
-      <button onclick="goToPhase(2)" id="tab2" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-purple-300 hover:bg-slate-900">
-        Phase 2: Pivot Story
-      </button>
-      <button onclick="goToPhase(3)" id="tab3" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-sky-300 hover:bg-slate-900">
-        Phase 3: Capstones
-      </button>
-      <button onclick="goToPhase(4)" id="tab4" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-emerald-300 hover:bg-slate-900">
-        Phase 4: DE Matrix
-      </button>
+      <button onclick="goToPhase(0)" id="tab0" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-cyan-500 text-slate-950 shadow-md">Overview</button>
+      <button onclick="goToPhase(1)" id="tab1" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-cyan-300 hover:bg-slate-900">Phase 1: Civil Projects</button>
+      <button onclick="goToPhase(2)" id="tab2" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-purple-300 hover:bg-slate-900">Phase 2: Pivot Story</button>
+      <button onclick="goToPhase(3)" id="tab3" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-sky-300 hover:bg-slate-900">Phase 3: Capstones</button>
+      <button onclick="goToPhase(4)" id="tab4" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all text-slate-400 hover:text-emerald-300 hover:bg-slate-900">Phase 4: DE Matrix</button>
     </nav>
 
     <div class="flex items-center gap-3 font-mono text-xs">
