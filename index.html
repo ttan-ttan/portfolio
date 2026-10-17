@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Tan Yong Jian | DE Interactive Career Canvas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+      background-color: #070a14;
+      color: #f1f5f9;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+    }
+
+    /* Background image layer */
+    #viewport {
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      overflow: hidden;
+      background-image: url('background.jpg');
+      background-size: cover;
+      background-position: center;
+    }
+
+    /* World Canvas Container */
+    #world {
+      width: 2600px;
+      height: 1000px;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform-origin: center center;
+      transition: transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    /* Running Neon Light Backlight Effect */
+    @keyframes border-run {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .neon-flow-box {
+      position: relative;
+      background: rgba(10, 15, 30, 0.92);
+      border-radius: 24px;
+      z-index: 1;
+    }
+
+    /* Continuous Neon Light Border Animation */
+    .neon-flow-box::before {
+      content: '';
+      position: absolute;
+      top: -2px; left: -2px; right: -2px; bottom: -2px;
+      background: linear-gradient(90deg, #38bdf8, #818cf8, #c084fc, #38bdf8);
+      background-size: 300% 300%;
+      border-radius: 26px;
+      z-index: -1;
+      animation: border-run 4s linear infinite;
+      opacity: 0.6;
+      filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.4));
+      transition: opacity 0.3s, filter 0.3s;
+    }
+
+    .neon-flow-box:hover::before {
+      opacity: 1;
+      filter: drop-shadow(0 0 18px rgba(56, 189, 248, 0.8));
+    }
+
+    /* Standout Hero Namecard styling */
+    .hero-card::before {
+      background: linear-gradient(90deg, #0284c7, #38bdf8, #a855f7, #0284c7) !important;
+      background-size: 300% 300% !important;
+      opacity: 0.95 !important;
+      filter: drop-shadow(0 0 20px rgba(56, 189, 248, 0.7)) !important;
+    }
+
+    /* Spatial Node Cards */
+    .spatial-card {
+      position: absolute;
+      padding: 24px;
+      backdrop-filter: blur(20px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      cursor: pointer;
+      z-index: 10;
+      transition: transform 0.3s ease;
+    }
+
+    .spatial-card:hover {
+      transform: translateY(-5px) scale(1.02);
+    }
+
+    .active-node::before {
+      opacity: 1 !important;
+      filter: drop-shadow(0 0 25px rgba(56, 189, 248, 0.9)) !important;
+    }
+
+    /* Animated Neon Dotted SVG Pipeline Line */
+    .neon-line {
+      stroke: #38bdf8;
+      stroke-width: 4;
+      stroke-dasharray: 12, 12;
+      animation: dash-flow 1.5s linear infinite;
+      filter: drop-shadow(0 0 10px #38bdf8);
+    }
+
+    @keyframes dash-flow {
+      to { stroke-dashoffset: -24; }
+    }
+
+    /* Slow Blinking Button Effect */
+    @keyframes slow-blink {
+      0%, 100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 0.9)); transform: scale(1); }
+      50% { opacity: 0.65; filter: drop-shadow(0 0 4px rgba(56, 189, 248, 0.2)); transform: scale(0.98); }
+    }
+
+    .blink-slow {
+      animation: slow-blink 2.2s infinite ease-in-out;
+      border-color: #38bdf8 !important;
+      background-color: #0284c7 !important;
+      color: #ffffff !important;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Viewport Stage -->
+  <div id="viewport" onclick="onCanvasClick(event)">
+
+    <!-- Top Floating Bar: Action Links -->
+    <div class="fixed top-4 right-4 md:right-8 z-50 flex items-center gap-3 bg-slate-950/90 p-2.5 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-2xl">
+      <a href="https://linkedin.com/in/tanyj" target="_blank" class="flex items-center gap-2 bg-slate-900 border border-slate-700 hover:border-sky-400 px-3.5 py-2 rounded-xl transition-all">
+        <img src="linkedin.jpg" alt="LinkedIn" class="w-6 h-6 rounded object-cover" onerror="this.style.display='none'">
+        <span class="text-xs font-mono font-bold text-slate-200">LinkedIn</span>
+      </a>
+
+      <a href="https://github.com/ttan-ttan" target="_blank" class="flex items-center gap-2 bg-slate-900 border border-slate-700 hover:border-sky-400 px-3.5 py-2 rounded-xl transition-all">
+        <img src="github.jpg" alt="GitHub" class="w-6 h-6 rounded object-cover" onerror="this.style.display='none'">
+        <span class="text-xs font-mono font-bold text-slate-200">GitHub</span>
+      </a>
+
+      <div class="flex items-center bg-slate-900 border border-slate-700 rounded-xl overflow-hidden font-mono text-xs font-bold">
+        <span class="px-3 text-sky-400 border-r border-slate-700"><i class="fa-solid fa-file-pdf mr-1"></i> Resume</span>
+        <a href="TanYongJian_JDE10.pdf" target="_blank" class="px-3 py-2 hover:bg-slate-800 text-slate-300">Open</a>
+        <a href="TanYongJian_JDE10.pdf" download class="px-3 py-2 hover:bg-slate-800 text-emerald-400 border-l border-slate-700">Download</a>
+      </div>
+
+      <button onclick="toggleQrModal()" class="flex items-center gap-2 bg-emerald-950/80 border border-emerald-500/60 hover:bg-emerald-900 px-3.5 py-2 rounded-xl transition-all text-xs font-mono font-bold text-emerald-300">
+        <i class="fa-solid fa-qrcode"></i> QR Code
+      </button>
+    </div>
+
+    <!-- Spatial World Canvas (2-Row Pipeline) -->
+    <div id="world">
+
+      <!-- SVG Layer for Neon Connector Lines -->
+      <svg class="absolute inset-0 w-full h-full pointer-events-none z-0">
+        <!-- Top Row Connectors -->
+        <path class="neon-line" d="M 620 280 L 780 280" />
+        <path class="neon-line" d="M 1260 280 L 1420 280" />
+        <!-- Drop Down to Row 2 Connector -->
+        <path class="neon-line" d="M 1900 280 L 2100 280 L 2100 450 L 1040 450 L 1040 580" />
+        <!-- Row 2 Connectors -->
+        <path class="neon-line" d="M 1300 720 L 1420 720" />
+        <path class="neon-line" d="M 1940 720 L 2060 720" />
+      </svg>
+
+      <!-- TOP-LEFT STANDOUT HERO NAMECARD -->
+      <div id="cardMain" class="spatial-card neon-flow-box hero-card w-[520px] top-[150px] left-[100px]" onclick="zoomToNode('cardMain', event)">
+        <div class="flex justify-between items-center mb-2">
+          <span class="text-xs font-mono text-sky-300 uppercase font-bold tracking-widest block">CAREER EVOLUTION ROADMAP</span>
+          <span class="bg-sky-500/20 text-sky-300 border border-sky-400 px-2.5 py-0.5 rounded-full text-[10px] font-mono font-bold">PORTFOLIO HUB</span>
+        </div>
+        <h1 class="text-4xl font-black text-white mb-2 tracking-tight">Tan Yong Jian</h1>
+        <p class="text-slate-200 text-xs leading-relaxed font-sans">
+          10 years of structural engineering leadership managing complex projects, now transitioning into cloud-native Data Engineering architecture.
+        </p>
+      </div>
+
+      <!-- ROW 1 - NODE 1: PHASE 1 FOUNDATION -->
+      <div id="cardPhase1" class="spatial-card neon-flow-box w-[480px] top-[150px] left-[780px]" onclick="zoomToNode('cardPhase1', event)">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-mono text-indigo-400 font-bold">PHASE 1: FOUNDATION</span>
+          <span class="text-[10px] font-mono bg-indigo-950 text-indigo-300 px-2.5 py-0.5 rounded border border-indigo-800">Construction Era</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Graduate to Construction Manager</h3>
+        <p class="text-slate-300 text-xs mb-3">10 years managing structural projects (S$3M–S$100M) across Singapore.</p>
+        <ul class="text-xs font-mono text-slate-300 space-y-1.5 bg-slate-950/90 p-3 rounded-xl border border-slate-800">
+          <li>✓ Multidisciplinary technical stakeholder coordination</li>
+          <li>✓ Resource allocation & schedule optimization</li>
+          <li>✓ De-risking PPVC off-site module casting</li>
+        </ul>
+      </div>
+
+      <!-- ROW 1 - NODE 2: PHASE 2 THE PIVOT -->
+      <div id="cardPhase2" class="spatial-card neon-flow-box w-[480px] top-[150px] left-[1420px]" onclick="zoomToNode('cardPhase2', event)">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-mono text-purple-400 font-bold">PHASE 2: THE PIVOT</span>
+          <span class="text-[10px] font-mono bg-purple-950 text-purple-300 px-2.5 py-0.5 rounded border border-purple-800">Tech Upskilling</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Why IT & Data Engineering?</h3>
+        <p class="text-slate-300 text-xs italic mb-3">
+          "Tech integration can solve construction bottlenecks, but I want to build the data pipelines solving complex problems directly."
+        </p>
+        <div class="bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-xs font-mono text-purple-300 space-y-1">
+          <p>• PgDip Cybersecurity (PSB Academy)</p>
+          <p>• 42 Singapore Piscine (C & Linux Shell)</p>
+          <p>• NTU SCTP Software Engineering</p>
+        </div>
+      </div>
+
+      <!-- ROW 1 - NODE 3: PHASE 3 IT WORK EXPERIENCE -->
+      <div id="cardPhase3" class="spatial-card neon-flow-box w-[480px] top-[150px] left-[2060px]" onclick="zoomToNode('cardPhase3', event)">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-mono text-amber-400 font-bold">PHASE 3: IT EXPERIENCE</span>
+          <span class="text-[10px] font-mono bg-amber-950 text-amber-300 px-2.5 py-0.5 rounded border border-amber-800">IRAS (via Spade)</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">SOC L1 Analyst</h3>
+        <p class="text-slate-300 text-xs mb-3">Monitored 24/7 SIEM security logs and automated operational reporting workflows.</p>
+        <div class="bg-slate-950/90 p-3 rounded-xl border border-slate-800 text-xs font-mono text-amber-300 space-y-1.5">
+          <p>⚡ Automated daily reporting using Excel VBA (reduced manual entry time).</p>
+          <p>🛡️ Fine-tuned SIEM alert rules, cutting security response time by >50%.</p>
+        </div>
+      </div>
+
+      <!-- ROW 2 - NODE 4 PAGE 1: OLIST CAPSTONE -->
+      <div id="cardPhase4Page1" class="spatial-card neon-flow-box w-[520px] top-[580px] left-[780px]" onclick="zoomToNode('cardPhase4Page1', event)">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-mono text-emerald-400 font-bold">PHASE 4: PROJECTS (PAGE 1 / 2)</span>
+          <span class="text-[10px] font-mono bg-emerald-950 text-emerald-300 px-2.5 py-0.5 rounded border border-emerald-800">Fabric & PySpark</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Olist E-Commerce Medallion Architecture</h3>
+        <p class="text-slate-300 text-xs mb-3">Engineered 3-tier Medallion pipeline (Bronze/Silver/Gold) on Microsoft Fabric across 9 datasets.</p>
+        <ul class="text-xs font-mono text-slate-300 space-y-1.5 bg-slate-950/90 p-3 rounded-xl border border-slate-800">
+          <li>🔹 PySpark error-proof schema reading & validation</li>
+          <li>🔹 Gold Star Schema for Direct Lake Power BI analytics</li>
+          <li>🔹 CI/CD pivot via GitHub Actions & Power Automate</li>
+        </ul>
+      </div>
+
+      <!-- ROW 2 - NODE 4 PAGE 2: SMART-ROUTE ED -->
+      <div id="cardPhase4Page2" class="spatial-card neon-flow-box w-[520px] top-[580px] left-[1420px]" onclick="zoomToNode('cardPhase4Page2', event)">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-mono text-sky-400 font-bold">PHASE 4: PROJECTS (PAGE 2 / 2)</span>
+          <span class="text-[10px] font-mono bg-sky-950 text-sky-300 px-2.5 py-0.5 rounded border border-sky-800">Routing Engine</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Emergency Hospital Routing Engine</h3>
+        <p class="text-slate-300 text-xs mb-3">Solved 80% hospital queue API absence using tri-modal extraction (Selenium, NEA REST APIs, Mock).</p>
+        <ul class="text-xs font-mono text-slate-300 space-y-1.5 bg-slate-950/90 p-3 rounded-xl border border-slate-800">
+          <li>🔹 OneMap JWT refresh wrapper & Regex geocoding</li>
+          <li>🔹 Total Time-to-Treatment (TTT) logic with rain penalty</li>
+          <li>🔹 PostgreSQL relational database & terminal CLI</li>
+        </ul>
+      </div>
+
+      <!-- ROW 2 - NODE 5: THE PRESENT -->
+      <div id="cardPresent" class="spatial-card neon-flow-box w-[480px] top-[580px] left-[2060px]" onclick="zoomToNode('cardPresent', event)">
+        <div class="flex justify-between items-center mb-1.5">
+          <span class="text-xs font-mono text-sky-400 font-bold">THE PRESENT</span>
+          <span class="text-[10px] font-mono bg-sky-950 text-sky-300 px-2.5 py-0.5 rounded border border-sky-800">DE Ready</span>
+        </div>
+        <h3 class="text-xl font-bold text-white mb-2">Ready for Data Engineering</h3>
+        <p class="text-slate-300 text-xs mb-3">Combining 10 years of domain project leadership with cloud-native data pipeline architecture.</p>
+        <div class="bg-sky-950/80 border border-sky-500/60 p-3 rounded-xl text-xs font-mono text-sky-200">
+          Microsoft Fabric • PySpark • PostgreSQL • CI/CD DevOps
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Navigation Controls -->
+    <div class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-4 bg-slate-950/95 p-3 rounded-2xl border border-slate-800 backdrop-blur-xl shadow-2xl font-mono">
+      <button id="btnMain" onclick="resetZoom()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-2">
+        <i class="fa-solid fa-house"></i> Main
+      </button>
+
+      <button id="btnBack" onclick="stepPrev()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-2">
+        <i class="fa-solid fa-chevron-left"></i> Back
+      </button>
+
+      <button id="btnNext" onclick="stepNext()" class="px-6 py-3 rounded-xl border border-slate-700 bg-slate-900 text-slate-200 text-xs font-bold hover:bg-slate-800 transition-all flex items-center gap-2">
+        Next <i class="fa-solid fa-chevron-right"></i>
+      </button>
+    </div>
+
+  </div>
+
+  <!-- QR Code Modal Overlay -->
+  <div id="qrModal" class="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md hidden flex items-center justify-center" onclick="toggleQrModal()">
+    <div class="bg-slate-900 border border-slate-700 p-6 rounded-3xl text-center space-y-4 max-w-sm" onclick="event.stopPropagation()">
+      <div class="flex justify-between items-center border-b border-slate-800 pb-2">
+        <span class="text-xs font-mono font-bold text-sky-400">Scan Portfolio QR Code</span>
+        <button onclick="toggleQrModal()" class="text-slate-400 hover:text-white"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <img src="qrcode.jpg" alt="Portfolio QR Code" class="w-60 h-60 mx-auto rounded-2xl border-2 border-sky-500/50 object-cover" onerror="this.src='https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=https://ttan-ttan.github.io/portfolio/'">
+      <p class="text-xs text-slate-400 font-mono">Scan to open on mobile phone</p>
+    </div>
+  </div>
+
+  <script>
+    const world = document.getElementById('world');
+    let activeCardId = 'cardMain';
+
+    const sequence = [
+      'cardMain',
+      'cardPhase1',
+      'cardPhase2',
+      'cardPhase3',
+      'cardPhase4Page1',
+      'cardPhase4Page2',
+      'cardPresent'
+    ];
+
+    function getFitScale() {
+      const padding = 100; // Account for top navbar and bottom floating controls
+      const scaleX = (window.innerWidth - 80) / 2600;
+      const scaleY = (window.innerHeight - padding) / 1000;
+      return Math.min(scaleX, scaleY);
+    }
+
+    function updateButtonStates(currentId) {
+      const btnMain = document.getElementById('btnMain');
+      const btnNext = document.getElementById('btnNext');
+
+      btnMain.classList.remove('blink-slow');
+      btnNext.classList.remove('blink-slow');
+
+      const currentIndex = sequence.indexOf(currentId);
+
+      if (currentId === 'cardPhase4Page1' || (currentIndex >= 0 && currentIndex < sequence.length - 1)) {
+        btnNext.classList.add('blink-slow');
+      } 
+      else if (currentId === 'cardPresent') {
+        btnMain.classList.add('blink-slow');
+      }
+    }
+
+    function zoomToNode(nodeId, event) {
+      if (event) event.stopPropagation();
+
+      const card = document.getElementById(nodeId);
+      if (!card) return;
+
+      sequence.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active-node');
+      });
+
+      card.classList.add('active-node');
+      activeCardId = nodeId;
+
+      if (nodeId === 'cardMain') {
+        resetZoom();
+        return;
+      }
+
+      const cardX = card.offsetLeft + card.offsetWidth / 2;
+      const cardY = card.offsetTop + card.offsetHeight / 2;
+
+      // Calculate dynamic focus zoom for laptop & tablet viewports
+      const scale = Math.min(1.5, (window.innerHeight - 180) / card.offsetHeight);
+      const translateX = -cardX * scale + window.innerWidth / 2;
+      const translateY = -cardY * scale + window.innerHeight / 2;
+
+      world.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+      updateButtonStates(nodeId);
+    }
+
+    function resetZoom() {
+      sequence.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.remove('active-node');
+      });
+
+      activeCardId = 'cardMain';
+      document.getElementById('cardMain').classList.add('active-node');
+      
+      // Auto-fit overview camera to entire screen viewport
+      const fitScale = getFitScale();
+      world.style.transform = `translate(-50%, -50%) scale(${fitScale})`;
+      updateButtonStates('cardMain');
+    }
+
+    function stepNext() {
+      const currentIndex = sequence.indexOf(activeCardId);
+      if (currentIndex < sequence.length - 1) {
+        zoomToNode(sequence[currentIndex + 1]);
+      } else {
+        resetZoom();
+      }
+    }
+
+    function stepPrev() {
+      const currentIndex = sequence.indexOf(activeCardId);
+      if (currentIndex > 0) {
+        zoomToNode(sequence[currentIndex - 1]);
+      } else {
+        resetZoom();
+      }
+    }
+
+    function onCanvasClick(event) {
+      if (event.target.id === 'viewport' || event.target.id === 'world') {
+        resetZoom();
+      }
+    }
+
+    function toggleQrModal() {
+      const modal = document.getElementById('qrModal');
+      modal.classList.toggle('hidden');
+    }
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === ' ') stepNext();
+      else if (e.key === 'ArrowLeft') stepPrev();
+      else if (e.key === 'Escape') resetZoom();
+    });
+
+    window.addEventListener('resize', () => {
+      if (activeCardId === 'cardMain') {
+        resetZoom();
+      } else {
+        zoomToNode(activeCardId);
+      }
+    });
+
+    window.onload = () => resetZoom();
+  </script>
+</body>
+</html>
