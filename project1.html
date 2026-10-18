@@ -58,66 +58,57 @@
     .terminal-scroll::-webkit-scrollbar-thumb { background: #003863; border-radius: 4px; }
   </style>
 </head>
-<body id="mainBody" class="slide-bg-bright text-slate-800 flex flex-col justify-between p-6 select-none">
+<body id="mainBody" class="slide-bg-bright text-slate-800 flex flex-col justify-between select-none">
 
-  <!-- Floating Story Navigator Drawer -->
-  <aside id="navDrawer" class="fixed right-4 top-4 bottom-4 w-96 z-50 bg-white/98 border border-slate-300 rounded-3xl p-6 backdrop-blur-2xl shadow-2xl flex flex-col justify-between transition-all duration-300">
-    <button onclick="toggleDrawer()" class="absolute -left-6 top-8 bg-[#002b49] text-white w-12 h-12 rounded-full border-2 border-white flex items-center justify-center shadow-2xl font-black hover:bg-[#00406c] transition-all">
-      <i id="drawerToggleIcon" class="fa-solid fa-chevron-right text-base"></i>
-    </button>
-
-    <div>
-      <div class="flex items-center gap-3 border-b-2 border-slate-100 pb-4 mb-5">
-        <div class="w-10 h-10 rounded-xl bg-[#002b49] text-white flex items-center justify-center font-bold text-xl shadow-md">
-          <i class="fa-solid fa-hospital-user"></i>
-        </div>
-        <div>
-          <h1 class="text-base font-black text-[#002b49] font-mono tracking-wider uppercase">MOH Digital Health</h1>
-          <p class="text-xs text-slate-500 font-mono font-bold">Smart-Route ED Architecture</p>
-        </div>
+  <!-- PERMANENT HEADER NAVIGATION BAR -->
+  <header class="w-full bg-[#002b49] text-white px-6 py-3 shadow-md flex items-center justify-between z-50 border-b border-[#00406c]">
+    <!-- Left: Branding -->
+    <div class="flex items-center gap-3">
+      <div class="w-9 h-9 rounded-xl bg-sky-600 text-white flex items-center justify-center font-bold text-lg shadow-sm">
+        <i class="fa-solid fa-hospital-user"></i>
       </div>
-
-      <p class="text-xs text-slate-400 font-mono uppercase tracking-widest font-bold">Slide Navigation</p>
-      <p id="sceneTitle" class="text-xl font-black text-slate-900 mt-1 leading-snug">Slide 1 / 11: Emergency Hook</p>
-
-      <div class="mt-6 bg-slate-100 border border-slate-200 rounded-2xl p-4">
-        <div class="flex justify-between text-sm font-mono mb-2">
-          <span class="text-slate-600 font-bold">Progress</span>
-          <span id="sceneCounter" class="text-[#002b49] font-black text-base">1 / 11</span>
-        </div>
-        <div class="w-full bg-slate-200 h-3 rounded-full overflow-hidden">
-          <div id="progressBar" class="bg-[#002b49] h-full w-[9%] transition-all duration-300"></div>
-        </div>
+      <div>
+        <h1 class="text-sm font-black tracking-wider uppercase font-mono text-white leading-tight">
+          MOH DIGITAL HEALTH SMART-ROUTE ED
+        </h1>
+        <p id="sceneTitle" class="text-xs text-sky-200 font-mono font-medium">
+          Slide 1 / 11: Emergency Hook
+        </p>
       </div>
     </div>
 
-    <!-- Navigation Controls -->
-    <div class="space-y-3">
-      <button id="playAllBtn" onclick="togglePlayAll()" class="w-full py-4 bg-[#002b49] hover:bg-[#00406c] text-white text-base font-black rounded-2xl shadow-xl flex items-center justify-center gap-2 transition-all active:scale-95">
-        <i id="playIcon" class="fa-solid fa-play text-sm"></i> <span id="playText">Play Presentation</span>
-      </button>
+    <!-- Right: Navigation & Controls -->
+    <div class="flex items-center gap-3 font-mono">
+      <div class="hidden md:flex items-center gap-2 bg-[#001c33] border border-[#003863] px-3 py-1.5 rounded-xl text-xs">
+        <span class="text-slate-400">Progress:</span>
+        <span id="sceneCounter" class="text-amber-400 font-black">1 / 11</span>
+        <div class="w-20 bg-slate-700 h-2 rounded-full overflow-hidden ml-1">
+          <div id="progressBar" class="bg-sky-400 h-full w-[9%] transition-all duration-300"></div>
+        </div>
+      </div>
 
-      <div class="grid grid-cols-2 gap-3">
-        <button onclick="prevScene()" class="py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-bold rounded-2xl border border-slate-300 flex items-center justify-center gap-2 active:scale-95">
-          <i class="fa-solid fa-chevron-left text-xs"></i> Prev
+      <div class="flex items-center gap-2">
+        <button onclick="prevScene()" class="px-3.5 py-1.5 bg-slate-700 hover:bg-slate-600 text-white text-xs font-bold rounded-xl border border-slate-500 flex items-center gap-1.5 transition-all active:scale-95">
+          <i class="fa-solid fa-chevron-left text-[10px]"></i> Prev
         </button>
-        <button onclick="nextScene()" class="py-3.5 bg-sky-700 hover:bg-sky-600 text-white text-sm font-black rounded-2xl shadow-lg flex items-center justify-center gap-2 active:scale-95">
-          Next <i class="fa-solid fa-chevron-right text-xs"></i>
+
+        <button onclick="nextScene()" class="px-3.5 py-1.5 bg-sky-600 hover:bg-sky-500 text-white text-xs font-black rounded-xl shadow flex items-center gap-1.5 transition-all active:scale-95">
+          Next <i class="fa-solid fa-chevron-right text-[10px]"></i>
+        </button>
+
+        <button id="playAllBtn" onclick="togglePlayAll()" class="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold rounded-xl shadow flex items-center gap-1.5 transition-all active:scale-95">
+          <i id="playIcon" class="fa-solid fa-play text-[10px]"></i> <span id="playText" class="hidden sm:inline">Play</span>
+        </button>
+
+        <button onclick="resetStory()" title="Reset Deck" class="p-2 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white text-xs rounded-xl border border-slate-500 transition-all">
+          <i class="fa-solid fa-rotate-left"></i>
         </button>
       </div>
-
-      <button onclick="resetStory()" class="w-full py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold rounded-xl border border-slate-300 flex items-center justify-center gap-2">
-        <i class="fa-solid fa-rotate-left"></i> Reset Deck
-      </button>
     </div>
-
-    <div class="border-t border-slate-200 pt-3 text-xs font-mono text-slate-500 text-center font-bold">
-      SINGAPORE PUBLIC HEALTH DATA ENGINE
-    </div>
-  </aside>
+  </header>
 
   <!-- Main Presentation Stage -->
-  <main id="stageCanvas" class="w-full h-full my-auto relative z-10 flex items-center justify-center p-2">
+  <main id="stageCanvas" class="w-full h-[calc(100vh-60px)] my-auto relative z-10 flex items-center justify-center p-6">
 
     <!-- SLIDE 1: EMERGENCY HOOK & PROBLEM STATEMENT -->
     <div id="slide1Wrapper" class="scene-element scene-visible w-full h-full flex flex-col items-center justify-center text-center space-y-8 px-8">
@@ -144,7 +135,7 @@
     </div>
 
     <!-- SLIDE 2: INTERACTIVE CLI DEMO -->
-    <div id="slide2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+    <div id="slide2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2">
       <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
         <div>
           <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">LIVE SYSTEM PROTOTYPE</span>
@@ -226,7 +217,7 @@
     </div>
 
     <!-- SLIDE 3: GOV DATA SOURCES & COVERAGE GAP MATRIX -->
-    <div id="slide3Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+    <div id="slide3Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2">
       <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
         <div>
           <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">DATA INGESTION REALITIES</span>
@@ -245,12 +236,12 @@
               <span class="text-[#002b49] font-black font-mono text-sm">A&E Queue Feeds</span>
               <span class="bg-red-50 text-red-700 border border-red-200 px-2.5 py-0.5 rounded text-xs font-bold">Scrape / Mock</span>
             </div>
-            <p class="text-sm text-slate-600 font-medium"><strong>Official Source:</strong> 10 Acute Public Hospitals in SG.</p>
-            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> Only 2/10 publish feeds (NUHS & TTSH web portals).</p>
-            <p class="text-sm text-slate-600 font-medium"><strong>Data Gap (80% missing):</strong> SingHealth (SGH, CGH, SKH, KTPH) provides no API or machine-readable feed.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Official Source:</strong> Acute Public Hospitals in SG.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> 5 hospitals published (AH, NUH, NTFGH, TTSH, WH web portals).</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Data Gap (50% missing):</strong> SingHealth & unlisted hospitals (SGH, SKH, CGH, KTPH, KKH) provide no API or machine-readable feed.</p>
           </div>
           <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs font-mono text-slate-700 mt-2">
-            <strong>DE Solution:</strong> Engineered pseudo-random synthetic wait generator driven by peak-hour congestion multipliers.
+            <strong>DE Solution:</strong> Engineered pseudo-random synthetic wait generator driven by peak-hour congestion multipliers for unlisted hospitals.
           </div>
         </div>
 
@@ -289,7 +280,7 @@
     </div>
 
     <!-- SLIDE 4: 3 EXTRACTION METHODS & CODE LOGIC -->
-    <div id="slide4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+    <div id="slide4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2">
       <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
         <div>
           <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">DE INGESTION STRATEGY</span>
@@ -330,7 +321,7 @@
           <div>
             <div class="flex justify-between items-center border-b border-[#003863] pb-2 mb-3">
               <span class="text-sky-400 font-mono font-bold text-xs"><i class="fa-solid fa-spider mr-1"></i> 2. Web Scraping</span>
-              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">NUH / TTSH</span>
+              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">NUHS & TTSH</span>
             </div>
             <p class="text-xs text-slate-300 font-mono mb-3">Headless Selenium extracts live HTML DOM queue elements.</p>
             <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto bg-[#001424] p-3.5 rounded-xl border border-[#003863]">
@@ -356,7 +347,7 @@
           <div>
             <div class="flex justify-between items-center border-b border-[#003863] pb-2 mb-3">
               <span class="text-amber-400 font-mono font-bold text-xs"><i class="fa-solid fa-vial mr-1"></i> 3. Mock Generator</span>
-              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">SingHealth</span>
+              <span class="text-[10px] bg-[#003863] text-sky-200 px-2 py-0.5 rounded font-mono">Unlisted Hospitals</span>
             </div>
             <p class="text-xs text-slate-300 font-mono mb-3">Synthetic fallback generation for unlisted acute hospitals.</p>
             <pre class="text-xs text-slate-200 leading-relaxed font-mono overflow-x-auto bg-[#001424] p-3.5 rounded-xl border border-[#003863]">
@@ -380,7 +371,7 @@
     </div>
 
     <!-- SLIDE 5: TRANSFORM - GEOCODING, TOKEN EXPIRATION & STANDARDIZATION -->
-    <div id="slide5Wrapper" class="scene-element w-full h-full flex items-center justify-between gap-8 p-4">
+    <div id="slide5Wrapper" class="scene-element w-full h-full flex items-center justify-between gap-8 p-2">
       <div class="w-1/2 h-full card-bright-white rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-[#002b49]">
         <div class="space-y-4">
           <span class="text-xs font-mono font-black text-purple-700 uppercase tracking-widest">DE TRANSFORMATION PIPELINE</span>
@@ -432,7 +423,7 @@
     </div>
 
     <!-- SLIDE 6: END-TO-END ARCHITECTURE & ANIMATED DATA LINEAGE -->
-    <div id="slide6Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4 relative">
+    <div id="slide6Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2 relative">
       <!-- Animated Motion Packet Actor -->
       <div id="lineagePacket" class="moving-packet absolute z-30 opacity-0 pointer-events-none flex flex-col items-center" style="top: 0px; left: 0px;">
         <div class="w-10 h-10 rounded-full bg-cyan-400 text-slate-950 flex items-center justify-center text-base shadow-xl font-bold animate-bounce border-2 border-white">
@@ -537,7 +528,7 @@
     </div>
 
     <!-- SLIDE 7: POSTGRESQL SCHEMA & DATA VALIDATION PIPELINE -->
-    <div id="slide7Wrapper" class="scene-element w-full h-full flex items-center justify-between gap-8 p-4">
+    <div id="slide7Wrapper" class="scene-element w-full h-full flex items-center justify-between gap-8 p-2">
       <div class="w-1/2 h-full card-bright-white rounded-3xl p-8 flex flex-col justify-between border-t-4 border-t-[#002b49]">
         <div class="space-y-4">
           <span class="text-xs font-mono font-black text-red-700 uppercase tracking-widest">DATABASE SCHEMA & VALIDATION</span>
@@ -587,7 +578,7 @@
     </div>
 
     <!-- SLIDE 8: SQL & ETL LOGIC FOR TTT CALCULATION -->
-    <div id="slide8Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+    <div id="slide8Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2">
       <div class="card-bright-white rounded-3xl p-8 h-full flex flex-col justify-between border-t-4 border-t-[#002b49]">
         <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
           <div>
@@ -673,7 +664,7 @@
     </div>
 
     <!-- SLIDE 9: DENGUE TIMELINE & WINDOW FUNCTION LAG ANALYSIS -->
-    <div id="slide9Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+    <div id="slide9Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2">
       <div class="card-bright-white rounded-3xl p-8 h-full flex flex-col justify-between border-t-4 border-t-[#002b49]">
         <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
           <div>
@@ -741,7 +732,7 @@
     </div>
 
     <!-- SLIDE 10: CONCLUSION & SUMMARY DE INSIGHTS -->
-    <div id="slide10Wrapper" class="scene-element w-full h-full flex flex-col items-center justify-center text-center space-y-8 p-4">
+    <div id="slide10Wrapper" class="scene-element w-full h-full flex flex-col items-center justify-center text-center space-y-8 p-2">
       <div class="flex items-center gap-3 bg-sky-50 border border-sky-200 px-6 py-2.5 rounded-full text-sm font-mono text-sky-800 font-bold shadow-sm">
         <i class="fa-solid fa-award text-sky-700 text-lg"></i> DATA ENGINEERING VALUE DELIVERED
       </div>
@@ -751,7 +742,7 @@
       <div class="grid grid-cols-3 gap-6 max-w-6xl text-left text-sm font-mono">
         <div class="card-bright-white p-6 rounded-3xl space-y-2 border-t-4 border-t-sky-600">
           <p class="text-sky-800 font-black text-base">Multi-Modal Pipeline</p>
-          <p class="text-slate-600 font-medium text-xs leading-relaxed">Successfully combined Web Scraping, REST APIs, and Mock Generators to overcome 80% public hospital feed absence.</p>
+          <p class="text-slate-600 font-medium text-xs leading-relaxed">Successfully combined Web Scraping, REST APIs, and Mock Generators to handle 50% public hospital feed missingness.</p>
         </div>
         <div class="card-bright-white p-6 rounded-3xl space-y-2 border-t-4 border-t-purple-600">
           <p class="text-purple-800 font-black text-base">Spatial Standardization</p>
@@ -768,8 +759,8 @@
       </button>
     </div>
 
-    <!-- SLIDE 11: DELIVERABLES & PUBLIC LINKS (OPTION A INTEGRATED) -->
-    <div id="slide11Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
+    <!-- SLIDE 11: DELIVERABLES & PUBLIC LINKS -->
+    <div id="slide11Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-2">
       <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
         <div>
           <span class="text-xs font-mono font-black text-sky-700 uppercase tracking-widest">PROOF OF WORK & DELIVERABLES DIRECTORY</span>
@@ -781,7 +772,7 @@
       </div>
 
       <div class="grid grid-cols-12 gap-8 my-auto h-full py-4 items-stretch">
-        <!-- Deliverable Links Column (Option A) -->
+        <!-- Deliverable Links Column -->
         <div class="col-span-6 card-bright-white rounded-3xl p-6 flex flex-col justify-between border-t-4 border-t-[#002b49] shadow-xl">
           <div>
             <p class="text-sm font-black text-[#002b49] font-mono mb-4 flex items-center gap-2 border-b border-slate-200 pb-2">
@@ -859,7 +850,6 @@
     const totalSteps = 11;
     let isPlayingAll = false;
     let playTimer = null;
-    let isDrawerOpen = true;
     let isRainy = false;
 
     const stepTitles = [
@@ -875,20 +865,6 @@
       "Slide 10 / 11: DE Engineering Insights & Summary",
       "Slide 11 / 11: Deliverables Directory & Links"
     ];
-
-    function toggleDrawer() {
-      const drawer = document.getElementById('navDrawer');
-      const icon = document.getElementById('drawerToggleIcon');
-      isDrawerOpen = !isDrawerOpen;
-
-      if (isDrawerOpen) {
-        drawer.style.transform = 'translateX(0)';
-        icon.className = "fa-solid fa-chevron-right text-base";
-      } else {
-        drawer.style.transform = 'translateX(calc(100% - 1.5rem))';
-        icon.className = "fa-solid fa-chevron-left text-base";
-      }
-    }
 
     function setVisible(elemId, visible) {
       const el = document.getElementById(elemId);
@@ -1052,7 +1028,7 @@
 
     function startPlayAll() {
       isPlayingAll = true;
-      document.getElementById('playIcon').className = "fa-solid fa-pause text-sm";
+      document.getElementById('playIcon').className = "fa-solid fa-pause text-[10px]";
       document.getElementById('playText').innerText = "Pause";
       
       renderStep(1);
@@ -1065,8 +1041,8 @@
     function stopPlayAll() {
       isPlayingAll = false;
       if (playTimer) clearInterval(playTimer);
-      document.getElementById('playIcon').className = "fa-solid fa-play text-sm";
-      document.getElementById('playText').innerText = "Play Presentation";
+      document.getElementById('playIcon').className = "fa-solid fa-play text-[10px]";
+      document.getElementById('playText').innerText = "Play";
     }
 
     window.addEventListener('keydown', (e) => {
