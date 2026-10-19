@@ -392,11 +392,28 @@
       </div>
 
       <div class="neon-card-purple rounded-3xl p-3 sm:p-5 flex-1 flex flex-col justify-center items-center overflow-hidden">
-        <video controls playsinline preload="metadata" aria-label="Career transition narrative video"
-          class="w-full max-w-3xl aspect-video rounded-2xl bg-black border border-purple-500/40 object-contain shadow-[0_0_20px_rgba(168,85,247,0.2)]">
-          <source src="career_pivot_story.mp4" type="video/mp4">
-          Your browser does not support video playback.
-        </video>
+        <div class="w-full max-w-3xl">
+          <div class="relative aspect-video rounded-2xl bg-black border border-purple-500/40 overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.2)]">
+            <video id="phase2Video" controls playsinline preload="metadata" aria-label="Career transition narrative video"
+              onplaying="document.getElementById('phase2PlayButton').classList.add('hidden')"
+              onpause="document.getElementById('phase2PlayButton').classList.remove('hidden')"
+              onended="document.getElementById('phase2PlayButton').classList.remove('hidden')"
+              class="w-full h-full bg-black object-contain">
+              <source src="career_pivot_story.mp4" type="video/mp4">
+              Your browser does not support video playback.
+            </video>
+            <button id="phase2PlayButton" type="button" onclick="playPhaseTwoVideo()"
+              class="absolute inset-0 m-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-purple-300 bg-purple-700/90 text-white shadow-[0_0_30px_rgba(168,85,247,0.7)] transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-4 focus-visible:outline-purple-300"
+              aria-label="Play career transition video" title="Play video">
+              <i class="fa-solid fa-play ml-1 text-3xl"></i>
+            </button>
+          </div>
+          <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
+            <p id="phase2VideoStatus" class="text-xs font-mono text-slate-400" aria-live="polite">Tap Play to start the video.</p>
+            <a href="career_pivot_story.mp4" target="_blank" rel="noopener noreferrer"
+              class="text-xs font-mono font-bold text-purple-300 underline underline-offset-4 hover:text-purple-200">Open video directly</a>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -720,6 +737,21 @@
       const modal = document.getElementById("qrModal");
       modal.classList.remove("flex");
       modal.classList.add("hidden");
+    }
+
+    async function playPhaseTwoVideo() {
+      const video = document.getElementById("phase2Video");
+      const status = document.getElementById("phase2VideoStatus");
+      status.textContent = "Starting video...";
+
+      try {
+        if (video.ended) video.currentTime = 0;
+        await video.play();
+        status.textContent = "";
+      } catch (error) {
+        console.error("Unable to play the Phase 2 video:", error);
+        status.textContent = "Playback was blocked. Use “Open video directly” to watch it.";
+      }
     }
 
     function updateNavControls() {
