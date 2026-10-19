@@ -45,9 +45,9 @@
       transform: scale(1);
     }
 
-    /* ZOOM & HYPERSPACE TUNNEL ANIMATION STYLES */
+    /* TIMELAPSE CARD ZOOM EFFECT */
     .card-zoom-target {
-      transition: transform 0.6s cubic-bezier(0.7, 0, 0.84, 0), opacity 0.5s ease-in !important;
+      transition: transform 0.75s cubic-bezier(0.7, 0, 0.84, 0), opacity 0.6s ease-in !important;
       transform: scale(3.5) translate(0, 0) !important;
       opacity: 0 !important;
       z-index: 100 !important;
@@ -205,7 +205,6 @@
       </div>
 
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full max-w-6xl px-2">
-        <!-- Card 1 -->
         <div id="card-phase-1" onclick="onCardClicked(1, event)"
           class="neon-card-cyan rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400 flex flex-col justify-between group">
           <div>
@@ -218,7 +217,6 @@
           </span>
         </div>
 
-        <!-- Card 2 -->
         <div id="card-phase-2" onclick="onCardClicked(2, event)"
           class="neon-card-purple rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-purple-400 flex flex-col justify-between group">
           <div>
@@ -231,7 +229,6 @@
           </span>
         </div>
 
-        <!-- Card 3 -->
         <div id="card-phase-3" onclick="onCardClicked(3, event)"
           class="neon-card-emerald rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-sky-400 flex flex-col justify-between group">
           <div>
@@ -244,7 +241,6 @@
           </span>
         </div>
 
-        <!-- Card 4 -->
         <div id="card-phase-4" onclick="onCardClicked(4, event)"
           class="neon-card-emerald rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-emerald-400 flex flex-col justify-between group">
           <div>
@@ -434,7 +430,7 @@
           <div class="space-y-2">
             <span class="text-[10px] font-mono text-purple-400 font-bold bg-purple-950/80 px-2.5 py-1 rounded-lg border border-purple-800">CAPSTONE 02</span>
             <h3 class="text-sm sm:text-base font-black text-slate-100">Olist E-Commerce Fabric Medallion Pipeline</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">Scalable Medallion Architecture built on Microsoft Fabric with Bronze/Silver/Gold Delta Lake layers, automated CI/CD via GitHub Actions, and Direct Lake Power BI analytics.</p>
+            <p class="text-[10px] sm:text-xs text-slate-300 leading-relaxed">Scalable Medallion Architecture built on Microsoft Fabric with Bronze/Silver/Gold Delta Lake layers, automated CI/CD via GitHub Actions, and Direct Lake Power BI analytics.</p>
           </div>
           <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800">
             <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-purple-300">MS Fabric</span>
@@ -446,94 +442,125 @@
       </div>
     </div>
 
-    <!-- PHASE 4: READINESS MATRIX (TRANSFERABLE SKILLS & UNIQUE VALUE PROPOSITION) -->
+    <!-- PHASE 4: READINESS MATRIX (3 TABLES RESTRUCTURED) -->
     <div id="phase4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 space-y-2 overflow-hidden">
       <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
         <div>
           <span class="text-[10px] font-mono font-black text-emerald-400 uppercase">PHASE 4 · DE READINESS MATRIX</span>
-          <h2 class="text-xs sm:text-base font-black text-slate-100 leading-tight">Construction To IT Bridge & Unique Value Proposition</h2>
+          <h2 class="text-xs sm:text-base font-black text-slate-100 leading-tight">Construction-to-IT Bridge, Technical Skills & Core Value Add</h2>
         </div>
-        <span class="text-[9px] sm:text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">Transferable Matrix</span>
+        <span class="text-[9px] sm:text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">Readiness Framework</span>
       </div>
 
       <div class="flex-1 overflow-y-auto space-y-3 pr-1">
         
-        <!-- TABLE 1: Construction to IT Transferable Skills -->
+        <!-- TABLE 1: Direct Construction Experience to IT Concept Linkage -->
         <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
           <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
-            <i class="fa-solid fa-arrows-split-up-and-left text-cyan-400 text-sm"></i>
-            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">1. Direct Construction-to-IT Transferable Skill Mapping</h3>
+            <i class="fa-solid fa-link text-cyan-400 text-sm"></i>
+            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">1. Construction Site Experience to IT Concept Linkage</h3>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-[11px] sm:text-xs font-mono">
               <thead>
                 <tr class="border-b border-slate-800 text-cyan-400 bg-slate-950/50">
-                  <th class="p-2">Structural & Site Practice</th>
-                  <th class="p-2">Data Engineering Concept</th>
-                  <th class="p-2">Technical Tool Alignment</th>
+                  <th class="p-2 w-1/2">Construction Project / Site Workflow</th>
+                  <th class="p-2 w-1/2">Corresponding IT & Data Engineering Concept</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-800/60 text-slate-300">
                 <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Structural QA/QC Inspection & Tolerances</td>
-                  <td class="p-2">Data Quality Checks, Schema Enforcement & Governance</td>
-                  <td class="p-2 text-cyan-300 font-bold">PySpark / Great Expectations / SQL</td>
+                  <td class="p-2 font-semibold text-slate-100">Structural QA/QC Inspection, BCA Clearances & Tolerance Checks</td>
+                  <td class="p-2 text-cyan-300 font-medium">Data Quality Validation, Schema Enforcement & Data Governance</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">PPVC Modular Assembly & Supply Logistics</td>
-                  <td class="p-2">Batch & Streaming ETL / ELT Ingestion Pipelines</td>
-                  <td class="p-2 text-cyan-300 font-bold">Apache Airflow / MS Fabric / Delta Lake</td>
+                  <td class="p-2 font-semibold text-slate-100">PPVC Modular Assembly, Factory Precast & Just-In-Time Delivery</td>
+                  <td class="p-2 text-cyan-300 font-medium">Batch / Real-time ETL & ELT Ingestion Pipelines</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Sub-contractor Trade Coordination & Schedules</td>
-                  <td class="p-2">Pipeline Orchestration, Dependency Management & DAGs</td>
-                  <td class="p-2 text-cyan-300 font-bold">Airflow DAGs / GitHub Actions CI/CD</td>
+                  <td class="p-2 font-semibold text-slate-100">Multi-trade Sub-contractor Sequencing & Critical Path Scheduling</td>
+                  <td class="p-2 text-cyan-300 font-medium">Pipeline Orchestration, DAG Dependency Management & Workflow Scheduling</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">SOC Log Automation & Incident Response (IRAS)</td>
-                  <td class="p-2">Log Ingestion, Incident Auditing & SIEM Analytics</td>
-                  <td class="p-2 text-cyan-300 font-bold">Splunk / Excel VBA / NetWitness</td>
+                  <td class="p-2 font-semibold text-slate-100">IRAS Security Operations Center (SOC) Log Analysis & Threat Reporting</td>
+                  <td class="p-2 text-cyan-300 font-medium">Log Ingestion, SIEM Analytics & Incident Auditing Pipelines</td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
 
-        <!-- TABLE 2: Unique Value Add (Senior Construction PM vs Fresh CS Graduate) -->
+        <!-- TABLE 2: Skillsets & Technical Tool Proficiency Ratings -->
         <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
           <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
-            <i class="fa-solid fa-trophy text-amber-400 text-sm"></i>
-            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">2. Value Proposition: Senior PM Advantage vs. Fresh CS Graduate</h3>
+            <i class="fa-solid fa-sliders text-purple-400 text-sm"></i>
+            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">2. Technical Skillsets & Tool Proficiency Matrix</h3>
           </div>
           <div class="overflow-x-auto">
             <table class="w-full text-left text-[11px] sm:text-xs font-mono">
               <thead>
-                <tr class="border-b border-slate-800 text-amber-400 bg-slate-950/50">
-                  <th class="p-2">Competency Dimension</th>
-                  <th class="p-2">Typical Fresh CS Graduate</th>
-                  <th class="p-2 text-emerald-300">My Senior PM Edge (Tan Yong Jian)</th>
+                <tr class="border-b border-slate-800 text-purple-400 bg-slate-950/50">
+                  <th class="p-2">Skill / Tool Domain</th>
+                  <th class="p-2">Technologies & Libraries</th>
+                  <th class="p-2 text-right">Proficiency Level</th>
                 </tr>
               </thead>
               <tbody class="divide-y divide-slate-800/60 text-slate-300">
                 <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Crisis & Downtime Risk</td>
-                  <td class="p-2 text-slate-400">Theoretical knowledge of system outages.</td>
-                  <td class="p-2 text-emerald-300 font-semibold">10 yrs managing high-stakes S$100M physical sites; battle-tested under zero-downtime pressure.</td>
+                  <td class="p-2 font-semibold text-slate-100">Data Engineering & Transformation</td>
+                  <td class="p-2 text-slate-300">PySpark, SQL, Python, Delta Lake, Microsoft Fabric</td>
+                  <td class="p-2 text-right text-purple-300 font-bold">★★★★☆ (Advanced)</td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-2 font-semibold text-slate-100">Pipeline Orchestration & DevOps</td>
+                  <td class="p-2 text-slate-300">Apache Airflow, GitHub Actions, Docker, Git</td>
+                  <td class="p-2 text-right text-purple-300 font-bold">★★★★☆ (Advanced)</td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-2 font-semibold text-slate-100">Databases & Analytics</td>
+                  <td class="p-2 text-slate-300">PostgreSQL, Power BI (Direct Lake / DAX), pgAdmin</td>
+                  <td class="p-2 text-right text-purple-300 font-bold">★★★★☆ (Advanced)</td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-2 font-semibold text-slate-100">Cybersecurity & Log Automation</td>
+                  <td class="p-2 text-slate-300">Splunk, NetWitness, Excel VBA Automation, Linux Shell</td>
+                  <td class="p-2 text-right text-purple-300 font-bold">★★★☆☆ (Intermediate)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 3: Professional Value Added & Soft Competencies -->
+        <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
+          <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
+            <i class="fa-solid fa-gem text-emerald-400 text-sm"></i>
+            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">3. Core Professional Value & Operational Strengths</h3>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left text-[11px] sm:text-xs font-mono">
+              <thead>
+                <tr class="border-b border-slate-800 text-emerald-400 bg-slate-950/50">
+                  <th class="p-2 w-1/3">Professional Dimension</th>
+                  <th class="p-2 w-2/3">Operational Value & Demonstrated Capabilities</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-800/60 text-slate-300">
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-2 font-semibold text-slate-100">Professional Maturity & Leadership</td>
+                  <td class="p-2 text-emerald-300 font-medium">10+ years managing large-scale infrastructure projects up to S$100M; calm under pressure, highly responsible, and accustomed to managing complex multi-party deliverables.</td>
+                </tr>
+                <tr class="hover:bg-slate-900/40">
+                  <td class="p-2 font-semibold text-slate-100">Pragmatic Problem-Solving</td>
+                  <td class="p-2 text-emerald-300 font-medium">Deep experience resolving physical site conflicts translating directly into fast troubleshooting of pipeline bugs, data drift, and unexpected infrastructure bottlenecks.</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
                   <td class="p-2 font-semibold text-slate-100">Stakeholder Communication</td>
-                  <td class="p-2 text-slate-400">Primarily peer-to-peer or academic presentation.</td>
-                  <td class="p-2 text-emerald-300 font-semibold">Direct negotiation experience with BCA, MOH, HDB authorities, contractors, and C-suite leadership.</td>
+                  <td class="p-2 text-emerald-300 font-medium">Proven ability to bridge communication between technical engineering teams, business executives, and regulatory authorities (BCA, MOH, HDB).</td>
                 </tr>
                 <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">System Traceability & Audit</td>
-                  <td class="p-2 text-slate-400">Basic unit test cases and code comments.</td>
-                  <td class="p-2 text-emerald-300 font-semibold">Rigorous structural compliance mindset — every data record treated with legal structural traceability.</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Business Value Realization</td>
-                  <td class="p-2 text-slate-400">Focuses purely on code aesthetics or algorithms.</td>
-                  <td class="p-2 text-emerald-300 font-semibold">Driven by ROI, resource budget optimization, time-to-market, and business operational targets.</td>
+                  <td class="p-2 font-semibold text-slate-100">Zero-Downtime & Quality Mindset</td>
+                  <td class="p-2 text-emerald-300 font-medium">Treating data reliability with structural safety rigor—ensuring end-to-end traceability, strict schema compliance, and zero data loss.</td>
                 </tr>
               </tbody>
             </table>
@@ -637,7 +664,7 @@
       }
     }
 
-    /* NAVIGATION BETWEEN PHASES: Jump to Overview first, then enter target */
+    /* NAVIGATION BETWEEN PHASES: Jump out towards overview first, then enter target */
     function goToPhaseWithAnimation(targetPhase) {
       if (targetPhase === currentPhase || isNavigating) return;
       isNavigating = true;
