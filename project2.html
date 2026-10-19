@@ -27,9 +27,10 @@
         radial-gradient(circle at 25% 75%, rgba(245, 158, 11, 0.15), transparent 50%),
         radial-gradient(circle at 50% 50%, rgba(56, 189, 248, 0.1), transparent 70%),
         linear-gradient(to right, rgba(2, 6, 23, 0.95) 0%, rgba(9, 13, 22, 0.75) 50%, rgba(3, 7, 18, 0.9) 100%),
-        url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%3C%2Fpath%3E%3Cg stroke='%2338bdf8' stroke-width='0.4' stroke-opacity='0.15'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-      background-size: cover, cover, cover, cover, 60px 60px;
+        url("background11.jpg");
+      background-size: cover, cover, cover, cover, cover;
       background-position: center;
+      background-repeat: no-repeat;
     }
 
     /* 2. Candlestick & Data Grid Engineering Theme (Slides 4, 5, 6, 7, 8, 9) */
@@ -39,9 +40,10 @@
         radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.25), transparent 60%),
         radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.15), transparent 50%),
         linear-gradient(to bottom, rgba(2, 6, 23, 0.85), rgba(9, 13, 22, 0.95)),
-        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231e293b' stroke-width='1' stroke-opacity='0.4'%3E%3Cpath d='M0 0h80v80H0z'/%3E%3Cpath d='M0 40h80M40 0v80' stroke='%230284c7' stroke-opacity='0.15' stroke-dasharray='2,2'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: cover, cover, cover, 80px 80px;
+        url("background2.jpg");
+      background-size: cover, cover, cover, cover;
       background-position: center;
+      background-repeat: no-repeat;
     }
 
     /* Step Cards Hidden Until Stickman Lands */
@@ -859,8 +861,8 @@
                   <span class="text-xs font-bold text-slate-100"><i class="fa-brands fa-github text-cyan-400 mr-1.5"></i>1. GitHub Repository</span>
                   <span class="text-[9px] font-mono bg-emerald-950 text-emerald-400 px-1.5 py-0.5 rounded border border-emerald-800">Permanent</span>
                 </div>
-                <p class="text-[10px] text-slate-400 truncate">PySpark notebooks, modular cleaning scripts & CI/CD workflows[cite: 9].</p>
-                <a href="https://github.com/ttan-ttan/ttan-olist-project" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 font-bold pt-0.5">
+                <p class="text-[10px] text-slate-400 truncate">PySpark notebooks, modular cleaning scripts & CI/CD workflows.</p>
+                <a href="https://github.com/ttan-ttan/ttan-olist-project" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-[11px] font-mono text-cyan-400 hover:text-cyan-300 font-bold pt-0.5">
                   View Source Repository <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
               </div>
@@ -871,7 +873,7 @@
                   <span class="text-xs font-bold text-slate-100"><i class="fa-solid fa-chart-column text-amber-400 mr-1.5"></i>2. Power BI Live Dashboard</span>
                   <span class="text-[9px] font-mono bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-800 font-bold">Expires Oct 25</span>
                 </div>
-                <p class="text-[10px] text-slate-400 truncate">Direct Lake live dashboard for revenue and SLA insights[cite: 9].</p>
+                <p class="text-[10px] text-slate-400 truncate">Direct Lake live dashboard for revenue and SLA insights.</p>
                 <a href="https://app.fabric.microsoft.com/groups/db31b021-c604-4f46-bef0-f45f32f8b60e/reports/a241455d-4844-4244-a1d8-676cd7c5ef3f/93c2baa6bbe67dd191ab?experience=power-bi" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-mono text-amber-300 hover:text-amber-200 font-bold pt-0.5">
                   Open Power BI Dashboard <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
@@ -883,7 +885,7 @@
                   <span class="text-xs font-bold text-slate-100"><i class="fa-solid fa-sitemap text-purple-400 mr-1.5"></i>3. Fabric Workspace Lineage</span>
                   <span class="text-[9px] font-mono bg-purple-950 text-purple-300 px-1.5 py-0.5 rounded border border-purple-800 font-bold">Expires Oct 25</span>
                 </div>
-                <p class="text-[10px] text-slate-400 truncate">Lineage graph of Lakehouses, Delta tables, and pipelines[cite: 9].</p>
+                <p class="text-[10px] text-slate-400 truncate">Lineage graph of Lakehouses, Delta tables, and pipelines.</p>
                 <a href="https://app.fabric.microsoft.com/groups/db31b021-c604-4f46-bef0-f45f32f8b60e/lineage?experience=fabric-developer" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-mono text-purple-300 hover:text-purple-200 font-bold pt-0.5">
                   Open Lineage Graph <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
@@ -895,7 +897,7 @@
                   <span class="text-xs font-bold text-slate-100"><i class="fa-brands fa-google-drive text-blue-400 mr-1.5"></i>4. Google Drive Hub</span>
                   <span class="text-[9px] font-mono bg-blue-950 text-blue-300 px-1.5 py-0.5 rounded border border-blue-800">Public Hub</span>
                 </div>
-                <p class="text-[10px] text-slate-400 truncate">Exported PowerPoint deck, video, and Power Automate flows[cite: 9].</p>
+                <p class="text-[10px] text-slate-400 truncate">Exported PowerPoint deck, video, and Power Automate flows.</p>
                 <a href="https://docs.google.com/document/d/1xaZMAAX-5J0d4iJC1vxZOXzEOk5ao_m9_w1aOSYnFOk/edit?usp=sharing" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-mono text-blue-300 hover:text-blue-200 font-bold pt-0.5">
                   Open Google Drive Documentation <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
@@ -907,7 +909,7 @@
                   <span class="text-xs font-bold text-slate-100"><i class="fa-solid fa-file-powerpoint text-amber-400 mr-1.5"></i>5. PowerPoint Presentation Deck</span>
                   <span class="text-[9px] font-mono bg-amber-950 text-amber-300 px-1.5 py-0.5 rounded border border-amber-800 font-bold">OneDrive Live</span>
                 </div>
-                <p class="text-[10px] text-slate-400 truncate">Full presentation deck with architecture and metrics[cite: 9].</p>
+                <p class="text-[10px] text-slate-400 truncate">Full presentation deck with architecture and metrics.</p>
                 <a href="https://onedrive.live.com/personal/1be3912c55ca5391/_layouts/15/Doc.aspx?sourcedoc=%7Bf2e0f246-7202-41e8-b8f6-51733bb5fc2f%7D&action=default&redeem=aHR0cHM6Ly8xZHJ2Lm1zL3AvYy8xYmUzOTEyYzU1Y2E1MzkxL0lRQkc4dUR5QW5Mb1FiajJVWE03dGZ3dkFhQ2VNTjBIV0FSVUllVUVob253RnIwP2U9ek9wZEdz&slrid=931945a2-e081-0000-4a42-71be330a31e2&originalPath=aHR0cHM6Ly9vbmVkcml2ZS5saXZlLmNvbS86cDovZy9wZXJzb25hbC8xYmUzOTEyYzU1Y2E1MzkxL0lRQkc4dUR5QW5Mb1FiajJVWE03dGZ3dkFhQ2VNTjBIV0FSVUllVUVob253RnIwP3J0aW1lPWhmWTljYk1xMzBnJnJlZGVlbT1hSFIwY0hNNkx5OHhaSEoyTG0xekwzQXZZeTh4WW1Vek9URXlZelUxWTJFMU16a3hMMGxSUWtjNGRVUjVRVzVNYjFGaWFqSlZXRTAzZEdaM2RrRmhRMlZOVGpCSVYwRlNWVWxsVlVWb2IyNTNSbkl3UDJVOWVrOXdaRWR6&CID=2e9383a2-dab6-4558-9fc6-a219344b7779&_SRM=0%3AG%3A68&file=Olist_Black_Friday_Final_Presentation%20(1).pptx" target="_blank" class="inline-flex items-center gap-1 text-[11px] font-mono text-amber-300 hover:text-amber-200 font-bold pt-0.5">
                   Open PowerPoint Deck <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                 </a>
@@ -916,7 +918,7 @@
           </div>
 
           <p class="text-[10px] font-mono text-slate-500 border-t border-slate-800 pt-1.5">
-            Team Members: Tan YJ, Ana, JieSong, Junjie • Date: 06 Oct 2026[cite: 9]
+            Team Members: Tan YJ, Ana, JieSong, Junjie • Date: 06 Oct 2026
           </p>
         </div>
 
@@ -942,7 +944,7 @@
                 <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative aspect-video flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(34,211,238,0.2)] transition-all">
                   <img src="fabric_pipeline.png" alt="Microsoft Fabric Pipeline Proof" class="w-full h-full object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-3 text-center text-[10px] font-mono text-amber-400\'><i class=\'fa-solid fa-image-slash block text-lg mb-1\'></i>Image failed to load</div>';">
                 </div>
-                <p class="text-[10px] text-slate-400 leading-tight">Medallion ELT pipeline execution across Bronze, Silver, and Gold layers[cite: 9].</p>
+                <p class="text-[10px] text-slate-400 leading-tight">Medallion ELT pipeline execution across Bronze, Silver, and Gold layers.</p>
               </div>
 
               <!-- Snapshot Card 2: Power Automate Webhook -->
@@ -956,18 +958,18 @@
                 <div class="bg-slate-950 border border-slate-800 rounded-xl overflow-hidden relative aspect-video flex items-center justify-center group-hover:shadow-[0_0_15px_rgba(168,85,247,0.2)] transition-all">
                   <img src="power_automate.png" alt="Power Automate Flow Proof" class="w-full h-full object-cover" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-3 text-center text-[10px] font-mono text-amber-400\'><i class=\'fa-solid fa-image-slash block text-lg mb-1\'></i>Image failed to load</div>';">
                 </div>
-                <p class="text-[10px] text-slate-400 leading-tight">Event-driven automation triggering Fabric pipeline upon GitHub merge[cite: 9].</p>
+                <p class="text-[10px] text-slate-400 leading-tight">Event-driven automation triggering Fabric pipeline upon GitHub merge.</p>
               </div>
             </div>
 
             <div class="bg-slate-900/80 border border-slate-800 p-3 rounded-2xl text-xs font-mono text-slate-300 leading-relaxed">
               <i class="fa-solid fa-shield-halved text-cyan-400 mr-2"></i>
-              <strong>Proof of Work Justification:</strong> Screenshots prove full end-to-end functionality of Microsoft Fabric pipelines and Power Automate webhooks under restricted trial-tenant conditions[cite: 9].
+              <strong>Proof of Work Justification:</strong> Screenshots prove full end-to-end functionality of Microsoft Fabric pipelines and Power Automate webhooks under restricted trial-tenant conditions.
             </div>
           </div>
 
           <div class="bg-slate-900 p-2.5 rounded-2xl border border-slate-800 text-xs font-mono text-slate-400 flex items-center justify-between">
-            <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i>Proof of Work Verified[cite: 9]</span>
+            <span><i class="fa-solid fa-circle-check text-emerald-400 mr-1.5"></i>Proof of Work Verified</span>
             <button onclick="renderStep(1)" class="px-3 py-1 bg-cyan-400 hover:bg-cyan-300 text-slate-950 font-black rounded-xl text-xs transition-all active:scale-95">
               Restart Story
             </button>

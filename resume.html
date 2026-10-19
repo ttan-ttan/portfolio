@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#020617">
+  <title>Download Resume | Tan Yong Jian</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      padding: 24px;
+      display: grid;
+      place-items: center;
+      background: #020617;
+      color: #e2e8f0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    main {
+      width: min(100%, 440px);
+      padding: 32px 24px;
+      border: 1px solid #164e63;
+      border-radius: 24px;
+      background: #0f172a;
+      text-align: center;
+      box-shadow: 0 0 32px rgb(6 182 212 / 12%);
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      color: #67e8f9;
+      font-size: 1.5rem;
+    }
+
+    p {
+      margin: 0 0 24px;
+      color: #cbd5e1;
+      line-height: 1.5;
+    }
+
+    a {
+      display: block;
+      padding: 14px 18px;
+      border-radius: 12px;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .download {
+      background: #06b6d4;
+      color: #020617;
+    }
+
+    .preview {
+      margin-top: 12px;
+      border: 1px solid #334155;
+      color: #cbd5e1;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Tan Yong Jian</h1>
+    <p>Your resume is ready. Tap below to download the PDF to your phone.</p>
+    <a class="download" href="TanYongJian_JDE10.pdf" download="TanYongJian_JDE10.pdf">Download Resume (PDF)</a>
+    <a class="preview" href="TanYongJian_JDE10.pdf" target="_blank" rel="noopener noreferrer">Open PDF instead</a>
+  </main>
+</body>
+</html>
