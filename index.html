@@ -116,6 +116,14 @@
       backdrop-filter: blur(12px);
     }
 
+    /* HALF STAR GRADIENT MASK */
+    .star-half-split {
+      background: linear-gradient(90deg, #fbbf24 50%, #334155 50%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
     /* CUSTOM SCROLLBARS FOR RESPONSIVE PANELS */
     ::-webkit-scrollbar {
       width: 5px;
@@ -391,7 +399,7 @@
         <span class="text-[9px] sm:text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded-full font-bold">Narrative Video</span>
       </div>
 
-      <div class="neon-card-purple rounded-3xl p-3 sm:p-5 flex-1 flex flex-col justify-center items-center overflow-hidden">
+      <div class="neon-card-purple rounded-3xl p-3 sm:p-5 flex-1 flex flex-col justify-center items-center overflow-y-auto">
         <div class="w-full max-w-3xl">
           <div class="relative aspect-video rounded-2xl bg-black border border-purple-500/40 overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.2)]">
             <video id="phase2Video" controls playsinline preload="metadata" aria-label="Career transition narrative video"
@@ -414,10 +422,100 @@
               class="text-xs font-mono font-bold text-purple-300 underline underline-offset-4 hover:text-purple-200">Open video directly</a>
           </div>
         </div>
+
+        <!-- CHRONOLOGICAL DUAL-TRACK TIMELINE -->
+        <div class="w-full max-w-5xl pt-2 border-t border-purple-900/50 mt-3">
+          <div class="text-center mb-2">
+            <span class="text-[10px] font-mono text-purple-300 font-bold uppercase tracking-wider">
+              <i class="fa-solid fa-timeline text-cyan-400 mr-1"></i> Career Pivot & Parallel Upskilling Progression
+            </span>
+          </div>
+
+          <!-- CONNECTED NODES GRID -->
+          <div class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
+            
+            <!-- CONNECTING GLOW LINE -->
+            <div class="hidden lg:block absolute top-1/2 left-4 right-4 h-0.5 bg-slate-800 -translate-y-1/2 z-0">
+              <div class="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-400 animate-pulse"></div>
+            </div>
+
+            <!-- MILESTONE 1: CONSTRUCTION + CYBERSECURITY -->
+            <div class="relative z-10 bg-slate-950/90 border border-cyan-500/40 hover:border-cyan-400 rounded-xl p-2.5 transition-all duration-300 group shadow-lg flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[8px] font-mono font-black text-cyan-300 bg-cyan-950/80 px-1.5 py-0.5 rounded border border-cyan-700/80 uppercase">Mar 2023 – May 2023</span>
+                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
+              </div>
+              <div class="space-y-1">
+                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
+                  <p class="text-[9px] font-mono font-bold text-slate-200"><i class="fa-solid fa-hard-hat text-cyan-400 mr-1"></i> Structural PM (Full-Time)</p>
+                  <p class="text-[8px] text-slate-400">Managing site operations & logistics</p>
+                </div>
+                <div class="p-1.5 rounded bg-cyan-950/40 border border-cyan-800/60">
+                  <p class="text-[9px] font-mono font-bold text-cyan-300"><i class="fa-solid fa-graduation-cap mr-1"></i> Postgrad Dip Cybersecurity</p>
+                  <p class="text-[8px] text-slate-400">PSB Academy (Part-Time)</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- MILESTONE 2: 42SG SUTD + CYBERSECURITY -->
+            <div class="relative z-10 bg-slate-950/90 border border-purple-500/40 hover:border-purple-400 rounded-xl p-2.5 transition-all duration-300 group shadow-lg flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[8px] font-mono font-black text-purple-300 bg-purple-950/80 px-1.5 py-0.5 rounded border border-purple-700/80 uppercase">May 2023 – Oct 2023</span>
+                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
+              </div>
+              <div class="space-y-1">
+                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
+                  <p class="text-[9px] font-mono font-bold text-purple-300"><i class="fa-solid fa-code mr-1"></i> 42 Singapore (Full-Time)</p>
+                  <p class="text-[8px] text-slate-400">42SG @ SUTD · Piscine & Core C programming</p>
+                </div>
+                <div class="p-1.5 rounded bg-cyan-950/40 border border-cyan-800/60">
+                  <p class="text-[9px] font-mono font-bold text-cyan-300"><i class="fa-solid fa-graduation-cap mr-1"></i> Postgrad Dip Cybersecurity</p>
+                  <p class="text-[8px] text-slate-400">PSB Academy (Graduated Oct 2023)</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- MILESTONE 3: SOC ANALYST + NTU SCTP -->
+            <div class="relative z-10 bg-slate-950/90 border border-sky-500/50 hover:border-sky-400 rounded-xl p-2.5 transition-all duration-300 group shadow-[0_0_15px_rgba(56,189,248,0.15)] flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[8px] font-mono font-black text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-600/80 uppercase">Oct 2023 – Nov 2024</span>
+                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
+              </div>
+              <div class="space-y-1">
+                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
+                  <p class="text-[9px] font-mono font-bold text-amber-400"><i class="fa-solid fa-shield-halved mr-1"></i> SOC L1 Analyst (Full-Time)</p>
+                  <p class="text-[8px] text-slate-400">IRAS (Spade) · Monitoring & Excel VBA</p>
+                </div>
+                <div class="p-1.5 rounded bg-sky-950/40 border border-sky-800/60">
+                  <p class="text-[9px] font-mono font-bold text-sky-300"><i class="fa-solid fa-laptop-code mr-1"></i> Software Engineering</p>
+                  <p class="text-[8px] text-slate-400">NTU SCTP (Part-Time · May 24 – Nov 24)</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- MILESTONE 4: GENSG DATA ENGINEERING -->
+            <div class="relative z-10 bg-slate-950/90 border border-emerald-500/50 hover:border-emerald-400 rounded-xl p-2.5 transition-all duration-300 group shadow-[0_0_15px_rgba(52,211,153,0.15)] flex flex-col justify-between space-y-1.5">
+              <div class="flex items-center justify-between">
+                <span class="text-[8px] font-mono font-black text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-700/80 uppercase">Jul 2026 – Oct 2026</span>
+                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+              </div>
+              <div class="space-y-1">
+                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
+                  <p class="text-[9px] font-mono font-bold text-emerald-300"><i class="fa-solid fa-database mr-1"></i> Junior Data Engineer</p>
+                  <p class="text-[8px] text-slate-400">Generation Singapore (Full-Time)</p>
+                </div>
+                <div class="p-1.5 rounded bg-emerald-950/30 border border-emerald-800/40">
+                  <p class="text-[8px] text-emerald-400 font-mono"><i class="fa-solid fa-check-double mr-1"></i> PySpark, MS Fabric, Delta Lake & Power BI</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
       </div>
     </div>
 
-    <!-- PHASE 3: CAPSTONES (CLICKABLE INTERACTIVE MODALS) -->
+    <!-- PHASE 3: CAPSTONES -->
     <div id="phase3Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 space-y-2 overflow-hidden">
       <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
         <div>
@@ -483,7 +581,7 @@
       </div>
     </div>
 
-    <!-- PHASE 4: READINESS MATRIX (EXACT SNAPSHOT MAPPINGS & PROFICIENCY MATRIX) -->
+    <!-- PHASE 4: READINESS MATRIX -->
     <div id="phase4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 space-y-2 overflow-hidden">
       <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
         <div>
@@ -495,7 +593,7 @@
 
       <div class="flex-1 overflow-y-auto space-y-3 pr-1">
         
-        <!-- TABLE 1: ENGINEERING vs DATA ENGINEERING (SNAPSHOT 3) -->
+        <!-- TABLE 1: ENGINEERING vs DATA ENGINEERING -->
         <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
           <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
             <i class="fa-solid fa-compass-drafting text-cyan-400 text-sm"></i>
@@ -538,7 +636,7 @@
           </div>
         </div>
 
-        <!-- TABLE 2: TECHNICAL SKILLSET MATRIX SPLIT BY DOMAINS (SNAPSHOT 1) -->
+        <!-- TABLE 2: TECHNICAL SKILLSET MATRIX (DATA ENGINEERING FOCUS) -->
         <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
           <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
             <i class="fa-solid fa-sliders text-purple-400 text-sm"></i>
@@ -546,61 +644,129 @@
           </div>
           
           <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <!-- Data Engineering Table -->
+            <!-- Core Data Engineering Table -->
             <div class="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/40">
               <table class="w-full text-left text-[11px] sm:text-xs font-mono">
                 <thead>
                   <tr class="border-b border-slate-800 text-purple-400 bg-purple-950/30">
-                    <th class="p-2">DATA ENGINEERING</th>
+                    <th class="p-2">CORE DATA ENGINEERING</th>
                     <th class="p-2 text-right">PROFICIENCY</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800/60 text-slate-300">
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">SQL</td>
-                    <td class="p-2 text-right text-purple-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">SQL (Queries, Joins, Aggregations)</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">Data Modelling</td>
-                    <td class="p-2 text-right text-purple-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">Python (Pandas, Automation)</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">ETL / ELT</td>
-                    <td class="p-2 text-right text-purple-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">ETL / ELT Pipelines & Ingestion</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">PySpark</td>
-                    <td class="p-2 text-right text-purple-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">Microsoft Fabric & Delta Lake</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">Microsoft Fabric</td>
-                    <td class="p-2 text-right text-purple-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">PySpark / Big Data Processing</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                 </tbody>
               </table>
             </div>
 
-            <!-- Platform Engineering Table -->
+            <!-- Platforms & Software Engineering Foundation Table -->
             <div class="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/40">
               <table class="w-full text-left text-[11px] sm:text-xs font-mono">
                 <thead>
                   <tr class="border-b border-slate-800 text-cyan-400 bg-cyan-950/30">
-                    <th class="p-2">PLATFORM ENGINEERING</th>
+                    <th class="p-2">PLATFORMS & SOFTWARE FOUNDATION</th>
                     <th class="p-2 text-right">PROFICIENCY</th>
                   </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800/60 text-slate-300">
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">Git</td>
-                    <td class="p-2 text-right text-cyan-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">Git & GitHub Actions (CI/CD)</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">Docker</td>
-                    <td class="p-2 text-right text-cyan-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">Development Tools (VS Code, pgAdmin, Jupyter)</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                    </td>
                   </tr>
                   <tr>
-                    <td class="p-2 font-semibold text-slate-100">CI/CD</td>
-                    <td class="p-2 text-right text-cyan-300 font-bold">★★★☆☆</td>
+                    <td class="p-2 font-semibold text-slate-100">Power BI & Semantic Modeling</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="p-2 font-semibold text-slate-100">Docker & Containerization</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="p-2 font-semibold text-slate-100">Full-Stack & APIs (Java Spring Boot, JS, React)</td>
+                    <td class="p-2 text-right text-amber-400 space-x-0.5">
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star"></i>
+                      <i class="fa-solid fa-star star-half-split"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                      <i class="fa-solid fa-star text-slate-700"></i>
+                    </td>
                   </tr>
                 </tbody>
               </table>
@@ -608,7 +774,7 @@
           </div>
         </div>
 
-        <!-- TABLE 3: THE ROLE REQUIRES vs WHAT I BRING (SNAPSHOT 2) -->
+        <!-- TABLE 3: THE ROLE REQUIRES vs WHAT I BRING -->
         <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
           <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
             <i class="fa-solid fa-gem text-emerald-400 text-sm"></i>
