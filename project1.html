@@ -246,8 +246,8 @@
               <span class="bg-red-50 text-red-700 border border-red-200 px-2.5 py-0.5 rounded text-xs font-bold">Scrape / Mock</span>
             </div>
             <p class="text-sm text-slate-600 font-medium"><strong>Official Source:</strong> 10 Acute Public Hospitals in SG.</p>
-            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> Only 2/10 publish feeds (NUHS & TTSH web portals).</p>
-            <p class="text-sm text-slate-600 font-medium"><strong>Data Gap (80% missing):</strong> SingHealth (SGH, CGH, SKH, KTPH) provides no API or machine-readable feed.</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Available Data:</strong> Only 3/10 publish feeds (NUHS & TTSH web portals).</p>
+            <p class="text-sm text-slate-600 font-medium"><strong>Data Gap (70% missing):</strong> SingHealth (SGH, CGH, SKH, KTPH) provides no API or machine-readable feed.</p>
           </div>
           <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 text-xs font-mono text-slate-700 mt-2">
             <strong>DE Solution:</strong> Engineered pseudo-random synthetic wait generator driven by peak-hour congestion multipliers.
@@ -672,10 +672,12 @@
       </div>
     </div>
 
-    <!-- SLIDE 9: DENGUE TIMELINE & WINDOW FUNCTION LAG ANALYSIS -->
+   <!-- SLIDE 9: DENGUE TIMELINE & WINDOW FUNCTION LAG ANALYSIS -->
     <div id="slide9Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-4">
-      <div class="card-bright-white rounded-3xl p-8 h-full flex flex-col justify-between border-t-4 border-t-[#002b49]">
-        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3">
+      <div class="card-bright-white rounded-3xl p-6 h-full flex flex-col justify-between border-t-4 border-t-[#002b49] overflow-y-auto">
+        
+        <!-- Header -->
+        <div class="flex justify-between items-center border-b-2 border-slate-200 pb-3 shrink-0">
           <div>
             <span class="text-xs font-mono font-black text-purple-700 uppercase tracking-widest">ADVANCED ANALYTICS</span>
             <h2 class="text-3xl font-black text-[#002b49]">Dengue Catalyst Lag Analysis (28–58 Day Window)</h2>
@@ -685,7 +687,8 @@
           </span>
         </div>
 
-        <div class="grid grid-cols-12 gap-6 my-auto h-full py-2">
+        <!-- Top Grid: SQL Code + Decision Cards -->
+        <div class="grid grid-cols-12 gap-6 my-2 shrink-0">
           <!-- SQL Window Function Code -->
           <div class="col-span-7 terminal-window-bright rounded-2xl p-5 flex flex-col justify-between">
             <div class="flex items-center justify-between border-b border-[#003863] pb-2 mb-2">
@@ -718,25 +721,56 @@
 
           <!-- Research Conclusion Box -->
           <div class="col-span-5 flex flex-col justify-between space-y-3">
-            <div class="bg-emerald-50 p-6 rounded-2xl border border-emerald-300 space-y-2">
+            <div class="bg-emerald-50 p-5 rounded-2xl border border-emerald-300 space-y-2">
               <p class="text-emerald-900 font-black text-sm flex items-center gap-2">
                 <i class="fa-solid fa-circle-check"></i> Primary Goal (VALIDATED)
               </p>
               <p class="text-emerald-800 text-xs leading-relaxed font-medium">
-                Live A&E queue data proves our core thesis: TTSH reported a 44-min wait vs NUH's 180-min wait despite equal patient volume. Routing saves >2 hours.
+                Live A&E queue data proves our core thesis: TTSH reported a 44-min wait vs NUH's 180-min wait despite equal patient volume. Dynamic routing saves >2 hours per emergency trip.
               </p>
             </div>
 
-            <div class="bg-amber-50 p-6 rounded-2xl border border-amber-300 space-y-2">
+            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-300 space-y-2">
               <p class="text-amber-900 font-black text-sm flex items-center gap-2">
                 <i class="fa-solid fa-circle-xmark"></i> Secondary Lag Hypothesis (INCONCLUSIVE)
               </p>
               <p class="text-amber-800 text-xs leading-relaxed font-medium">
-                60-day historical data limit was too short to establish statistical correlation between vector catalysts and A&E load. Longer runway (>180 days) required.
+                60-day historical window was too short to establish direct causality between rainfall vectors and A&E load. Longer runway (>180 days) across monsoon cycles required.
               </p>
             </div>
           </div>
         </div>
+
+        <!-- NEW: INTERACTIVE CHART & TIMELINE VIEWER -->
+        <div class="col-span-12 card-bright-white p-4 rounded-2xl border border-purple-200 shadow-sm shrink-0">
+          <div class="flex justify-between items-center border-b border-slate-200 pb-2 mb-3">
+            <span class="text-[#002b49] font-black font-mono text-xs uppercase">
+              <i class="fa-solid fa-timeline text-purple-600 mr-2"></i>28–58 Day Vector Incubation Cycle & Lag Model
+            </span>
+            <span class="text-[10px] font-mono bg-purple-100 text-purple-800 px-2 py-0.5 rounded font-bold">Incubation Timeline</span>
+          </div>
+
+          <!-- Dengue Breeding Incubation Timeline Graphic -->
+          <div class="grid grid-cols-4 gap-3 bg-purple-50/60 p-3 rounded-xl border border-purple-100 font-mono text-xs">
+            <div class="space-y-1">
+              <span class="text-purple-800 font-black text-[11px] block">Step 1: Heavy Rain (T-60d)</span>
+              <p class="text-slate-600 text-[10px] leading-snug">3+ days heavy rain creating standing pools for mosquito breeding.</p>
+            </div>
+            <div class="space-y-1 border-l border-purple-200 pl-3">
+              <span class="text-purple-800 font-black text-[11px] block">Step 2: Vector Incubate (T-30d)</span>
+              <p class="text-slate-600 text-[10px] leading-snug">Aedes larvae hatch & mature in stagnant water clusters.</p>
+            </div>
+            <div class="space-y-1 border-l border-purple-200 pl-3">
+              <span class="text-purple-800 font-black text-[11px] block">Step 3: GP Surge (T-7d)</span>
+              <p class="text-slate-600 text-[10px] leading-snug">Febrile patients visit local GP clinics (~25 cases/day).</p>
+            </div>
+            <div class="space-y-1 border-l border-purple-200 pl-3">
+              <span class="text-red-700 font-black text-[11px] block">Step 4: A&E Admission (T-0)</span>
+              <p class="text-slate-600 text-[10px] leading-snug">Severe cases admitted to regional public hospital A&E.</p>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
 
