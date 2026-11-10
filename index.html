@@ -1,1127 +1,1251 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Career Evolution Portfolio | Tan Yong Jian</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
-  <style>
-    html,
-    body {
-      width: 100vw;
-      height: 100vh;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      background-color: #020617;
-      font-family: system-ui, -apple-system, sans-serif;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart-Route ED | Capstone Presentation Deck (GenSG JDE10)</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
 
-    /* BACKGROUND TECH GRID */
-    .bg-tech-grid {
-      background-color: #020617;
-      background-image:
-        radial-gradient(circle at 50% 20%, rgba(56, 189, 248, 0.15), transparent 60%),
-        radial-gradient(circle at 80% 80%, rgba(139, 92, 246, 0.15), transparent 50%),
-        linear-gradient(to bottom, rgba(2, 6, 23, 0.85), rgba(9, 13, 22, 0.95)),
-        url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' stroke='%231e293b' stroke-width='1' stroke-opacity='0.4'%3E%3Cpath d='M0 0h80v80H0z'/%3E%3Cpath d='M0 40h80M40 0v80' stroke='%230284c7' stroke-opacity='0.15' stroke-dasharray='2,2'/%3E%3C/g%3E%3C/svg%3E");
-      background-size: cover, cover, cover, 80px 80px;
-    }
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        navy: {
+                            800: '#002b49',
+                            900: '#001a2e',
+                            950: '#000f1c'
+                        },
+                        medical: {
+                            blue: '#0066cc',
+                            cyan: '#00b4d8',
+                            teal: '#06b6d4',
+                            emerald: '#10b981'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #001a2e;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #00568c;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00b4d8;
+        }
 
-    /* SCENE VISIBILITY & TRANSITION BASE */
-    .scene-element {
-      display: none !important;
-      opacity: 0;
-      transform: scale(1);
-      transition: opacity 0.4s ease-out, transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+        .glass-dark {
+            background: rgba(0, 26, 46, 0.94);
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card {
+            background: rgba(15, 32, 53, 0.88);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 180, 216, 0.18);
+        }
+        .glass-card:hover {
+            border-color: rgba(0, 180, 216, 0.4);
+        }
 
-    .scene-visible {
-      display: flex !important;
-      opacity: 1;
-      transform: scale(1);
-    }
+        .gradient-text {
+            background: linear-gradient(135deg, #38bdf8 0%, #00b4d8 50%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-    /* TIMELAPSE CARD ZOOM EFFECT */
-    .card-zoom-target {
-      transition: transform 0.75s cubic-bezier(0.7, 0, 0.84, 0), opacity 0.6s ease-in !important;
-      transform: scale(3.5) translate(0, 0) !important;
-      opacity: 0 !important;
-      z-index: 100 !important;
-    }
-
-    .wrapper-zoom-out {
-      animation: phaseZoomOut 0.5s cubic-bezier(0.7, 0, 0.84, 0) forwards;
-    }
-
-    @keyframes phaseZoomOut {
-      0% {
-        transform: scale(1);
-        opacity: 1;
-        filter: blur(0px);
-      }
-      100% {
-        transform: scale(0.3);
-        opacity: 0;
-        filter: blur(8px);
-      }
-    }
-
-    /* LIGHT TUNNEL OVERLAY */
-    #lightTunnelOverlay {
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-      pointer-events: none;
-      opacity: 0;
-      background: radial-gradient(circle at center,
-          rgba(255, 255, 255, 0.95) 0%,
-          rgba(56, 189, 248, 0.85) 20%,
-          rgba(168, 85, 247, 0.7) 45%,
-          rgba(15, 23, 42, 0.95) 75%,
-          rgba(2, 6, 23, 1) 100%);
-      transform: scale(0.1);
-      filter: blur(20px);
-      transition: transform 0.75s cubic-bezier(0.85, 0, 0.15, 1), opacity 0.4s ease-in-out, filter 0.6s ease-out;
-    }
-
-    #lightTunnelOverlay.tunnel-active {
-      opacity: 1;
-      transform: scale(4.5);
-      filter: blur(2px);
-    }
-
-    /* STYLED CARDS */
-    .neon-card-cyan {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(56, 189, 248, 0.3);
-      box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
-      backdrop-filter: blur(12px);
-    }
-
-    .neon-card-purple {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(168, 85, 247, 0.3);
-      box-shadow: 0 0 15px rgba(168, 85, 247, 0.15);
-      backdrop-filter: blur(12px);
-    }
-
-    .neon-card-emerald {
-      background: rgba(15, 23, 42, 0.85);
-      border: 1px solid rgba(52, 211, 153, 0.3);
-      box-shadow: 0 0 15px rgba(52, 211, 153, 0.15);
-      backdrop-filter: blur(12px);
-    }
-
-    /* HALF STAR GRADIENT MASK */
-    .star-half-split {
-      background: linear-gradient(90deg, #fbbf24 50%, #334155 50%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      display: inline-block;
-    }
-
-    /* CUSTOM SCROLLBARS FOR RESPONSIVE PANELS */
-    ::-webkit-scrollbar {
-      width: 5px;
-      height: 5px;
-    }
-
-    ::-webkit-scrollbar-track {
-      background: #020617;
-    }
-
-    ::-webkit-scrollbar-thumb {
-      background: #1e293b;
-      border-radius: 4px;
-    }
-
-    ::-webkit-scrollbar-thumb:hover {
-      background: #0284c7;
-    }
-
-    #largeQrCode img,
-    #largeQrCode canvas {
-      max-width: 100%;
-      height: auto;
-    }
-  </style>
+        .table-custom th {
+            background-color: #002b49;
+            color: #38bdf8;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #00568c;
+        }
+        .table-custom td {
+            padding: 0.65rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 0.8rem;
+        }
+        .table-custom tr:nth-child(even) {
+            background-color: rgba(0, 26, 46, 0.4);
+        }
+        .table-custom tr:hover {
+            background-color: rgba(0, 180, 216, 0.08);
+        }
+    </style>
 </head>
+<body class="bg-[#000f1c] text-slate-100 font-sans antialiased selection:bg-cyan-500 selection:text-navy-950">
 
-<body id="mainBody" class="bg-tech-grid text-slate-100 flex flex-col justify-between p-2 sm:p-3 select-none overflow-hidden">
+    <!-- STICKY TOP NAVIGATION BAR -->
+    <header class="fixed top-0 left-0 w-full z-50 glass-dark border-b border-slate-800/80 shadow-2xl">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-600 to-blue-700 flex items-center justify-center text-white shadow-lg shadow-cyan-900/40 font-black text-lg">
+                        <i class="fa-solid fa-truck-medical"></i>
+                    </div>
+                    <div>
+                        <span class="font-extrabold text-white tracking-tight text-base sm:text-lg block leading-none">Smart-Route ED</span>
+                        <span class="text-[10px] font-mono text-cyan-400 block tracking-wider uppercase mt-1">Group 2: Error 404 No Name Group · GenSG JDE10</span>
+                    </div>
+                </div>
 
-  <!-- HYPERSPACE LIGHT TUNNEL OVERLAY -->
-  <div id="lightTunnelOverlay"></div>
+                <!-- Slide Navigation Dots / Quick Jump -->
+                <nav class="hidden lg:flex items-center space-x-1 text-xs font-mono">
+                    <a href="#slide1" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S1: Title</a>
+                    <a href="#slide2" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S2: Problem</a>
+                    <a href="#slide3" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S3: Objectives</a>
+                    <a href="#slide4" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S4: Ingestion</a>
+                    <a href="#slide5" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S5: Geocoding</a>
+                    <a href="#slide6" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S6: Tech Stack</a>
+                    <a href="#slide7" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S7: Lineage</a>
+                    <a href="#slide8" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S8: Schemas</a>
+                    <a href="#slide9" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S9: Validation</a>
+                    <a href="#slide10" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S10: Analytics</a>
+                    <a href="#slide11" class="px-2 py-1 rounded text-slate-300 hover:text-cyan-400 hover:bg-slate-800/60">S11: Deliverables</a>
+                </nav>
 
-  <!-- HEADER -->
-  <header
-    class="w-full bg-slate-950/90 border border-slate-800 rounded-2xl px-3 sm:px-5 py-2 sm:py-2.5 flex justify-between items-center backdrop-blur-md z-40 shrink-0">
-    
-    <!-- LEFT SIDE: Identity, Title & Tech Badges -->
-    <div class="flex items-center gap-2.5 sm:gap-4 cursor-pointer" onclick="goToPhaseWithAnimation(0)">
-      <div
-        class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl sm:rounded-2xl bg-cyan-500 text-slate-950 flex items-center justify-center font-black text-base sm:text-lg shadow-[0_0_20px_rgba(6,182,212,0.6)] shrink-0">
-        YJ
-      </div>
-
-      <div class="flex flex-col gap-1">
-        <!-- Row 1: Name | Subtitle -->
-        <div class="flex items-center gap-2">
-          <h1 class="text-sm sm:text-base font-black text-slate-100 font-mono tracking-wider leading-none">TAN YONG JIAN</h1>
-          <span class="text-slate-600 text-xs font-mono hidden sm:inline">|</span>
-          <span class="text-xs font-mono font-bold text-cyan-400 hidden sm:inline">Data Engineering & Analytics</span>
+                <div class="flex items-center space-x-2">
+                    <a href="https://github.com/ttan-ttan/hospital_wait_time" target="_blank" class="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-white font-mono text-xs border border-slate-700 flex items-center gap-1.5 transition-all">
+                        <i class="fa-brands fa-github text-cyan-400"></i>
+                        <span class="hidden sm:inline">GitHub Code</span>
+                    </a>
+                </div>
+            </div>
         </div>
 
-        <!-- Row 2: Tech Badges & Background Tag -->
-        <div class="flex items-center gap-1.5 flex-wrap font-mono">
-          <span class="text-[10px] font-semibold text-slate-200 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">Fabric</span>
-          <span class="text-[10px] font-semibold text-slate-200 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">PySpark</span>
-          <span class="text-[10px] font-semibold text-slate-200 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">Python</span>
-          <span class="text-[10px] font-semibold text-slate-200 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">SQL</span>
-          <span class="text-[10px] font-semibold text-slate-200 bg-cyan-950/60 border border-cyan-500/30 px-2 py-0.5 rounded">Power BI</span>
-          <span class="text-[10px] text-slate-400 italic font-sans hidden md:inline ml-1">• 10+ Yrs Eng. Background</span>
+        <div class="w-full bg-slate-900 h-1">
+            <div id="scrollProgress" class="bg-gradient-to-r from-cyan-500 via-blue-500 to-indigo-500 h-1 w-0 transition-all duration-150"></div>
         </div>
-      </div>
-    </div>
+    </header>
 
-    <!-- RIGHT SIDE: External Profile, Resume Links & QR Code -->
-    <div class="flex items-center gap-1.5 sm:gap-3 font-mono text-xs">
-      <a href="https://www.linkedin.com/in/ttan-ttan/" target="_blank" rel="noopener noreferrer"
-        class="p-2 sm:px-3 sm:py-1.5 bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors"
-        title="LinkedIn Profile">
-        <i class="fa-brands fa-linkedin text-sm"></i> <span class="hidden md:inline">LinkedIn</span>
-      </a>
-      <a href="https://github.com/ttan-ttan" target="_blank" rel="noopener noreferrer"
-        class="p-2 sm:px-3 sm:py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 rounded-xl font-bold flex items-center gap-1.5 transition-colors"
-        title="GitHub Profile">
-        <i class="fa-brands fa-github text-sm"></i> <span class="hidden md:inline">GitHub</span>
-      </a>
-      <a href="TanYongJian_JDE10.pdf" target="_blank"
-        class="px-2.5 py-1.5 sm:px-3.5 sm:py-1.5 bg-cyan-500 hover:bg-cyan-400 text-slate-950 rounded-xl font-black flex items-center gap-1.5 transition-colors shadow-[0_0_12px_rgba(6,182,212,0.4)] text-[11px] sm:text-xs">
-        <i class="fa-solid fa-file-pdf"></i> <span class="hidden sm:inline">Resume (PDF)</span><span class="sm:hidden">PDF</span>
-      </a>
-      <div class="hidden sm:block">
-        <button type="button" aria-label="Show QR code for mobile resume" title="Show QR code for mobile resume"
-          onclick="openQrModal()"
-          class="w-8 h-8 rounded-xl bg-slate-900 border border-slate-700 hover:border-cyan-400 text-cyan-400 flex items-center justify-center transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-cyan-400">
-          <i class="fa-solid fa-qrcode text-sm"></i>
-        </button>
-      </div>
-      <a href="TanYongJian_JDE10.docx" download
-        class="hidden lg:flex px-3 py-1.5 bg-slate-900 hover:bg-slate-800 text-slate-400 border border-slate-800 rounded-xl text-xs items-center gap-1.5 transition-colors">
-        <i class="fa-solid fa-file-word text-blue-400"></i> .DOCX
-      </a>
-    </div>
-  </header>
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-24 py-24">
 
-  <!-- MAIN STAGE STACK -->
-  <main id="stageCanvas"
-    class="w-full flex-1 my-1 sm:my-2 relative z-10 flex items-center justify-center overflow-hidden min-h-0">
+        <!-- SLIDE 1: TITLE & EXECUTIVE SUMMARY -->
+        <section id="slide1" class="min-h-[85vh] flex flex-col justify-center">
+            <div class="glass-card rounded-3xl p-8 sm:p-12 border border-cyan-500/20 relative overflow-hidden shadow-2xl">
+                <div class="absolute -top-24 -right-24 w-96 h-96 bg-cyan-500/10 rounded-full blur-3xl pointer-events-none"></div>
 
-    <!-- PHASE 0: OVERVIEW MAIN DASHBOARD -->
-    <div id="phase0Wrapper"
-      class="scene-element scene-visible w-full h-full flex flex-col justify-center items-center p-1 sm:p-2 space-y-3 sm:space-y-6 overflow-y-auto">
-      <div class="text-center space-y-1">
-        <h2 class="text-xl sm:text-3xl font-black font-serif text-slate-100 tracking-wide">CAREER EVOLUTION ROADMAP</h2>
-        <p class="text-[10px] sm:text-xs text-cyan-400 font-mono">From Structural Engineering Delivery to Reliable Data Platforms</p>
-      </div>
+                <div class="flex flex-wrap items-center justify-between gap-4 mb-6">
+                    <span class="px-3.5 py-1.5 rounded-full bg-cyan-950/80 border border-cyan-500/30 text-cyan-400 text-xs font-mono font-semibold">
+                        <i class="fa-solid fa-graduation-cap mr-2"></i>GENSG JDE10 CAPSTONE PROJECT · SLIDE 1 OF 11
+                    </span>
+                    <span class="text-xs font-mono text-slate-400">Team: Error 404 No Name Group</span>
+                </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 w-full max-w-6xl px-2">
-        <div id="card-phase-1" onclick="onCardClicked(1, event)"
-          class="neon-card-cyan rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-cyan-400 flex flex-col justify-between group">
-          <div>
-            <span class="text-[10px] sm:text-xs font-mono font-black text-cyan-400">PHASE 01</span>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 mt-1 group-hover:text-cyan-300 transition-colors">Civil Eng. Career</h3>
-            <p class="text-[11px] sm:text-xs text-slate-400 mt-1.5 sm:mt-2">8 project stages with evolving skill scale from Benoi Rd to Yishun HDB.</p>
-          </div>
-          <span class="text-[11px] sm:text-xs font-mono text-cyan-300 font-bold mt-3 sm:mt-4 flex items-center justify-between">
-            View All 8 Projects <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-          </span>
-        </div>
+                <h1 class="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-white tracking-tight leading-tight">
+                    Smart-Route Emergency Department: <br>
+                    <span class="gradient-text">Optimizing Total Time to Treatment (TTT)</span>
+                </h1>
 
-        <div id="card-phase-2" onclick="onCardClicked(2, event)"
-          class="neon-card-purple rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-purple-400 flex flex-col justify-between group">
-          <div>
-            <span class="text-[10px] sm:text-xs font-mono font-black text-purple-400">PHASE 02</span>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 mt-1 group-hover:text-purple-300 transition-colors">Lively Pivot Story</h3>
-            <p class="text-[11px] sm:text-xs text-slate-400 mt-1.5 sm:mt-2">Cinematic video narrative detailing site data chaos transforming into data engineering pipelines.</p>
-          </div>
-          <span class="text-[11px] sm:text-xs font-mono text-purple-300 font-bold mt-3 sm:mt-4 flex items-center justify-between">
-            Watch Story Video <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-          </span>
-        </div>
+                <p class="text-slate-300 text-base sm:text-xl mt-6 max-w-4xl leading-relaxed font-normal">
+                    An end-to-end data pipeline and dynamic routing platform that balances live Singapore hospital A&E waiting queues, precipitation delays, and 60-day historical dengue outbreak vectors to save up to <strong>2.5 hours per emergency trip</strong>.
+                </p>
 
-        <div id="card-phase-3" onclick="onCardClicked(3, event)"
-          class="neon-card-emerald rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-sky-400 flex flex-col justify-between group">
-          <div>
-            <span class="text-[10px] sm:text-xs font-mono font-black text-sky-400">PHASE 03</span>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 mt-1 group-hover:text-sky-300 transition-colors">Capstone Projects</h3>
-            <p class="text-[11px] sm:text-xs text-slate-400 mt-1.5 sm:mt-2">Hospital Wait-Time Engine, Olist E-Commerce Pipeline & CRISP-DM project.</p>
-          </div>
-          <span class="text-[11px] sm:text-xs font-mono text-sky-300 font-bold mt-3 sm:mt-4 flex items-center justify-between">
-            View Capstones <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-          </span>
-        </div>
+                <!-- Project Source Links Badge Row -->
+                <div class="mt-6 flex flex-wrap gap-3 font-mono text-xs">
+                    <a href="https://github.com/ttan-ttan/hospital_wait_time" target="_blank" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-cyan-500/40 flex items-center gap-2 transition-all">
+                        <i class="fa-brands fa-github text-base"></i>
+                        <span>github.com/ttan-ttan/hospital_wait_time</span>
+                    </a>
+                    <a href="https://drive.google.com/drive/u/0/folders/1t4l-ThmTnlKxFVBhH6kdbMrDMxNcvA3l" target="_blank" class="px-4 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-purple-400 border border-purple-500/40 flex items-center gap-2 transition-all">
+                        <i class="fa-brands fa-google-drive text-base"></i>
+                        <span>Google Drive Project Folder</span>
+                    </a>
+                </div>
 
-        <div id="card-phase-4" onclick="onCardClicked(4, event)"
-          class="neon-card-emerald rounded-2xl sm:rounded-3xl p-4 sm:p-5 cursor-pointer transition-all duration-300 hover:scale-[1.03] hover:border-emerald-400 flex flex-col justify-between group">
-          <div>
-            <span class="text-[10px] sm:text-xs font-mono font-black text-emerald-400">PHASE 04</span>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 mt-1 group-hover:text-emerald-300 transition-colors">DE Readiness Matrix</h3>
-            <p class="text-[11px] sm:text-xs text-slate-400 mt-1.5 sm:mt-2">Direct site-to-DE skill correlations, technical matrix & value proposition.</p>
-          </div>
-          <span class="text-[11px] sm:text-xs font-mono text-emerald-300 font-bold mt-3 sm:mt-4 flex items-center justify-between">
-            View Readiness <i class="fa-solid fa-arrow-right transform group-hover:translate-x-1 transition-transform"></i>
-          </span>
-        </div>
-      </div>
-    </div>
+                <!-- Plain English Explainer Box -->
+                <div class="mt-8 p-5 rounded-2xl bg-navy-950/90 border border-slate-800 space-y-2 text-xs sm:text-sm">
+                    <span class="text-cyan-400 font-bold font-mono uppercase tracking-wider block">
+                        <i class="fa-solid fa-lightbulb mr-2"></i>Plain English Explanation for Non-Technical Stakeholders:
+                    </span>
+                    <p class="text-slate-300 leading-relaxed">
+                        When someone gets sick, taking them to the nearest hospital isn't always the fastest way to get care. If the nearest hospital is overcrowded with a 3-hour wait, driving 10 minutes further to a quieter hospital gets the patient seen by a doctor much sooner. Smart-Route ED continuously checks live hospital queue times and weather to recommend the fastest total trip.
+                    </p>
+                </div>
 
-    <!-- PHASE 1: CIVIL PROJECTS -->
-    <div id="phase1Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 overflow-hidden">
-      <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
+                <div class="mt-8 pt-6 border-t border-slate-800/80 flex flex-wrap items-center justify-between gap-4 font-mono text-xs">
+                    <div class="flex items-center space-x-3 text-slate-300">
+                        <span class="px-3 py-1 bg-navy-900 rounded-lg border border-slate-800"><i class="fa-solid fa-user text-cyan-400 mr-1.5"></i> Tan Yong Jian</span>
+                        <span class="px-3 py-1 bg-navy-900 rounded-lg border border-slate-800"><i class="fa-solid fa-users text-purple-400 mr-1.5"></i> Group 2</span>
+                    </div>
+                    <a href="#slide2" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-cyan-600 to-blue-600 hover:from-cyan-500 hover:to-blue-500 text-white font-semibold transition-all flex items-center space-x-2">
+                        <span>Begin Presentation</span>
+                        <i class="fa-solid fa-arrow-down text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 2: PROBLEM STATEMENT & LIVE TTT SIMULATOR -->
+        <section id="slide2" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 2 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">The A&E Overcrowding Paradox & Solution</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Problem & Reality</span>
+            </div>
+
+            <!-- Plain English Banner -->
+            <div class="p-4 rounded-xl bg-navy-950 border border-slate-800 text-xs sm:text-sm text-slate-300 mb-6">
+                <strong class="text-white font-bold">Why Nearest Isn't Fastest:</strong> Traditional dispatching sends ambulances to the physically closest building. But if National University Hospital (NUH) has a 3-hour queue, traveling 10 minutes there means waiting <strong>190 minutes total</strong> before seeing a doctor.
+            </div>
+
+            <!-- Live Simulator -->
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                <div class="lg:col-span-5 glass-card p-6 rounded-2xl border border-cyan-500/30 space-y-4">
+                    <h3 class="text-sm font-bold text-white font-mono uppercase tracking-wider flex items-center gap-2">
+                        <i class="fa-solid fa-sliders text-cyan-400"></i> Interactive Routing Simulator
+                    </h3>
+
+                    <div class="space-y-1.5 text-xs font-mono">
+                        <label class="text-slate-300">Emergency Incident Location:</label>
+                        <select id="simOrigin" onchange="calcTTT()" class="w-full bg-navy-950 border border-slate-700 rounded-lg p-2 text-white">
+                            <option value="D05">District D05 (Clementi / West Coast)</option>
+                            <option value="D11">District D11 (Novena / Newton)</option>
+                            <option value="D19">District D19 (Sengkang / Hougang)</option>
+                        </select>
+                    </div>
+
+                    <div class="space-y-1 text-xs font-mono">
+                        <div class="flex justify-between">
+                            <span class="text-slate-300">NUH Queue Time:</span>
+                            <span id="nuhQVal" class="text-red-400 font-bold">180 mins</span>
+                        </div>
+                        <input type="range" id="nuhQSlider" min="20" max="240" value="180" oninput="calcTTT()" class="w-full accent-cyan-400">
+                    </div>
+
+                    <div class="space-y-1 text-xs font-mono">
+                        <div class="flex justify-between">
+                            <span class="text-slate-300">TTSH Queue Time:</span>
+                            <span id="ttshQVal" class="text-emerald-400 font-bold">44 mins</span>
+                        </div>
+                        <input type="range" id="ttshQSlider" min="20" max="240" value="44" oninput="calcTTT()" class="w-full accent-cyan-400">
+                    </div>
+
+                    <div class="p-3 bg-navy-950 rounded-lg border border-slate-800 text-[11px] font-mono text-slate-300">
+                        Formula: <strong>TTT = Travel Mins + A&E Queue Mins</strong>
+                    </div>
+                </div>
+
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="glass-card p-6 rounded-2xl border-2 border-emerald-500/50 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-xs font-mono font-bold text-emerald-400 uppercase">Recommended Destination</span>
+                            <span class="text-[10px] font-mono bg-emerald-950 text-emerald-300 px-2 py-0.5 rounded border border-emerald-800">Smart-Route Decision</span>
+                        </div>
+                        <h4 id="recName" class="text-2xl font-black text-white">Tan Tock Seng Hospital (TTSH)</h4>
+                        <div class="flex justify-between items-center pt-2">
+                            <span class="text-xs text-slate-300">Total Delay to Doctor Treatment:</span>
+                            <span id="recTTT" class="text-3xl font-mono font-black text-emerald-400">64 Mins</span>
+                        </div>
+                        <div id="recSavings" class="text-xs font-mono text-emerald-300 font-bold bg-emerald-950/60 p-2 rounded border border-emerald-800 text-center">
+                            Saves 126 Minutes (2.1 Hours faster than nearest hospital!)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 3: SYSTEM OBJECTIVES -->
+        <section id="slide3" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 3 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Core Engineering Objectives</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Scope & Vision</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-cyan-400 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-cyan-950 flex items-center justify-center text-cyan-400 font-bold">1</div>
+                    <h3 class="text-lg font-bold text-white">Automated Data Collection</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Scrape and ingest live hospital queue times from public portals (SingHealth, NHG, NUHS) every 15 minutes, alongside real-time weather readings.
+                    </p>
+                    <div class="text-[11px] font-mono text-cyan-400">Plain English: Never rely on old or manual spreadsheets.</div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-blue-500 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-blue-950 flex items-center justify-center text-blue-400 font-bold">2</div>
+                    <h3 class="text-lg font-bold text-white">Geographic Standardizing</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Convert mismatched postal addresses, lat/long coordinates, and region names into Singapore's 28 Postal Sectors (D01 to D28).
+                    </p>
+                    <div class="text-[11px] font-mono text-blue-400">Plain English: Make all government data talk in the same language.</div>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl border-l-4 border-l-purple-500 space-y-3">
+                    <div class="w-10 h-10 rounded-xl bg-purple-950 flex items-center justify-center text-purple-400 font-bold">3</div>
+                    <h3 class="text-lg font-bold text-white">Epidemiological Analysis</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Test whether 60-day historical rainfall patterns correlate with dengue outbreak clusters and subsequent A&E queue spikes using SQL window functions.
+                    </p>
+                    <div class="text-[11px] font-mono text-purple-400">Plain English: Predict future hospital crowding before it happens.</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 4: TRI-MODAL DATA INGESTION ENGINE -->
+        <section id="slide4" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 4 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Tri-Modal Multi-Source Data Collection</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Data Engineering</span>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-2xl space-y-3">
+                    <span class="text-xs font-mono font-bold text-cyan-400 bg-cyan-950 px-2 py-1 rounded border border-cyan-800">Source 1: REST API</span>
+                    <h3 class="text-lg font-bold text-white">NEA Weather APIs</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Fetches 2-hour weather nowcasts and 5-minute rain gauge readings directly from Data.gov.sg in structured JSON.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl space-y-3">
+                    <span class="text-xs font-mono font-bold text-purple-400 bg-purple-950 px-2 py-1 rounded border border-purple-800">Source 2: Selenium Bot</span>
+                    <h3 class="text-lg font-bold text-white">Hospital Queue Web Scraping</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Runs a headless web browser to automatically click, render, and extract live wait-time minutes from public hospital dashboards.
+                    </p>
+                </div>
+
+                <div class="glass-card p-6 rounded-2xl space-y-3">
+                    <span class="text-xs font-mono font-bold text-amber-400 bg-amber-950 px-2 py-1 rounded border border-amber-800">Source 3: GeoJSON & CSV</span>
+                    <h3 class="text-lg font-bold text-white">Dengue Outbreak Backfill</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Parses historic dengue cluster polygons and 60-day rainfall archives to support retrospective correlation modeling.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 5: GEOCODING TRANSFORMER & SINGAPORE POSTAL HARMONIZATION MAP -->
+        <section id="slide5" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 5 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Spatial Harmonization (D01–D28)</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Two Incompatible Keys Resolved</span>
+            </div>
+
+            <!-- Plain English Explainer -->
+            <div class="p-4 rounded-xl bg-navy-950 border border-slate-800 text-xs sm:text-sm text-slate-300 mb-6">
+                <strong class="text-white font-bold">The Challenge:</strong> Dengue reports use locality text (e.g. <em>"Springleaf / Lentor"</em>), hospital dashboards use 6-digit postal codes (e.g. <em>119260</em>), and weather stations use Lat/Long coordinates. We resolved two incompatible geographic keys by mapping the first 2 digits of 6-digit postal codes to standard Singapore Postal Sectors (D01–D28).
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+                <!-- Interactive Transformer Box & Lookup Table -->
+                <div class="lg:col-span-7 space-y-4">
+                    <div class="p-5 rounded-2xl glass-card border border-cyan-500/30 space-y-3">
+                        <span class="text-xs font-mono text-cyan-400 font-bold block uppercase"><i class="fa-solid fa-calculator mr-2"></i>Live Postal Code Transformer Engine</span>
+                        <div class="flex gap-2">
+                            <input type="text" id="postalInput" value="119260" class="bg-navy-950 border border-slate-700 text-xs font-mono text-white p-2.5 rounded-lg flex-1">
+                            <button onclick="transformPostal()" class="px-4 py-2 bg-cyan-600 hover:bg-cyan-500 text-white font-mono text-xs rounded-lg font-bold">Transform</button>
+                        </div>
+                        <div id="transformOutput" class="text-xs font-mono text-emerald-400 bg-navy-950 p-3 rounded-lg border border-slate-800">
+                            Output: NUH (119260) ➔ Postal Sector D05 (Buona Vista / Clementi)
+                        </div>
+                    </div>
+
+                    <!-- Singapore District Lookup Summary Matrix -->
+                    <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 max-h-72 overflow-y-auto">
+                        <table class="w-full text-left table-custom">
+                            <thead>
+                                <tr>
+                                    <th>District</th>
+                                    <th>Postal Sector (1st 2 digits)</th>
+                                    <th>General Location</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td class="font-bold text-cyan-400">01</td><td>01, 02, 03, 04, 05, 06</td><td>Raffles Place, Cecil, Marina, People's Park</td></tr>
+                                <tr><td class="font-bold text-cyan-400">02</td><td>07, 08</td><td>Anson, Tanjong Pagar</td></tr>
+                                <tr><td class="font-bold text-cyan-400">03</td><td>14, 15, 16</td><td>Queenstown, Tiong Bahru</td></tr>
+                                <tr><td class="font-bold text-cyan-400">05</td><td>11, 12, 13</td><td>Pasir Panjang, Hong Leong Garden, Clementi</td></tr>
+                                <tr><td class="font-bold text-cyan-400">11</td><td>28, 29, 30</td><td>Watten Estate, Novena, Thomson</td></tr>
+                                <tr><td class="font-bold text-cyan-400">19</td><td>53, 54, 55, 82</td><td>Serangoon Garden, Hougang, Punggol</td></tr>
+                                <tr><td class="font-bold text-cyan-400">27</td><td>75, 76</td><td>Yishun, Sembawang</td></tr>
+                                <tr><td class="font-bold text-cyan-400">28</td><td>79, 80</td><td>Seletar, Springleaf, Lentor</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Code & Handling Awkward Inputs Box -->
+                <div class="lg:col-span-5 space-y-4">
+                    <div class="glass-card p-5 rounded-2xl border border-slate-800 space-y-3">
+                        <h3 class="text-xs font-mono font-bold text-purple-400 uppercase">Handling Awkward Engineering Inputs</h3>
+                        <ul class="space-y-2 text-xs text-slate-300 font-mono">
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-cyan-400 mt-0.5"></i><span><strong>Client-side SPAs:</strong> Selenium scrapes portals rendering wait times via JavaScript.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-cyan-400 mt-0.5"></i><span><strong>Two-Step APIs:</strong> Handles signed-download URLs from NEA data portals.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-cyan-400 mt-0.5"></i><span><strong>72-hr JWT Tokens:</strong> Automatically renews OneMap geocoding session credentials.</span></li>
+                            <li class="flex items-start gap-2"><i class="fa-solid fa-angle-right text-cyan-400 mt-0.5"></i><span><strong>Free-Text Locality:</strong> Converts text like "Begonia Dr, Rd" into standardized 2-digit sector 80.</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 6: TECH STACK AND TOOLS MATRIX -->
+        <section id="slide6" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 6 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Tech Stack and Engineering Tools</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Full Architectural Matrix</span>
+            </div>
+
+            <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr>
+                                <th>Layer</th>
+                                <th>Technology</th>
+                                <th>Exact Project Role & Description</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Language</td>
+                                <td class="font-mono text-white">Python 3</td>
+                                <td class="text-slate-300">All data extraction, cleaning, transformation, loading, and analytical window modeling.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Extraction — API</td>
+                                <td class="font-mono text-white">requests</td>
+                                <td class="text-slate-300">REST API calls to data.gov.sg (rainfall data), NEA (nowcasts), and OneMap (geocoding).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Extraction — Web</td>
+                                <td class="font-mono text-white">Selenium, webdriver-manager</td>
+                                <td class="text-slate-300">Headless Chrome scraper for hospital portals rendering wait times client-side (CSS selector ➔ dataTable).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Transformation</td>
+                                <td class="font-mono text-white">pandas</td>
+                                <td class="text-slate-300">Type coercion, exact-duplicate removal, derived fields, and rolling 60-day window aggregation logic.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Database</td>
+                                <td class="font-mono text-white">PostgreSQL</td>
+                                <td class="text-slate-300">Production relational database storing tables across all 5 data domains.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">DB Drivers</td>
+                                <td class="font-mono text-white">psycopg2-binary, SQLAlchemy</td>
+                                <td class="text-slate-300">Database connection pooling, ORM mapping, and structured SQL query execution.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Configuration</td>
+                                <td class="font-mono text-white">python-dotenv</td>
+                                <td class="text-slate-300">Security credentials, database URIs, and API endpoints read safely from .env files.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Orchestration</td>
+                                <td class="font-mono text-white">src/main.py</td>
+                                <td class="text-slate-300">Interactive CLI menu that runs pipeline stages sequentially in an automated workflow.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Visualisation</td>
+                                <td class="font-mono text-white">src/visualization.py</td>
+                                <td class="text-slate-300">Generates Seaborn dashboard charts and exportable metrics from loaded PostgreSQL tables.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Testing</td>
+                                <td class="font-mono text-white">test/ modules</td>
+                                <td class="text-slate-300">Unit test coverage for extract (`test_extract.py`), transform (`test_transform.py`), and load (`test_loader.py`).</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-cyan-400 font-mono">Version Control</td>
+                                <td class="font-mono text-white">Git / GitHub</td>
+                                <td class="text-slate-300">Branch-per-feature collaboration across four team members with merge conflict resolution.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 7: DATA LINEAGE ARCHITECTURE -->
+        <section id="slide7" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 7 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">End-to-End Data Lineage Architecture</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Pipeline Flow</span>
+            </div>
+
+            <div class="glass-card p-6 sm:p-8 rounded-2xl border border-slate-800 relative overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-4 text-center font-mono text-xs">
+                    <div class="p-4 rounded-xl bg-navy-950 border border-slate-800 space-y-2">
+                        <span class="text-cyan-400 font-bold block">1. RAW SOURCES</span>
+                        <p class="text-slate-400 text-[11px]">Selenium Scraper, NEA API, GeoJSON</p>
+                        <div class="text-[10px] text-slate-500 mt-2">Interval: 5-15 mins</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-navy-950 border border-slate-800 space-y-2">
+                        <span class="text-cyan-400 font-bold block">2. PYTHON ETL</span>
+                        <p class="text-slate-400 text-[11px]">Regex cleaning, OneMap geocoding, D01-D28 mapping</p>
+                        <div class="text-[10px] text-slate-500 mt-2">Data Quality Checks</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-navy-950 border border-slate-800 space-y-2">
+                        <span class="text-cyan-400 font-bold block">3. POSTGRES DB</span>
+                        <p class="text-slate-400 text-[11px]">Relational tables with primary key constraints</p>
+                        <div class="text-[10px] text-slate-500 mt-2">Structured Tables</div>
+                    </div>
+                    <div class="p-4 rounded-xl bg-navy-950 border border-emerald-500/40 space-y-2">
+                        <span class="text-emerald-400 font-bold block">4. TTT ENGINE</span>
+                        <p class="text-slate-400 text-[11px]">Live routing calculator & Dengue analytics dashboard</p>
+                        <div class="text-[10px] text-emerald-400 mt-2">Decision UI</div>
+                    </div>
+                </div>
+
+                <div class="mt-6 p-4 rounded-xl bg-navy-950 border border-slate-800 text-xs text-slate-300 flex items-center justify-between">
+                    <span><i class="fa-solid fa-circle-check text-emerald-400 mr-2"></i>Lineage Status: Fully automated background synchronization without manual intervention.</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 8: FULL DATA SCHEMA & TABLES -->
+        <section id="slide8" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 8 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Complete Data Schema & Database Structures</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">PostgreSQL Schema Definition</span>
+            </div>
+
+            <!-- Plain English Banner -->
+            <div class="p-4 rounded-xl bg-navy-950 border border-slate-800 text-xs sm:text-sm text-slate-300 mb-6">
+                <strong class="text-white font-bold">5 Core Data Tables:</strong> Our database is divided into 5 distinct tables to isolate live scrapers, real-time weather feeds, forecast models, historic archives, and vector outbreak clusters.
+            </div>
+
+            <!-- Table Structure Summary Matrix -->
+            <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 mb-8">
+                <div class="px-5 py-3 bg-navy-900 border-b border-slate-800 font-mono text-xs font-bold text-cyan-400 uppercase">
+                    Table Structure & Load Behaviour Summary Matrix
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr>
+                                <th>Table Name</th>
+                                <th>Cols</th>
+                                <th>Primary Key</th>
+                                <th>Unique Constraint</th>
+                                <th>Load Behaviour</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-white font-mono">hospital_wait_times</td>
+                                <td class="font-mono text-slate-300">6</td>
+                                <td class="font-mono text-cyan-400">id (SERIAL)</td>
+                                <td class="font-mono text-slate-400">None</td>
+                                <td class="text-slate-300">Append-only; each run adds a new timestamped row per hospital</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white font-mono">weather_realtime</td>
+                                <td class="font-mono text-slate-300">6</td>
+                                <td class="font-mono text-cyan-400">id (SERIAL)</td>
+                                <td class="font-mono text-amber-400">(area_name, recorded_at)</td>
+                                <td class="text-slate-300">Append-only; repeat runs of the same reading are rejected</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white font-mono">weather_forecast</td>
+                                <td class="font-mono text-slate-300">6</td>
+                                <td class="font-mono text-cyan-400">id (SERIAL)</td>
+                                <td class="font-mono text-amber-400">(area_name)</td>
+                                <td class="text-slate-300">Latest-state; one row per named area</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white font-mono">weather_history</td>
+                                <td class="font-mono text-slate-300">6</td>
+                                <td class="font-mono text-cyan-400">id (SERIAL)</td>
+                                <td class="font-mono text-amber-400">(area_name, record_date)</td>
+                                <td class="text-slate-300">Append-only; idempotent across re-runs of the backfill</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white font-mono">dengue_clusters</td>
+                                <td class="font-mono text-slate-300">6</td>
+                                <td class="font-mono text-cyan-400">id (SERIAL)</td>
+                                <td class="font-mono text-slate-400">None</td>
+                                <td class="text-slate-300">Snapshot replace; reloaded per reporting period</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Detailed Tables Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+                <!-- 1. hospital_wait_times -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-slate-800">
+                    <div class="px-4 py-2.5 bg-navy-900 border-b border-slate-800 font-mono text-xs font-bold text-cyan-400">
+                        1. hospital_wait_times
+                    </div>
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr><th>Column</th><th>Type</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-mono text-white">id</td><td class="font-mono text-cyan-400">SERIAL PK</td><td>Surrogate key</td><td class="font-mono text-slate-400">1</td></tr>
+                            <tr><td class="font-mono text-white">hospital_name</td><td class="font-mono text-cyan-400">VARCHAR(100)</td><td>Hospital name as published</td><td class="font-mono text-slate-300">Tan Tock Seng Hospital (TTSH)</td></tr>
+                            <tr><td class="font-mono text-white">patients_waiting_count</td><td class="font-mono text-cyan-400">INT</td><td>Patients currently in queue</td><td class="font-mono text-slate-300">22</td></tr>
+                            <tr><td class="font-mono text-white">doctor_wait_minutes</td><td class="font-mono text-cyan-400">INT</td><td>Estimated mins to see doctor</td><td class="font-mono text-emerald-400 font-bold">44</td></tr>
+                            <tr><td class="font-mono text-white">wait_time_hrs</td><td class="font-mono text-cyan-400">NUMERIC(4,2)</td><td>Wait expressed in hours</td><td class="font-mono text-slate-300">0.73</td></tr>
+                            <tr><td class="font-mono text-white">updated_at</td><td class="font-mono text-cyan-400">TIMESTAMP</td><td>Scraped timestamp</td><td class="font-mono text-slate-400">2026-08-19 14:45:36</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 2. weather_forecast -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-slate-800">
+                    <div class="px-4 py-2.5 bg-navy-900 border-b border-slate-800 font-mono text-xs font-bold text-cyan-400">
+                        2. weather_forecast
+                    </div>
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr><th>Column</th><th>Type</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-mono text-white">id</td><td class="font-mono text-cyan-400">SERIAL PK</td><td>Surrogate key</td><td class="font-mono text-slate-400">1</td></tr>
+                            <tr><td class="font-mono text-white">area_name</td><td class="font-mono text-cyan-400">VARCHAR(100)</td><td>NEA named forecast area</td><td class="font-mono text-slate-300">Bedok</td></tr>
+                            <tr><td class="font-mono text-white">postal_prefix</td><td class="font-mono text-cyan-400">VARCHAR(10)</td><td>Derived postal sector code</td><td class="font-mono text-cyan-400">D16</td></tr>
+                            <tr><td class="font-mono text-white">forecast_text</td><td class="font-mono text-cyan-400">VARCHAR(100)</td><td>NEA nowcast label</td><td class="font-mono text-amber-300">Showers</td></tr>
+                            <tr><td class="font-mono text-white">will_rain</td><td class="font-mono text-cyan-400">BOOLEAN</td><td>Precipitation flag</td><td class="font-mono text-emerald-400">True</td></tr>
+                            <tr><td class="font-mono text-white">updated_at</td><td class="font-mono text-cyan-400">TIMESTAMP</td><td>Forecast issue time</td><td class="font-mono text-slate-400">2026-08-19 13:56:39</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 3. weather_history -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-slate-800">
+                    <div class="px-4 py-2.5 bg-navy-900 border-b border-slate-800 font-mono text-xs font-bold text-cyan-400">
+                        3. weather_history
+                    </div>
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr><th>Column</th><th>Type</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-mono text-white">id</td><td class="font-mono text-cyan-400">SERIAL PK</td><td>Surrogate key</td><td class="font-mono text-slate-400">1</td></tr>
+                            <tr><td class="font-mono text-white">area_name</td><td class="font-mono text-cyan-400">VARCHAR(100)</td><td>NEA station name</td><td class="font-mono text-slate-300">Alexandra Road</td></tr>
+                            <tr><td class="font-mono text-white">postal_prefix</td><td class="font-mono text-cyan-400">VARCHAR(10)</td><td>Derived postal sector code</td><td class="font-mono text-cyan-400">D01</td></tr>
+                            <tr><td class="font-mono text-white">record_date</td><td class="font-mono text-cyan-400">DATE</td><td>Calendar date of aggregate</td><td class="font-mono text-slate-300">2026-06-20</td></tr>
+                            <tr><td class="font-mono text-white">total_rainfall_mm</td><td class="font-mono text-cyan-400">NUMERIC(5,2)</td><td>Station daily sum (mm)</td><td class="font-mono text-slate-300">0.00</td></tr>
+                            <tr><td class="font-mono text-white">is_catalyst_day</td><td class="font-mono text-cyan-400">BOOLEAN</td><td>Breeding-catalyst rule flag</td><td class="font-mono text-slate-400">False</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- 4. dengue_clusters -->
+                <div class="glass-card rounded-2xl overflow-hidden border border-slate-800">
+                    <div class="px-4 py-2.5 bg-navy-900 border-b border-slate-800 font-mono text-xs font-bold text-cyan-400">
+                        4. dengue_clusters
+                    </div>
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr><th>Column</th><th>Type</th><th>Description</th><th>Example</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-mono text-white">id</td><td class="font-mono text-cyan-400">SERIAL PK</td><td>Surrogate key</td><td class="font-mono text-slate-400">1</td></tr>
+                            <tr><td class="font-mono text-white">postal_district</td><td class="font-mono text-cyan-400">VARCHAR(20)</td><td>2-digit postal sector</td><td class="font-mono text-red-400 font-bold">80</td></tr>
+                            <tr><td class="font-mono text-white">location_name</td><td class="font-mono text-cyan-400">VARCHAR(150)</td><td>NEA locality string</td><td class="font-mono text-slate-300">Begonia Dr, Rd</td></tr>
+                            <tr><td class="font-mono text-white">case_count</td><td class="font-mono text-cyan-400">INT</td><td>Cases recorded in cluster</td><td class="font-mono text-red-400 font-bold">243</td></tr>
+                            <tr><td class="font-mono text-white">cluster_severity</td><td class="font-mono text-cyan-400">VARCHAR(50)</td><td>Derived banding</td><td class="font-mono text-red-400 font-bold">High</td></tr>
+                            <tr><td class="font-mono text-white">report_month</td><td class="font-mono text-cyan-400">VARCHAR(20)</td><td>Reporting snapshot period</td><td class="font-mono text-slate-400">2026-08</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+
+            <!-- Intermediate Geocoding Fields Table -->
+            <div class="mt-6 glass-card rounded-2xl overflow-hidden border border-slate-800">
+                <div class="px-5 py-3 bg-navy-900 border-b border-slate-800 font-mono text-xs font-bold text-cyan-400 uppercase">
+                    Intermediate Geocoding Transformation Fields
+                </div>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr>
+                                <th>Field Name</th>
+                                <th>Engineering Meaning & Purpose</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td class="font-mono text-cyan-400 font-bold">LOCALITY / ADDRESS</td><td class="text-slate-300">Raw and Regex-matched location strings extracted from source files.</td></tr>
+                            <tr><td class="font-mono text-cyan-400 font-bold">CASE_SIZE</td><td class="text-slate-300">Case count reported by NEA for the active dengue outbreak cluster.</td></tr>
+                            <tr><td class="font-mono text-cyan-400 font-bold">FNEL_UPD_D</td><td class="text-slate-300">NEA source-file update timestamp.</td></tr>
+                            <tr><td class="font-mono text-cyan-400 font-bold">POSTAL / POSTAL_PREFIX</td><td class="text-slate-300">Geocoded 6-digit postal code and its derived 2-digit sector prefix.</td></tr>
+                            <tr><td class="font-mono text-cyan-400 font-bold">VERIFIED</td><td class="text-slate-300">'Y' when OneMap returned at least one valid match, 'N' otherwise.</td></tr>
+                            <tr><td class="font-mono text-cyan-400 font-bold">MATCH_COUNT</td><td class="text-slate-300">Number of OneMap API results returned; 0 indicates a geocoding failure.</td></tr>
+                            <tr><td class="font-mono text-cyan-400 font-bold">LATITUDE / LONGITUDE</td><td class="text-slate-300">Exact geographic coordinates returned by OneMap API.</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 9: DATA VALIDATION & PIPELINE QUALITY GATES -->
+        <section id="slide9" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 9 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Data Validation & Pipeline Quality Gates</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Failure Handling</span>
+            </div>
+
+            <div class="glass-card rounded-2xl overflow-hidden border border-slate-800 shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left table-custom">
+                        <thead>
+                            <tr>
+                                <th>Validation Check</th>
+                                <th>Pipeline Stage / Location</th>
+                                <th>Behaviour on Failure / Error Handling</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="font-bold text-white">HTTP status and API result code</td>
+                                <td class="font-mono text-cyan-400">All extractors</td>
+                                <td class="text-slate-300">Logs the error and returns empty data frame; pipeline execution continues safely.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Network timeout (10–120s)</td>
+                                <td class="font-mono text-cyan-400">All extractors</td>
+                                <td class="text-slate-300">Caught gracefully, logged per date or per call without crashing orchestrator.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Element-presence wait (10s)</td>
+                                <td class="font-mono text-cyan-400">Selenium scrapers</td>
+                                <td class="text-slate-300">Timeout is caught; that specific unresponsive hospital is omitted from the batch.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Postal-code format (6 numeric digits)</td>
+                                <td class="font-mono text-cyan-400">CLI input handler</td>
+                                <td class="text-slate-300">Rejected with a clear error message before any database query runs.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Numeric coercion with null-fill</td>
+                                <td class="font-mono text-cyan-400">All transformations</td>
+                                <td class="text-slate-300">Bad string values become 0 or NaN; valid row context is safely retained.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Exact-duplicate removal</td>
+                                <td class="font-mono text-cyan-400">Dengue transformation</td>
+                                <td class="text-slate-300">Duplicate snapshot row dropped; count logged in pipeline summary.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Uniqueness constraints</td>
+                                <td class="font-mono text-cyan-400">PostgreSQL DDL</td>
+                                <td class="text-slate-300">Database insert rejected on repeat load to prevent duplicate primary records.</td>
+                            </tr>
+                            <tr>
+                                <td class="font-bold text-white">Unit tests suite</td>
+                                <td class="font-mono text-cyan-400">test/ modules</td>
+                                <td class="text-slate-300">Tests any failure across extract (`test_extract.py`), transform (`test_transform.py`), and loader (`test_loader.py`).</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 10: DYNAMIC ANALYTICS DASHBOARD & 5 SEABORN CHARTS -->
+        <section id="slide10" class="pt-12">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-purple-400 uppercase tracking-widest font-bold">SLIDE 10 OF 11 · CORE ANALYTICS</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Epidemiological & Operational Seaborn Analytics</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-purple-950 text-purple-300 border border-purple-800">5-Chart Hub</span>
+            </div>
+
+            <!-- Plain English Explainer Box for Analytics -->
+            <div class="p-4 rounded-xl bg-purple-950/60 border border-purple-800/80 text-xs sm:text-sm text-slate-200 mb-6 space-y-1">
+                <strong class="text-purple-300 font-bold"><i class="fa-solid fa-chart-line mr-2"></i>Seaborn & Matplotlib Analytical Suite (Plain English):</strong>
+                <p>
+                    Below are the 5 exact Seaborn visualizations generated from our Python data pipeline. Select any chart tab below to inspect individual epidemiological metrics, weather lag timelines, and hospital load index correlations.
+                </p>
+            </div>
+
+            <!-- Chart Navigation Tabs for 5 Exact Slide Charts -->
+            <div class="flex flex-wrap gap-2 mb-6 font-mono text-xs">
+                <button onclick="renderSelectedChart('chart1')" id="btn-chart-chart1" class="px-4 py-2 rounded-xl bg-cyan-600 text-white font-bold transition-all">Chart 1: A&E Wait Times</button>
+                <button onclick="renderSelectedChart('chart2')" id="btn-chart-chart2" class="px-4 py-2 rounded-xl bg-navy-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-bold transition-all">Chart 2: Top Dengue Clusters</button>
+                <button onclick="renderSelectedChart('chart3')" id="btn-chart-chart3" class="px-4 py-2 rounded-xl bg-navy-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-bold transition-all">Chart 3: Daily Rainfall Trends</button>
+                <button onclick="renderSelectedChart('chart4')" id="btn-chart-chart4" class="px-4 py-2 rounded-xl bg-navy-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-bold transition-all">Chart 4: 60-Day Dengue Lag</button>
+                <button onclick="renderSelectedChart('chart5')" id="btn-chart-chart5" class="px-4 py-2 rounded-xl bg-navy-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-bold transition-all">Chart 5: Cluster Proximity Index</button>
+            </div>
+
+            <!-- Main Interactive Chart Display Box -->
+            <div class="glass-card p-6 rounded-3xl border border-purple-500/30 space-y-6">
+                <div class="flex justify-between items-center border-b border-slate-800 pb-3">
+                    <div>
+                        <h3 id="chartTitle" class="text-lg font-bold text-white font-mono">Hospital A&E Wait Time</h3>
+                        <p id="chartSubtitle" class="text-xs text-slate-400 mt-0.5">Horizontal Bar Chart: Current Emergency Department Wait Times</p>
+                    </div>
+                    <span id="chartTag" class="text-xs font-mono px-2.5 py-1 rounded bg-purple-950 text-purple-300 border border-purple-800">Slide Chart 1</span>
+                </div>
+
+                <!-- Canvas Container with Fixed Height & Canvas Reset -->
+                <div class="relative w-full h-[360px] sm:h-[420px] bg-navy-950/80 rounded-2xl p-4 border border-slate-800/80">
+                    <canvas id="activeAnalyticsChart"></canvas>
+                </div>
+
+                <!-- Plain English Analytical Insight Explanation Box -->
+                <div id="chartInsightBox" class="p-4 rounded-xl bg-navy-950 border border-slate-800 text-xs sm:text-sm text-slate-300 space-y-2">
+                    <span class="text-cyan-400 font-bold font-mono uppercase block"><i class="fa-solid fa-lightbulb mr-2"></i>Analytical Takeaway:</span>
+                    <p id="chartInsightText" class="leading-relaxed">
+                        Horizontal bar charts show current emergency department turnaround times. Sengkang General Hospital (SKH), Khoo Teck Puat Hospital (KTPH), and Changi General Hospital (CGH) are experiencing the highest congestion (~3 hours), whereas Tan Tock Seng Hospital (TTSH) currently records the lowest wait time.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Incubation Visual Timeline Graphic -->
+            <div class="mt-8 p-6 rounded-2xl glass-card border border-slate-800 space-y-4">
+                <h4 class="text-xs font-mono font-bold text-purple-400 uppercase tracking-widest">
+                    <i class="fa-solid fa-timeline mr-2"></i>28–58 Day Dengue Vector Incubation Hypothesis
+                </h4>
+                <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 font-mono text-xs">
+                    <div class="p-3.5 rounded-xl bg-navy-950 border border-purple-900/50 space-y-1">
+                        <span class="text-purple-400 font-bold block">T - 60 Days: Heavy Rain</span>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">Continuous rain creates standing water pools in residential sector clusters.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-navy-950 border border-purple-900/50 space-y-1">
+                        <span class="text-purple-400 font-bold block">T - 30 Days: Breeding Surge</span>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">Aedes mosquito eggs hatch and mature into adult vector populations.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-navy-950 border border-purple-900/50 space-y-1">
+                        <span class="text-purple-400 font-bold block">T - 7 Days: GP Consults</span>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">Patients experience high fevers and visit neighborhood primary clinics.</p>
+                    </div>
+                    <div class="p-3.5 rounded-xl bg-navy-950 border border-red-900/50 space-y-1 border-l-2 border-l-red-500">
+                        <span class="text-red-400 font-bold block">T - 0 Days: A&E Admission</span>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">Severe fever cases arrive at regional hospital emergency departments.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SLIDE 11: SUMMARY, REPOSITORY LINKS & CAPSTONE DELIVERABLES -->
+        <section id="slide11" class="pt-12 pb-16">
+            <div class="flex items-center justify-between mb-6">
+                <div>
+                    <span class="text-xs font-mono text-cyan-400 uppercase tracking-widest font-bold">SLIDE 11 OF 11</span>
+                    <h2 class="text-2xl sm:text-4xl font-extrabold text-white mt-1">Summary, Code Differentiators & Project Links</h2>
+                </div>
+                <span class="text-xs font-mono px-3 py-1 rounded-lg bg-navy-900 text-slate-300 border border-slate-800">Deliverables Hub</span>
+            </div>
+
+            <!-- Key Findings Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                <div class="p-6 rounded-2xl bg-emerald-950/40 border border-emerald-500/40 space-y-3">
+                    <div class="flex items-center space-x-2 text-emerald-400 font-bold text-sm">
+                        <i class="fa-solid fa-circle-check text-lg"></i>
+                        <span>Primary Goal: VALIDATED</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white">Dynamic Routing Saves 2.5 Hours</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        Routing ambulances to TTSH (44 min wait) instead of NUH (180 min wait) during queue spikes effectively slashes total emergency time-to-treatment.
+                    </p>
+                </div>
+
+                <div class="p-6 rounded-2xl bg-amber-950/40 border border-amber-500/40 space-y-3">
+                    <div class="flex items-center space-x-2 text-amber-400 font-bold text-sm">
+                        <i class="fa-solid fa-circle-exclamation text-lg"></i>
+                        <span>Secondary Lag Hypothesis: INCONCLUSIVE</span>
+                    </div>
+                    <h3 class="text-base font-bold text-white">60-Day Runway Required Expansion</h3>
+                    <p class="text-slate-300 text-xs leading-relaxed">
+                        60-day weather data was too short to establish direct causality with A&E queue spikes due to low rainfall in that window; >180 days across monsoon cycles is recommended.
+                    </p>
+                </div>
+            </div>
+
+            <!-- Prominent Direct Project Source Links Box -->
+            <div class="glass-card p-8 rounded-3xl border border-cyan-500/40 space-y-6">
+                <div class="text-center space-y-2">
+                    <h3 class="text-2xl font-black text-white">Project Repositories & Resource Links</h3>
+                    <p class="text-slate-300 text-xs sm:text-sm max-w-2xl mx-auto leading-relaxed">
+                        Access the full source code, Python ETL pipeline modules, unit tests, and raw dataset documentation on GitHub and Google Drive.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2 font-mono text-xs">
+                    <a href="https://github.com/ttan-ttan/hospital_wait_time" target="_blank" class="p-5 rounded-2xl bg-navy-950 border border-cyan-500/40 hover:border-cyan-400 flex flex-col justify-between space-y-3 group transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-cyan-400 font-bold flex items-center gap-2">
+                                <i class="fa-brands fa-github text-xl"></i> GitHub Repository
+                            </span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-slate-500 group-hover:text-cyan-400 transition-colors"></i>
+                        </div>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">
+                            Includes main.py CLI orchestrator, requests API extractors, Selenium scrapers, pandas transformations, PostgreSQL DDL schemas, and unit tests.
+                        </p>
+                        <span class="text-[11px] text-cyan-300 underline font-semibold">https://github.com/ttan-ttan/hospital_wait_time</span>
+                    </a>
+
+                    <a href="https://drive.google.com/drive/u/0/folders/1t4l-ThmTnlKxFVBhH6kdbMrDMxNcvA3l" target="_blank" class="p-5 rounded-2xl bg-navy-950 border border-purple-500/40 hover:border-purple-400 flex flex-col justify-between space-y-3 group transition-all">
+                        <div class="flex justify-between items-center">
+                            <span class="text-purple-400 font-bold flex items-center gap-2">
+                                <i class="fa-brands fa-google-drive text-xl"></i> Google Drive Project Folder
+                            </span>
+                            <i class="fa-solid fa-arrow-up-right-from-square text-slate-500 group-hover:text-purple-400 transition-colors"></i>
+                        </div>
+                        <p class="text-slate-400 text-[11px] leading-relaxed">
+                            Contains raw PPTX decks, original Seaborn visualization exports, dataset snapshots, and GenSG JDE10 project evaluation documents.
+                        </p>
+                        <span class="text-[11px] text-purple-300 underline font-semibold">Open Project Drive Folder</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER WITH LINKS -->
+    <footer class="py-8 border-t border-slate-800 text-center text-xs font-mono text-slate-400 space-y-3">
         <div>
-          <span class="text-[10px] font-mono font-black text-cyan-400 uppercase">PHASE 1 · CIVIL ENGINEERING CAREER STAGES</span>
-          <h2 class="text-xs sm:text-base font-black text-slate-100 leading-tight">Ordered Project Scale & Evolving Skill Matrix</h2>
+            Tan Yong Jian · Group 2 (Error 404 No Name Group) · GenSG JDE10 Capstone Presentation Deck
         </div>
-        <span class="text-[9px] sm:text-[10px] font-mono bg-cyan-950 text-cyan-300 border border-cyan-800 px-2 py-0.5 rounded-xl font-bold">2014 - 2023 (8 Core Projects)</span>
-      </div>
-
-      <div class="grid grid-cols-2 lg:grid-cols-4 grid-rows-4 lg:grid-rows-2 gap-2.5 flex-1 my-1 min-h-0 overflow-y-auto">
-        
-        <!-- Card 1: Lide Builders -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo1.jpg" alt="Lide Builders" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">1. Lide Builders</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">Lide Builders Pte Ltd</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Site Engineer · Oct 2014 – Sep 2015</p>
-            <p class="text-xs text-slate-200 leading-relaxed">In charge of constructing two factory buildings from piling to roof completion while liaising with inspectors and subcontractors. Managed site progress reporting, material procurement, and manpower allocation records.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Autonomous Execution</div>
+        <div class="flex justify-center space-x-6 text-slate-400">
+            <a href="https://github.com/ttan-ttan/hospital_wait_time" target="_blank" class="hover:text-cyan-400 transition-colors"><i class="fa-brands fa-github mr-1"></i>GitHub</a>
+            <span>·</span>
+            <a href="https://drive.google.com/drive/u/0/folders/1t4l-ThmTnlKxFVBhH6kdbMrDMxNcvA3l" target="_blank" class="hover:text-purple-400 transition-colors"><i class="fa-brands fa-google-drive mr-1"></i>Google Drive</a>
         </div>
+    </footer>
 
-        <!-- Card 2: Tat Hin Builders -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo2.jpg" alt="Tat Hin Builders" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1541888946425-d0fbb186a5b3?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">2. Tat Hin Builders</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">Tat Hin Builders P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Project Engineer · Sep 2015 – Apr 2017</p>
-            <p class="text-xs text-slate-200 leading-relaxed">Managed technical documentation, risk assessments, and site inspections while liaising with subcontractors, suppliers, and BCA officers. Reviewed steel structure drawings to comply with blast-proof requirements.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Risk & Workflow Planning</div>
-        </div>
+    <!-- INTERACTIVE JAVASCRIPT & CHART.JS ENGINE -->
+    <script>
+        // 1. SCROLL PROGRESS BAR
+        window.onscroll = function() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById("scrollProgress").style.width = scrolled + "%";
+        };
 
-        <!-- Card 3: Tiong Aik Construction (Project 1) -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo3.jpg" alt="Tiong Aik Construction" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1581094794329-c8112a89af12?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">3. Tiong Aik (Roof Works)</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">Tiong Aik Construction P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Engineer · Apr 2017 – Dec 2018</p>
-            <p class="text-xs text-slate-200 leading-relaxed">Handled structural trade drawings and site inspection records. Coordinated complex steel structure roof drawings and managed on-site installation sequences.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: High Precision Detail</div>
-        </div>
+        // 2. LIVE TTT ROUTING CALCULATOR
+        function calcTTT() {
+            const origin = document.getElementById('simOrigin').value;
+            const nuhQ = parseInt(document.getElementById('nuhQSlider').value);
+            const ttshQ = parseInt(document.getElementById('ttshQSlider').value);
 
-        <!-- Card 4: Tiong Aik Construction (Project 2) -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo4.jpg" alt="Tiong Aik Precast" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">4. Tiong Aik (Precast)</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">Tiong Aik Construction P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Engineer · Apr 2017 – Dec 2018</p>
-            <p class="text-xs text-slate-200 leading-relaxed">Oversee offsite precast unit fabrication and joint details. Resolved drawing discrepancies and structural clash issues across architectural and MEP disciplines.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Fabrication Coordination</div>
-        </div>
+            document.getElementById('nuhQVal').innerText = nuhQ + ' mins';
+            document.getElementById('ttshQVal').innerText = ttshQ + ' mins';
 
-        <!-- Card 5: Long Xiang Construction (Project 1) -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo5.jpg" alt="Long Xiang Industrial" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1590069261209-f8e9b8642343?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">5. Long Xiang (Industrial)</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">Long Xiang Construction P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Project Manager · Dec 2018 – Nov 2021</p>
-            <p class="text-xs text-slate-200 leading-relaxed">Managed overall structural operations for industrial office building developments. Led material ordering, worker payroll processing, daily site scheduling, and drawing approvals.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Resource Management</div>
-        </div>
+            let nuhTransit = 10;
+            let ttshTransit = 20;
 
-        <!-- Card 6: Long Xiang Construction (Project 2) -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo6.jpg" alt="Long Xiang Bidadari HDB" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">6. Long Xiang (Bidadari)</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">Long Xiang Construction P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Project Manager · Dec 2018 – Nov 2021</p>
-            <p class="text-xs text-slate-200 leading-relaxed">Executed HDB Bidadari C10-12 public housing developments. Ensured structural works strictly complied with target schedules, project budgets, and BCA safety standards.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Regulation & Governance</div>
-        </div>
+            if (origin === 'D11') { nuhTransit = 25; ttshTransit = 8; }
+            if (origin === 'D19') { nuhTransit = 30; ttshTransit = 18; }
 
-        <!-- Card 7: HP Construction & Engineering -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo7.jpg" alt="HP Construction" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">7. HP Construction</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">HP Construction & Eng P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Engineer · Nov 2021 – Apr 2022</p>
-            <p class="text-xs text-slate-200 leading-relaxed">In charge of structural trade site coordination, technical issue resolution, and progress tracking. Coordinated complex precast panel fabrication and prepared trade contract specifications.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Multi-party Coordination</div>
-        </div>
+            const nuhTTT = nuhTransit + nuhQ;
+            const ttshTTT = ttshTransit + ttshQ;
 
-        <!-- Card 8: LBD Engineering -->
-        <div class="neon-card-cyan rounded-2xl p-2.5 flex flex-col justify-between overflow-hidden">
-          <div class="space-y-1.5">
-            <div class="h-16 sm:h-20 lg:h-24 rounded-xl bg-slate-900 border border-slate-800 overflow-hidden relative">
-              <img src="photo8.jpg" alt="LBD Engineering" class="w-full h-full object-cover"
-                onerror="this.src='https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?auto=format&fit=crop&w=600&q=80'">
-              <span class="absolute top-1 left-1 bg-slate-950/90 text-cyan-400 font-mono text-[9px] px-1.5 py-0.5 rounded border border-cyan-800">8. LBD Engineering</span>
-            </div>
-            <h4 class="text-sm font-black text-slate-100 truncate">LBD Engineering P/L</h4>
-            <p class="text-[11px] font-mono text-cyan-400">Senior Engineer · Apr 2022 – Jun 2023</p>
-            <p class="text-xs text-slate-200 leading-relaxed">Overall technical in-charge for structural trade matters at Yishun HDB YN3C27. Managed geotechnical, piling, reinforced concrete, structural steel, and offsite precast delivery logistics.</p>
-          </div>
-          <div class="pt-1.5 border-t border-slate-800 text-[10px] font-mono text-amber-300 font-bold">Skill: Mega Logistics & Supply Chain</div>
-        </div>
-
-      </div>
-    </div>
-
-    <!-- PHASE 2: LIVELY PIVOT STORY -->
-    <div id="phase2Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 space-y-2 overflow-hidden">
-      <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
-        <div>
-          <span class="text-[10px] font-mono font-black text-purple-400 uppercase">PHASE 2 · CAREER TRANSITION ROADMAP</span>
-          <h2 class="text-xs sm:text-base font-black text-slate-100 leading-tight">From Site Data Chaos to Data Engineering</h2>
-        </div>
-        <span class="text-[9px] sm:text-[10px] font-mono bg-purple-950 text-purple-300 border border-purple-800 px-2 py-0.5 rounded-full font-bold">Narrative Video</span>
-      </div>
-
-      <div class="neon-card-purple rounded-3xl p-3 sm:p-5 flex-1 flex flex-col justify-center items-center overflow-y-auto">
-        <div class="w-full max-w-3xl">
-          <div class="relative aspect-video rounded-2xl bg-black border border-purple-500/40 overflow-hidden shadow-[0_0_20px_rgba(168,85,247,0.2)]">
-            <video id="phase2Video" controls playsinline preload="metadata" aria-label="Career transition narrative video"
-              onplaying="document.getElementById('phase2PlayButton').classList.add('hidden')"
-              onpause="document.getElementById('phase2PlayButton').classList.remove('hidden')"
-              onended="document.getElementById('phase2PlayButton').classList.remove('hidden')"
-              class="w-full h-full bg-black object-contain">
-              <source src="career_pivot_story.mp4" type="video/mp4">
-              Your browser does not support video playback.
-            </video>
-            <button id="phase2PlayButton" type="button" onclick="playPhaseTwoVideo()"
-              class="absolute inset-0 m-auto flex h-20 w-20 items-center justify-center rounded-full border-2 border-purple-300 bg-purple-700/90 text-white shadow-[0_0_30px_rgba(168,85,247,0.7)] transition-transform hover:scale-110 focus-visible:outline focus-visible:outline-4 focus-visible:outline-purple-300"
-              aria-label="Play career transition video" title="Play video">
-              <i class="fa-solid fa-play ml-1 text-3xl"></i>
-            </button>
-          </div>
-          <div class="mt-2 flex flex-wrap items-center justify-between gap-2">
-            <p id="phase2VideoStatus" class="text-xs font-mono text-slate-400" aria-live="polite">Tap Play to start the video.</p>
-            <a href="career_pivot_story.mp4" target="_blank" rel="noopener noreferrer"
-              class="text-xs font-mono font-bold text-purple-300 underline underline-offset-4 hover:text-purple-200">Open video directly</a>
-          </div>
-        </div>
-
-        <!-- CHRONOLOGICAL DUAL-TRACK TIMELINE -->
-        <div class="w-full max-w-5xl pt-2 border-t border-purple-900/50 mt-3">
-          <div class="text-center mb-2">
-            <span class="text-[10px] font-mono text-purple-300 font-bold uppercase tracking-wider">
-              <i class="fa-solid fa-timeline text-cyan-400 mr-1"></i> Career Pivot & Parallel Upskilling Progression
-            </span>
-          </div>
-
-          <!-- CONNECTED NODES GRID -->
-          <div class="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 sm:gap-3">
-            
-            <!-- CONNECTING GLOW LINE -->
-            <div class="hidden lg:block absolute top-1/2 left-4 right-4 h-0.5 bg-slate-800 -translate-y-1/2 z-0">
-              <div class="h-full bg-gradient-to-r from-cyan-500 via-purple-500 to-emerald-400 animate-pulse"></div>
-            </div>
-
-            <!-- MILESTONE 1: CONSTRUCTION + CYBERSECURITY -->
-            <div class="relative z-10 bg-slate-950/90 border border-cyan-500/40 hover:border-cyan-400 rounded-xl p-2.5 transition-all duration-300 group shadow-lg flex flex-col justify-between space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[8px] font-mono font-black text-cyan-300 bg-cyan-950/80 px-1.5 py-0.5 rounded border border-cyan-700/80 uppercase">Mar 2023 – May 2023</span>
-                <span class="w-2 h-2 rounded-full bg-cyan-400"></span>
-              </div>
-              <div class="space-y-1">
-                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
-                  <p class="text-[9px] font-mono font-bold text-slate-200"><i class="fa-solid fa-hard-hat text-cyan-400 mr-1"></i> Structural PM (Full-Time)</p>
-                  <p class="text-[8px] text-slate-400">Managing site operations & logistics</p>
-                </div>
-                <div class="p-1.5 rounded bg-cyan-950/40 border border-cyan-800/60">
-                  <p class="text-[9px] font-mono font-bold text-cyan-300"><i class="fa-solid fa-graduation-cap mr-1"></i> Postgrad Dip Cybersecurity</p>
-                  <p class="text-[8px] text-slate-400">PSB Academy (Part-Time)</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- MILESTONE 2: 42SG SUTD + CYBERSECURITY -->
-            <div class="relative z-10 bg-slate-950/90 border border-purple-500/40 hover:border-purple-400 rounded-xl p-2.5 transition-all duration-300 group shadow-lg flex flex-col justify-between space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[8px] font-mono font-black text-purple-300 bg-purple-950/80 px-1.5 py-0.5 rounded border border-purple-700/80 uppercase">May 2023 – Oct 2023</span>
-                <span class="w-2 h-2 rounded-full bg-purple-400"></span>
-              </div>
-              <div class="space-y-1">
-                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
-                  <p class="text-[9px] font-mono font-bold text-purple-300"><i class="fa-solid fa-code mr-1"></i> 42 Singapore (Full-Time)</p>
-                  <p class="text-[8px] text-slate-400">42SG @ SUTD · Piscine & Core C programming</p>
-                </div>
-                <div class="p-1.5 rounded bg-cyan-950/40 border border-cyan-800/60">
-                  <p class="text-[9px] font-mono font-bold text-cyan-300"><i class="fa-solid fa-graduation-cap mr-1"></i> Postgrad Dip Cybersecurity</p>
-                  <p class="text-[8px] text-slate-400">PSB Academy (Graduated Oct 2023)</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- MILESTONE 3: SOC ANALYST + NTU SCTP -->
-            <div class="relative z-10 bg-slate-950/90 border border-sky-500/50 hover:border-sky-400 rounded-xl p-2.5 transition-all duration-300 group shadow-[0_0_15px_rgba(56,189,248,0.15)] flex flex-col justify-between space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[8px] font-mono font-black text-amber-300 bg-amber-950/80 px-1.5 py-0.5 rounded border border-amber-600/80 uppercase">Oct 2023 – Nov 2024</span>
-                <span class="w-2 h-2 rounded-full bg-amber-400"></span>
-              </div>
-              <div class="space-y-1">
-                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
-                  <p class="text-[9px] font-mono font-bold text-amber-400"><i class="fa-solid fa-shield-halved mr-1"></i> SOC L1 Analyst (Full-Time)</p>
-                  <p class="text-[8px] text-slate-400">IRAS (Spade) · Monitoring & Excel VBA</p>
-                </div>
-                <div class="p-1.5 rounded bg-sky-950/40 border border-sky-800/60">
-                  <p class="text-[9px] font-mono font-bold text-sky-300"><i class="fa-solid fa-laptop-code mr-1"></i> Software Engineering</p>
-                  <p class="text-[8px] text-slate-400">NTU SCTP (Part-Time · May 24 – Nov 24)</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- MILESTONE 4: GENSG DATA ENGINEERING -->
-            <div class="relative z-10 bg-slate-950/90 border border-emerald-500/50 hover:border-emerald-400 rounded-xl p-2.5 transition-all duration-300 group shadow-[0_0_15px_rgba(52,211,153,0.15)] flex flex-col justify-between space-y-1.5">
-              <div class="flex items-center justify-between">
-                <span class="text-[8px] font-mono font-black text-emerald-300 bg-emerald-950/80 px-1.5 py-0.5 rounded border border-emerald-700/80 uppercase">Jul 2026 – Oct 2026</span>
-                <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
-              </div>
-              <div class="space-y-1">
-                <div class="p-1.5 rounded bg-slate-900/80 border border-slate-800">
-                  <p class="text-[9px] font-mono font-bold text-emerald-300"><i class="fa-solid fa-database mr-1"></i> Junior Data Engineer</p>
-                  <p class="text-[8px] text-slate-400">Generation Singapore (Full-Time)</p>
-                </div>
-                <div class="p-1.5 rounded bg-emerald-950/30 border border-emerald-800/40">
-                  <p class="text-[8px] text-emerald-400 font-mono"><i class="fa-solid fa-check-double mr-1"></i> PySpark, MS Fabric, Delta Lake & Power BI</p>
-                </div>
-              </div>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PHASE 3: CAPSTONES -->
-    <div id="phase3Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 space-y-2 overflow-hidden">
-      <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
-        <div>
-          <span class="text-[10px] font-mono font-black text-sky-400 uppercase">PHASE 3 · DATA ENGINEERING CAPSTONES</span>
-          <h2 class="text-xs sm:text-base font-black text-slate-100 leading-tight">Production-Grade End-to-End Projects</h2>
-        </div>
-        <span class="text-[9px] sm:text-[10px] font-mono bg-sky-950 text-sky-300 border border-sky-800 px-2 py-0.5 rounded-full font-bold">Interactive Architecture Showcase</span>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-3 flex-1 min-h-0 overflow-y-auto">
-        <!-- CAPSTONE 1 -->
-        <div onclick="openCapstoneModal(1)" class="neon-card-emerald rounded-3xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-sky-400 hover:shadow-[0_0_20px_rgba(56,189,248,0.2)] transition-all group">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center">
-              <span class="text-[10px] font-mono text-sky-400 font-bold bg-sky-950/80 px-2.5 py-1 rounded-lg border border-sky-800">CAPSTONE 01</span>
-              <span class="text-xs font-mono text-sky-300 group-hover:translate-x-1 transition-transform">Click for details <i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 group-hover:text-sky-300 transition-colors">Hospital Wait-Time & Emergency Routing</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">Real-time emergency dispatch & dynamic pathfinding route optimization platform processing real-time telemetry logs with low latency.</p>
-          </div>
-          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800 mt-3">
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-cyan-300">Python</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-cyan-300">PySpark</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-cyan-300">PostgreSQL</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-cyan-300">Docker</span>
-          </div>
-        </div>
-
-        <!-- CAPSTONE 2 -->
-        <div onclick="openCapstoneModal(2)" class="neon-card-emerald rounded-3xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-purple-400 hover:shadow-[0_0_20px_rgba(168,85,247,0.2)] transition-all group">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center">
-              <span class="text-[10px] font-mono text-purple-400 font-bold bg-purple-950/80 px-2.5 py-1 rounded-lg border border-purple-800">CAPSTONE 02</span>
-              <span class="text-xs font-mono text-purple-300 group-hover:translate-x-1 transition-transform">Click for details <i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 group-hover:text-purple-300 transition-colors">Olist E-Commerce Fabric Medallion Pipeline</h3>
-            <p class="text-[10px] sm:text-xs text-slate-300 leading-relaxed">Scalable Medallion Architecture built on Microsoft Fabric with Bronze/Silver/Gold Delta Lake layers, automated CI/CD via GitHub Actions, and Direct Lake Power BI analytics.</p>
-          </div>
-          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800 mt-3">
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-purple-300">MS Fabric</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-purple-300">Delta Lake</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-purple-300">GitHub Actions</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-purple-300">Power BI</span>
-          </div>
-        </div>
-
-        <!-- CAPSTONE 3 -->
-        <div onclick="openCapstoneModal(3)" class="neon-card-emerald rounded-3xl p-4 sm:p-5 flex flex-col justify-between cursor-pointer hover:border-emerald-400 hover:shadow-[0_0_20px_rgba(52,211,153,0.2)] transition-all group">
-          <div class="space-y-2">
-            <div class="flex justify-between items-center">
-              <span class="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-950/80 px-2.5 py-1 rounded-lg border border-emerald-800">CAPSTONE 03</span>
-              <span class="text-xs font-mono text-emerald-300 group-hover:translate-x-1 transition-transform">Click for details <i class="fa-solid fa-arrow-right"></i></span>
-            </div>
-            <h3 class="text-sm sm:text-base font-black text-slate-100 group-hover:text-emerald-300 transition-colors">CRISP-DM Olist Project</h3>
-            <p class="text-xs text-slate-300 leading-relaxed">A data-mining project following the CRISP-DM lifecycle to turn Olist data into actionable insights.</p>
-          </div>
-          <div class="flex flex-wrap gap-1.5 pt-3 border-t border-slate-800 mt-3">
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-emerald-300">CRISP-DM</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-emerald-300">Olist</span>
-            <span class="text-[10px] font-mono bg-slate-900 border border-slate-700 px-2 py-0.5 rounded text-emerald-300">Data Analysis</span>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PHASE 4: READINESS MATRIX -->
-    <div id="phase4Wrapper" class="scene-element w-full h-full flex flex-col justify-between p-1 sm:p-2 space-y-2 overflow-hidden">
-      <div class="border-b border-slate-800 pb-1 flex justify-between items-center shrink-0">
-        <div>
-          <span class="text-[10px] font-mono font-black text-emerald-400 uppercase">PHASE 4 · DE READINESS MATRIX</span>
-          <h2 class="text-xs sm:text-base font-black text-slate-100 leading-tight">Engineering Parallels, Tech Proficiency & Capability Alignment</h2>
-        </div>
-        <span class="text-[9px] sm:text-[10px] font-mono bg-emerald-950 text-emerald-300 border border-emerald-800 px-2 py-0.5 rounded-full font-bold">Readiness Framework</span>
-      </div>
-
-      <div class="flex-1 overflow-y-auto space-y-3 pr-1">
-        
-        <!-- TABLE 1: ENGINEERING vs DATA ENGINEERING -->
-        <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
-          <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
-            <i class="fa-solid fa-compass-drafting text-cyan-400 text-sm"></i>
-            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">1. Engineering Discipline to Data Engineering Mapping</h3>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-[11px] sm:text-xs font-mono">
-              <thead>
-                <tr class="border-b border-slate-800 text-cyan-400 bg-slate-950/50">
-                  <th class="p-2 w-1/2 uppercase font-bold">ENGINEERING</th>
-                  <th class="p-2 w-1/2 uppercase font-bold">DATA ENGINEERING</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Project Planning</td>
-                  <td class="p-2 text-cyan-300">Schema, Workflow, Pipeline Planning</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Quality & Risk Management</td>
-                  <td class="p-2 text-cyan-300">Data Output Quality & Security Sense</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Attention to Details</td>
-                  <td class="p-2 text-cyan-300">Debugging, scoping edge-cases</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Documentation</td>
-                  <td class="p-2 text-cyan-300">Proper documentation, structure, records</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Process Improvement</td>
-                  <td class="p-2 text-cyan-300">Workflow Automation, ETL End-to-End</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 text-[11px] font-mono text-cyan-400 font-bold text-center">
-            KEY TAKEAWAY: I have been designing and improving complex systems long before entering technology.
-          </div>
-        </div>
-
-        <!-- TABLE 2: TECHNICAL SKILLSET MATRIX (DATA ENGINEERING FOCUS) -->
-        <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
-          <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
-            <i class="fa-solid fa-sliders text-purple-400 text-sm"></i>
-            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">2. Technical Skill Set Matrix</h3>
-          </div>
-          
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
-            <!-- Core Data Engineering Table -->
-            <div class="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/40">
-              <table class="w-full text-left text-[11px] sm:text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-slate-800 text-purple-400 bg-purple-950/30">
-                    <th class="p-2">CORE DATA ENGINEERING</th>
-                    <th class="p-2 text-right">PROFICIENCY</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">SQL (Queries, Joins, Aggregations)</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Python (Pandas, Automation)</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">ETL / ELT Pipelines & Ingestion</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Microsoft Fabric & Delta Lake</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">PySpark / Big Data Processing</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-
-            <!-- Platforms & Software Engineering Foundation Table -->
-            <div class="overflow-x-auto border border-slate-800 rounded-xl bg-slate-950/40">
-              <table class="w-full text-left text-[11px] sm:text-xs font-mono">
-                <thead>
-                  <tr class="border-b border-slate-800 text-cyan-400 bg-cyan-950/30">
-                    <th class="p-2">PLATFORMS & SOFTWARE FOUNDATION</th>
-                    <th class="p-2 text-right">PROFICIENCY</th>
-                  </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Git & GitHub Actions (CI/CD)</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Development Tools (VS Code, pgAdmin, Jupyter)</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Power BI & Semantic Modeling</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Docker & Containerization</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="p-2 font-semibold text-slate-100">Full-Stack & APIs (Java Spring Boot, JS, React)</td>
-                    <td class="p-2 text-right text-amber-400 space-x-0.5">
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star"></i>
-                      <i class="fa-solid fa-star star-half-split"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                      <i class="fa-solid fa-star text-slate-700"></i>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-        <!-- TABLE 3: THE ROLE REQUIRES vs WHAT I BRING -->
-        <div class="neon-card-emerald rounded-2xl p-3 sm:p-4 space-y-2">
-          <div class="flex items-center gap-2 border-b border-slate-800 pb-1.5">
-            <i class="fa-solid fa-gem text-emerald-400 text-sm"></i>
-            <h3 class="text-xs sm:text-sm font-black text-slate-100 font-mono uppercase">3. Core Professional Capability Alignment</h3>
-          </div>
-          <div class="overflow-x-auto">
-            <table class="w-full text-left text-[11px] sm:text-xs font-mono">
-              <thead>
-                <tr class="border-b border-slate-800 text-emerald-400 bg-slate-950/50">
-                  <th class="p-2 w-2/5 uppercase font-bold">THE ROLE REQUIRES</th>
-                  <th class="p-2 w-3/5 uppercase font-bold">WHAT I BRING</th>
-                </tr>
-              </thead>
-              <tbody class="divide-y divide-slate-800/60 text-slate-300">
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Technical capability</td>
-                  <td class="p-2 text-emerald-300">SQL, ETL, PySpark & Microsoft Fabric</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Reliable delivery</td>
-                  <td class="p-2 text-emerald-300">10+ years delivering complex projects</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Sound judgment</td>
-                  <td class="p-2 text-emerald-300">Mature decision-making under pressure</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Systems thinking</td>
-                  <td class="p-2 text-emerald-300">Engineering discipline across end-to-end workflows</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Continuous improvement</td>
-                  <td class="p-2 text-emerald-300">Automation and process optimization mindset</td>
-                </tr>
-                <tr class="hover:bg-slate-900/40">
-                  <td class="p-2 font-semibold text-slate-100">Governance & quality</td>
-                  <td class="p-2 text-emerald-300">Risk management, documentation, and data quality</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div class="pt-2 border-t border-slate-800/80 text-[11px] font-mono text-emerald-400 font-bold text-center">
-            Hands-on data engineering, proven delivery, and business understanding.
-          </div>
-        </div>
-
-      </div>
-    </div>
-
-  </main>
-
-  <!-- MODAL FOR PHASE 3 CAPSTONES -->
-  <div id="appModal" class="fixed inset-0 bg-slate-950/90 backdrop-blur-xl z-50 hidden flex-col items-center justify-center p-4">
-    <div class="relative w-full max-w-3xl bg-slate-900 border border-slate-700 rounded-3xl p-5 shadow-2xl flex flex-col space-y-4 max-h-[90vh] overflow-y-auto">
-      <button onclick="closeAppModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-colors">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <div id="modalBody" class="w-full space-y-3"></div>
-    </div>
-  </div>
-
-  <div id="qrModal" class="fixed inset-0 bg-slate-950/95 backdrop-blur-xl z-[60] hidden items-center justify-center p-3 sm:p-6"
-    role="dialog" aria-modal="true" aria-labelledby="qrModalTitle" onclick="if (event.target === this) closeQrModal()">
-    <div class="relative flex flex-col items-center gap-4 rounded-3xl border border-cyan-800/80 bg-slate-900 p-5 sm:p-7 shadow-[0_0_35px_rgba(6,182,212,0.25)]">
-      <button type="button" onclick="closeQrModal()" aria-label="Close QR code"
-        class="absolute right-3 top-3 w-9 h-9 rounded-full bg-slate-800 text-slate-300 hover:text-white hover:bg-slate-700 flex items-center justify-center transition-colors">
-        <i class="fa-solid fa-xmark"></i>
-      </button>
-      <h2 id="qrModalTitle" class="pr-8 text-center text-sm sm:text-base font-bold text-cyan-300 font-mono">SCAN FOR MOBILE RESUME</h2>
-      <div id="largeQrCode" class="flex items-center justify-center rounded-2xl bg-white p-3"
-        style="width: min(78vw, 60vh); height: min(78vw, 60vh)"
-        aria-label="QR code linking to the resume PDF"></div>
-      <p class="max-w-xs text-xs font-mono text-slate-400 text-center">Scan with your phone, then tap the link or banner shown by your camera app.</p>
-    </div>
-  </div>
-
-  <!-- NAVIGATION FOOTER CONTROLS -->
-  <footer class="w-full bg-slate-950/95 border border-slate-800 rounded-2xl px-3 sm:px-6 py-2 flex justify-between items-center backdrop-blur-md z-40 shrink-0">
-    <button id="navPrevBtn" onclick="navigateRelative(-1)"
-      class="px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-mono text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-      <i class="fa-solid fa-chevron-left"></i> PREV
-    </button>
-
-    <div class="flex items-center gap-2">
-      <button onclick="goToPhaseWithAnimation(0)" title="Overview Main Dashboard"
-        class="px-3 py-1.5 sm:py-2 bg-slate-900 hover:bg-slate-800 text-slate-200 border border-slate-700 rounded-xl font-mono text-xs font-bold flex items-center gap-1.5 transition-colors">
-        <i class="fa-solid fa-house text-cyan-400"></i> <span class="hidden sm:inline">HOME</span>
-      </button>
-      <span id="phaseIndicator" class="text-xs font-mono text-slate-400 font-bold px-2">OVERVIEW</span>
-    </div>
-
-    <button id="navNextBtn" onclick="navigateRelative(1)"
-      class="px-3 sm:px-4 py-1.5 sm:py-2 bg-slate-900 hover:bg-slate-800 text-cyan-400 border border-slate-700 rounded-xl font-mono text-xs font-bold flex items-center gap-2 transition-colors disabled:opacity-40 disabled:cursor-not-allowed">
-      NEXT <i class="fa-solid fa-chevron-right"></i>
-    </button>
-  </footer>
-
-  <script>
-    let currentPhase = 0;
-    const totalPhases = 4;
-    let isNavigating = false;
-
-    // QR Code Initializer
-    window.addEventListener('DOMContentLoaded', () => {
-      const qrElem = document.getElementById("largeQrCode");
-      if (qrElem && typeof QRCode !== 'undefined') {
-        new QRCode(qrElem, {
-          text: "https://ttan-ttan.github.io/portfolio/resume.html",
-          width: 512,
-          height: 512,
-          colorDark: "#020617",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
-      }
-      updateNavControls();
-    });
-
-    function openQrModal() {
-      const modal = document.getElementById("qrModal");
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
-
-    function closeQrModal() {
-      const modal = document.getElementById("qrModal");
-      modal.classList.remove("flex");
-      modal.classList.add("hidden");
-    }
-
-    async function playPhaseTwoVideo() {
-      const video = document.getElementById("phase2Video");
-      const status = document.getElementById("phase2VideoStatus");
-      status.textContent = "Starting video...";
-
-      try {
-        if (video.ended) video.currentTime = 0;
-        await video.play();
-        status.textContent = "";
-      } catch (error) {
-        console.error("Unable to play the Phase 2 video:", error);
-        status.textContent = "Playback was blocked. Use “Open video directly” to watch it.";
-      }
-    }
-
-    function updateNavControls() {
-      const prevBtn = document.getElementById("navPrevBtn");
-      const nextBtn = document.getElementById("navNextBtn");
-      const indicator = document.getElementById("phaseIndicator");
-
-      if (prevBtn) prevBtn.disabled = (currentPhase === 0);
-      if (nextBtn) nextBtn.disabled = (currentPhase === totalPhases);
-
-      if (indicator) {
-        if (currentPhase === 0) {
-          indicator.textContent = "OVERVIEW";
-        } else {
-          indicator.textContent = `PHASE ${currentPhase} / ${totalPhases}`;
+            if (ttshTTT < nuhTTT) {
+                document.getElementById('recName').innerText = "Tan Tock Seng Hospital (TTSH)";
+                document.getElementById('recTTT').innerText = ttshTTT + " Mins";
+                const diff = nuhTTT - ttshTTT;
+                document.getElementById('recSavings').innerText = `Saves ${diff} Minutes (${(diff/60).toFixed(1)} Hours faster than NUH!)`;
+            } else {
+                document.getElementById('recName').innerText = "National University Hospital (NUH)";
+                document.getElementById('recTTT').innerText = nuhTTT + " Mins";
+                const diff = ttshTTT - nuhTTT;
+                document.getElementById('recSavings').innerText = `Saves ${diff} Minutes (${(diff/60).toFixed(1)} Hours faster than TTSH!)`;
+            }
         }
-      }
-    }
 
-    /* CARD CLICK HANDLER FROM PHASE 0 WITH TIMELAPSE ZOOM-IN EFFECT */
-    function onCardClicked(phaseNum, event) {
-      if (isNavigating) return;
-      isNavigating = true;
-
-      const card = document.getElementById(`card-phase-${phaseNum}`);
-      const tunnel = document.getElementById("lightTunnelOverlay");
-
-      if (card && tunnel) {
-        card.classList.add("card-zoom-target");
-
-        setTimeout(() => {
-          tunnel.classList.add("tunnel-active");
-
-          setTimeout(() => {
-            switchSceneWrapper(phaseNum);
-
-            setTimeout(() => {
-              tunnel.classList.remove("tunnel-active");
-              card.classList.remove("card-zoom-target");
-              isNavigating = false;
-            }, 300);
-          }, 450);
-        }, 200);
-      } else {
-        goToPhaseWithAnimation(phaseNum);
-      }
-    }
-
-    /* NAVIGATION BETWEEN PHASES: Jump out towards overview first, then enter target */
-    function goToPhaseWithAnimation(targetPhase) {
-      if (targetPhase === currentPhase || isNavigating) return;
-      isNavigating = true;
-
-      const currentWrapper = document.getElementById(`phase${currentPhase}Wrapper`);
-      const tunnel = document.getElementById("lightTunnelOverlay");
-
-      if (currentWrapper) {
-        currentWrapper.classList.add("wrapper-zoom-out");
-      }
-
-      setTimeout(() => {
-        if (tunnel) tunnel.classList.add("tunnel-active");
-
-        setTimeout(() => {
-          if (currentWrapper) currentWrapper.classList.remove("wrapper-zoom-out");
-
-          switchSceneWrapper(targetPhase);
-
-          setTimeout(() => {
-            if (tunnel) tunnel.classList.remove("tunnel-active");
-            isNavigating = false;
-          }, 300);
-        }, 400);
-      }, 250);
-    }
-
-    function switchSceneWrapper(targetPhase) {
-      for (let i = 0; i <= totalPhases; i++) {
-        const wrapper = document.getElementById(`phase${i}Wrapper`);
-        if (wrapper) {
-          wrapper.classList.remove("scene-visible");
+        // 3. POSTAL TRANSFORMER ENGINE
+        function transformPostal() {
+            const raw = document.getElementById('postalInput').value.trim();
+            const clean = raw.replace(/\D/g, '');
+            if (clean.length >= 2) {
+                const prefix = clean.substring(0, 2);
+                document.getElementById('transformOutput').innerText = 
+                    `Output: Raw input '${raw}' ➔ Extracted Postal Sector Prefix D${prefix}`;
+            } else {
+                document.getElementById('transformOutput').innerText = "Output: Invalid postal code format. Enter 6 digits.";
+            }
         }
-      }
 
-      currentPhase = targetPhase;
-      const targetWrapper = document.getElementById(`phase${currentPhase}Wrapper`);
-      if (targetWrapper) {
-        targetWrapper.classList.add("scene-visible");
-      }
+        // 4. CHART.JS DYNAMIC RENDERER FOR ALL 5 SEABORN CHARTS
+        let activeChartInstance = null;
 
-      updateNavControls();
-    }
+        function renderSelectedChart(type) {
+            const canvas = document.getElementById('activeAnalyticsChart');
+            if (!canvas) return;
 
-    function navigateRelative(direction) {
-      const nextPhase = currentPhase + direction;
-      if (nextPhase >= 0 && nextPhase <= totalPhases) {
-        goToPhaseWithAnimation(nextPhase);
-      }
-    }
+            // Highlight active button
+            ['chart1', 'chart2', 'chart3', 'chart4', 'chart5'].forEach(t => {
+                const b = document.getElementById(`btn-chart-${t}`);
+                if (b) {
+                    if (t === type) {
+                        b.className = "px-4 py-2 rounded-xl bg-cyan-600 text-white font-bold transition-all shadow-lg";
+                    } else {
+                        b.className = "px-4 py-2 rounded-xl bg-navy-900 text-slate-300 hover:bg-slate-800 border border-slate-800 font-bold transition-all";
+                    }
+                }
+            });
 
-    /* MODAL FUNCTIONALITY FOR PHASE 3 CAPSTONES */
-    function openCapstoneModal(id) {
-      const modal = document.getElementById("appModal");
-      const body = document.getElementById("modalBody");
-      if (id === 1) {
-        body.innerHTML = `
-          <span class="text-[10px] font-mono text-sky-400 font-bold bg-sky-950 px-2.5 py-1 rounded border border-sky-800">CAPSTONE 01 DEEP DIVE</span>
-          <h3 class="text-lg font-black text-slate-100">Hospital Wait-Time & Emergency Routing</h3>
-          <p class="text-xs text-slate-300 font-mono leading-relaxed">Real-time pathfinding and telemetry ingestion platform built to route emergency dispatchers through dynamically updated low-latency traffic paths.</p>
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-2 font-mono text-xs">
-            <h4 class="text-sky-300 font-bold">Key Architectural Features:</h4>
-            <ul class="list-disc list-inside text-slate-400 space-y-1">
-              <li>Low-latency telemetry streaming using PySpark and PostgreSQL.</li>
-              <li>Containerized orchestration via Docker with automated CI/CD.</li>
-              <li>Optimized spatial pathfinding algorithms for dynamic dispatch.</li>
-            </ul>
-          </div>
-          <div class="flex gap-2 pt-2 font-mono text-xs">
-            <a href="https://ttan-ttan.github.io/hospital_wait_time/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-sky-500 text-slate-950 rounded-xl font-bold flex items-center gap-1.5 hover:bg-sky-400 transition-colors">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Project
-            </a>
-          </div>
-        `;
-      } else if (id === 2) {
-        body.innerHTML = `
-          <span class="text-[10px] font-mono text-purple-400 font-bold bg-purple-950 px-2.5 py-1 rounded border border-purple-800">CAPSTONE 02 DEEP DIVE</span>
-          <h3 class="text-lg font-black text-slate-100">Olist E-Commerce Fabric Pipeline</h3>
-          <p class="text-xs text-slate-300 font-mono leading-relaxed">End-to-end Medallion Architecture data platform ingesting and transforming Olist E-Commerce datasets across Microsoft Fabric Bronze, Silver, and Gold Delta Lake layers.</p>
-          <div class="p-3 bg-slate-950 rounded-xl border border-slate-800 space-y-2 font-mono text-xs">
-            <h4 class="text-purple-300 font-bold">Key Architectural Features:</h4>
-            <ul class="list-disc list-inside text-slate-400 space-y-1">
-              <li>Bronze/Silver/Gold Delta Lake schema enforcement and data quality checks.</li>
-              <li>Automated CI/CD deployment using GitHub Actions and Microsoft Fabric REST API.</li>
-              <li>Power BI Direct Lake semantic modeling for real-time executive dashboarding.</li>
-            </ul>
-          </div>
-          <div class="flex gap-2 pt-2 font-mono text-xs">
-            <a href="https://ttan-ttan.github.io/ttan-olist-project/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-purple-500 text-slate-950 rounded-xl font-bold flex items-center gap-1.5 hover:bg-purple-400 transition-colors">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Project
-            </a>
-          </div>
-        `;
-      } else {
-        body.innerHTML = `
-          <span class="text-[10px] font-mono text-emerald-400 font-bold bg-emerald-950 px-2.5 py-1 rounded border border-emerald-800">CAPSTONE 03 PROJECT</span>
-          <h3 class="text-lg font-black text-slate-100">CRISP-DM Olist Project</h3>
-          <p class="text-xs text-slate-300 font-mono leading-relaxed">Explore the Olist project from business understanding through data preparation, modeling, evaluation, and deployment using the CRISP-DM framework.</p>
-          <div class="flex gap-2 pt-2 font-mono text-xs">
-            <a href="https://ttan-ttan.github.io/CRISP-DM-Olist/" target="_blank" rel="noopener noreferrer" class="px-4 py-2 bg-emerald-400 text-slate-950 rounded-xl font-bold flex items-center gap-1.5 hover:bg-emerald-300 transition-colors">
-              <i class="fa-solid fa-arrow-up-right-from-square"></i> View Live Project
-            </a>
-          </div>
-        `;
-      }
-      modal.classList.remove("hidden");
-      modal.classList.add("flex");
-    }
+            // Safely destroy existing chart before rebuilding canvas
+            if (activeChartInstance) {
+                activeChartInstance.destroy();
+                activeChartInstance = null;
+            }
 
-    function closeAppModal() {
-      const modal = document.getElementById("appModal");
-      const body = document.getElementById("modalBody");
-      body.innerHTML = "";
-      modal.classList.remove("flex");
-      modal.classList.add("hidden");
-    }
+            const ctx = canvas.getContext('2d');
 
-    // Keyboard Arrow Controls
-    document.addEventListener('keydown', (e) => {
-      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
-        navigateRelative(1);
-      } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
-        navigateRelative(-1);
-      } else if (e.key === 'Escape') {
-        closeAppModal();
-        closeQrModal();
-      }
-    });
-  </script>
+            if (type === 'chart1') {
+                // CHART 1: Hospital A&E Wait Time (Horizontal Bar)
+                document.getElementById('chartTitle').innerText = "Hospital A&E Wait Time";
+                document.getElementById('chartSubtitle').innerText = "Horizontal bar charts show current emergency department turnaround times.";
+                document.getElementById('chartTag').innerText = "Slide Chart 1";
+                document.getElementById('chartInsightText').innerText = "Horizontal bar charts show current emergency department turnaround times. Sengkang General Hospital (SKH), Khoo Teck Puat Hospital (KTPH), and Changi General Hospital (CGH) are experiencing the highest congestion (~3 hours), whereas Tan Tock Seng Hospital (TTSH) currently records the lowest wait time. Patients presenting acute febrile illness or coming from high-density dengue zones (like D78) can be dynamically routed toward lower-wait facilities (such as TTSH) to balance healthcare loads.";
+
+                activeChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    indexAxis: 'y',
+                    data: {
+                        labels: [
+                            'Alexandra Hospital', 
+                            'National University Hospital', 
+                            'Ng Teng Fong General Hospital', 
+                            'Singapore General Hospital (SGH)', 
+                            'Sengkang General Hospital (SKH)', 
+                            'Changi General Hospital (CGH)', 
+                            'Khoo Teck Puat Hospital (KTPH)', 
+                            'Tan Tock Seng Hospital (TTSH)'
+                        ],
+                        datasets: [{
+                            label: 'Wait Time (Hours)',
+                            data: [2.0, 3.0, 3.0, 2.0, 2.0, 3.0, 2.0, 0.44],
+                            backgroundColor: [
+                                '#7dd3fc', '#0284c7', '#0284c7', '#38bdf8', '#0284c7', '#0f4c81', '#0f4c81', '#10b981'
+                            ],
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { title: { display: true, text: 'Wait Time (Hours / Mins)', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, min: 0, max: 3.5, grid: { color: '#1e293b' } },
+                            y: { ticks: { color: '#e2e8f0', font: { weight: 'bold' } }, grid: { display: false } }
+                        }
+                    }
+                });
+
+            } else if (type === 'chart2') {
+                // CHART 2: Top Dengue Clusters by Postal Prefix (Vertical Bar)
+                document.getElementById('chartTitle').innerText = "Top Dengue Clusters by Postal Prefix";
+                document.getElementById('chartSubtitle').innerText = "Bar chart ranks postal districts by cumulative active case volume.";
+                document.getElementById('chartTag').innerText = "Slide Chart 2";
+                document.getElementById('chartInsightText').innerText = "Top Dengue Clusters (Chart 01): The red bar chart ranks postal districts by cumulative active case volume. D78 (Springleaf, Lentor) clearly stands out as the primary high-risk red alert zone (exceeding 240 cases), dwarfing secondary clusters like D80, D79, and D61. Analytical Takeaway: Public health and vector control interventions should be heavily prioritized in D78 first before allocating resources to lower-tier districts.";
+
+                activeChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: ['D78', 'D80', 'D79', 'D61', 'Unknown', 'D67'],
+                        datasets: [{
+                            label: 'Total Cases',
+                            data: [248, 92, 42, 22, 12, 3],
+                            backgroundColor: ['#ef4444', '#f87171', '#fb923c', '#fbbf24', '#94a3b8', '#64748b'],
+                            borderRadius: 8
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { title: { display: true, text: 'Total Cases', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, max: 260, grid: { color: '#1e293b' } },
+                            x: { title: { display: true, text: 'Postal District / Prefix', color: '#94a3b8' }, ticks: { color: '#94a3b8', font: { weight: 'bold' } }, grid: { display: false } }
+                        }
+                    }
+                });
+
+            } else if (type === 'chart3') {
+                // CHART 3: Weather Trends vs Daily Rainfall (Time Series Line)
+                document.getElementById('chartTitle').innerText = "Weather Trends vs Daily Rainfall";
+                document.getElementById('chartSubtitle').innerText = "Daily Total Rainfall Trends Time-Series (June - August 2026)";
+                document.getElementById('chartTag').innerText = "Slide Chart 3";
+                document.getElementById('chartInsightText').innerText = "The time-series line plot shows sharp spikes in daily precipitation (reaching up to 220+ mm in late June and smaller spikes around mid-July). Analytical Takeaway: These sudden rainfall peaks create standing water environments that serve as ideal breeding grounds for Aedes mosquitoes, predicting localized transmission surges roughly 4 to 8 weeks later.";
+
+                activeChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2026-06-15', '2026-06-22', '2026-07-01', '2026-07-08', '2026-07-15', '2026-07-22', '2026-08-01', '2026-08-08', '2026-08-15'],
+                        datasets: [{
+                            label: 'Rainfall (mm)',
+                            data: [220, 15, 45, 12, 35, 10, 8, 12, 5],
+                            borderColor: '#fbbf24',
+                            backgroundColor: 'rgba(251, 191, 36, 0.15)',
+                            pointBackgroundColor: '#fbbf24',
+                            pointRadius: 6,
+                            fill: true,
+                            tension: 0.2
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            y: { title: { display: true, text: 'Rainfall (mm)', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, min: 0, max: 250, grid: { color: '#1e293b' } },
+                            x: { title: { display: true, text: 'Date', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, grid: { display: false } }
+                        }
+                    }
+                });
+
+            } else if (type === 'chart4') {
+                // CHART 4: Dengue Cases - 60 Day Lag (Dual Axis Line)
+                document.getElementById('chartTitle').innerText = "Dengue Cases - 60 Day Lag Analysis";
+                document.getElementById('chartSubtitle').innerText = "Historical Rainfall vs Today's Total Dengue Cases (Threshold 433)";
+                document.getElementById('chartTag').innerText = "Slide Chart 4";
+                document.getElementById('chartInsightText').innerText = "Historical Rainfall vs Today's Total Dengue Cases (433). This chart overlays daily precipitation spikes against the current total dengue caseload line (green dashed line at 433 cases). If our 60-day lag hypothesis holds, rainfall peaks precede dengue surges by 30 to 60 days.";
+
+                activeChartInstance = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['2026-06-15', '2026-06-22', '2026-07-01', '2026-07-08', '2026-07-15', '2026-07-22', '2026-08-01', '2026-08-08', '2026-08-15'],
+                        datasets: [
+                            {
+                                label: 'Rainfall (mm)',
+                                data: [18.5, 0.5, 9.5, 0.2, 6.0, 0.1, 0.5, 0.2, 1.0],
+                                borderColor: '#ef4444',
+                                backgroundColor: '#ef4444',
+                                pointRadius: 5,
+                                yAxisID: 'y'
+                            },
+                            {
+                                label: "Today's Dengue Cases (433)",
+                                data: [433, 433, 433, 433, 433, 433, 433, 433, 433],
+                                borderColor: '#22c55e',
+                                borderDash: [6, 6],
+                                pointRadius: 0,
+                                yAxisID: 'y1'
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: {
+                                type: 'linear',
+                                display: true,
+                                position: 'left',
+                                title: { display: true, text: 'Rainfall (mm)', color: '#ef4444' },
+                                ticks: { color: '#ef4444' },
+                                min: 0,
+                                max: 20,
+                                grid: { color: '#1e293b' }
+                            },
+                            y1: {
+                                type: 'linear',
+                                display: true,
+                                position: 'right',
+                                title: { display: true, text: 'Total Dengue Cases', color: '#22c55e' },
+                                ticks: { color: '#22c55e' },
+                                min: 400,
+                                max: 460,
+                                grid: { drawOnChartArea: false }
+                            },
+                            x: { title: { display: true, text: 'Date', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, grid: { display: false } }
+                        }
+                    }
+                });
+
+            } else if (type === 'chart5') {
+                // CHART 5: Hospital Load Index vs Nearby Cluster Proximity
+                document.getElementById('chartTitle').innerText = "Hospital Load Index vs. Nearby Cluster Proximity";
+                document.getElementById('chartSubtitle').innerText = "Analysis Chart 5: Calculated Cluster Proximity & Patient Inflow Risk Score";
+                document.getElementById('chartTag').innerText = "Slide Chart 5";
+                document.getElementById('chartInsightText').innerText = "Explanation: This maps hospital load indices against proximity to active high-risk dengue clusters. Outcome: Emergency departments situated close to high-density outbreak areas (such as Alexandra Hospital, CGH, and KTPH) experience heavier patient inflow scores and heightened operational congestion compared to facilities located further away (like TTSH), validating the need for dynamic patient routing.";
+
+                activeChartInstance = new Chart(ctx, {
+                    type: 'bar',
+                    indexAxis: 'y',
+                    data: {
+                        labels: [
+                            'Tan Tock Seng Hospital (TTSH)',
+                            'Singapore General Hospital (SGH)',
+                            'Sengkang General Hospital (SKH)',
+                            'Ng Teng Fong General Hospital',
+                            'National University Hospital',
+                            'Khoo Teck Puat Hospital (KTPH)',
+                            'Changi General Hospital (CGH)',
+                            'Alexandra Hospital'
+                        ],
+                        datasets: [{
+                            label: 'Proximity & Inflow Risk Score',
+                            data: [3.8, 4.3, 5.0, 5.5, 6.1, 6.7, 7.2, 7.8],
+                            backgroundColor: '#f97316',
+                            borderRadius: 6
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: { legend: { display: false } },
+                        scales: {
+                            x: { title: { display: true, text: 'Calculated Cluster Proximity & Patient Inflow Risk Score', color: '#94a3b8' }, ticks: { color: '#94a3b8' }, min: 0, max: 9, grid: { color: '#1e293b' } },
+                            y: { ticks: { color: '#e2e8f0' }, grid: { display: false } }
+                        }
+                    }
+                });
+            }
+        }
+
+        // Initialize on Load
+        window.onload = function() {
+            calcTTT();
+            renderSelectedChart('chart1');
+        };
+    </script>
 </body>
-
 </html>
